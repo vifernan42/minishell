@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/05 20:34:19 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/05 20:36:44 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int main()
 	t_data	data;
 	char	*cmd_line;
 
-	//atexit(leaks);
+	atexit(leaks);
 	data.promt = get_promt(getenv("USER"), &data);
 	while(1)
 	{
