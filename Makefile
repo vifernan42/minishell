@@ -6,7 +6,7 @@
 #    By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/07/05 18:00:28 by vifernan         ###   ########.fr        #
+#    Updated: 2022/07/05 20:01:52 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ CC = gcc
 NAME = minishell
 
 SRCS = main.c \
+	   pwd.c \
 
 #	echo.c \
 		#pwd.c \
