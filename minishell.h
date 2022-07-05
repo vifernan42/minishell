@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/05 18:30:35 by marvin           ###   ########.fr       */
+/*   Updated: 2022/07/05 20:27:50 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ typedef struct s_data {
 	char	*promt;
 }		t_data;
 
-int	echos(char **argv, int fd);
+int		echos(char **argv, int fd);
+//char|\\\*pwdcurrent();
 
 #endif
 

@@ -6,13 +6,23 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/05 20:09:33 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/05 20:34:19 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char *getenv( const char *name );
+
+char	*pwdcurrent()
+{
+	char	buff[FILENAME_MAX];
+	char	*current;
+
+	getcwd(buff, FILENAME_MAX);
+	current = ft_strdup(buff);
+	return (current);
+}
 
 void leaks(void)
 {
@@ -31,7 +41,7 @@ char	*get_promt(char *user, t_data *data)
 void	do_something(char *cmd_line)
 {
 	if (ft_strncmp(cmd_line, "pwd", 4) == 0)
-		printf("hola");
+		printf("%s\n", pwdcurrent());
 }
 
 int main()
