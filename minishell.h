@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/05 18:07:40 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/05 18:30:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 typedef struct s_data {
 	char	**env;
 	char	*env_user;
+	char	*promt;
 }		t_data;
 
 int	echos(char **argv, int fd);
