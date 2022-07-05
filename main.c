@@ -6,13 +6,18 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/05 18:41:07 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/05 18:46:56 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char *getenv( const char *name );
+
+void leaks(void)
+{
+	system("leaks minishell");
+}
 
 char	*get_promt(char *user, t_data *data)
 {
@@ -28,10 +33,12 @@ int main()
 
 	t_data	data;
 
+	//atexit(leaks);
 	data.promt = get_promt(getenv("USER"), &data);
 	while(1)
 	{
 		char * str = readline (data.promt);
 		free (str);
+		//exit(0);
 	}
 }
