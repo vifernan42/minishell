@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/12 13:49:44 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/12 18:35:06 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,35 @@ char	*skip_quotes(char *in_promp)
 	return (0);
 }
 
+void	check_tofill(char **aux) // revisar y meter un a uno saltando las comillas
+{
+	int	i;
+
+	i = -1;
+	while (aux[++i] != NULL)
+		printf("%s\n", aux[i]);
+}
+
+void	fill_it(t_data *data) // recorrer los pipes
+{
+	char	**aux;
+	int		j;
+
+	j = -1;
+	while (data->spt_pipes[++j] != NULL)
+	{
+		aux = st_split(data->spt_pipes[j], ' ');
+		check_tofill(aux);
+		free(aux);
+	}
+}
 
 int main()
 {
 
 	t_data	data;
 	char	*cmd_line;
-	//char	*val;
+	//char	***val;
 	int		i;
 
 	atexit(leaks);
@@ -83,9 +105,10 @@ int main()
 		cmd_line = readline (data.promt);
 		//val = skip_quotes(cmd_line);
 		data.spt_pipes = st_split(cmd_line, '|');
-		i = -1;
-		while (data.spt_pipes[++i] != NULL)
-			printf("%s\n", data.spt_pipes[i]);
+		i = 0;
+		while (data.spt_pipes[i] != NULL)
+			i++;
+		fill_it(&data);
 		//printf("%s\n", val); 
 		//save_right_cmd(cmd_line);
 		free (cmd_line);

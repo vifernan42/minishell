@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:01:20 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/12 13:52:28 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/12 18:23:04 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,44 @@ int	check_quotes(char const *s, char c, int i)
 	return (i + 1);
 }
 
+static	int aux_split(char const *s, int i, char c)
+{
+	char x;
+
+	x = 0;
+	if (s[i] == '\"' || s[i] == '\'')
+	{
+		if (s[i] == '\"')
+			x = '\"';
+		else
+			x = '\'';
+		i = check_quotes(s, x, i);
+	}
+	while (s[i] != c && s[i] != '\'' \
+		&& s[i] != '\"'  && s[i] != '\0')
+		i++;
+	return (i);
+}
+
 char	**ft_cacho(char **dst, char const *init, char c)
 {
 	int			i;
 	int			j;
 	int			z;
+	char		x;
 
 	i = 0;
 	z = 0;
+	x = 0;
 	while (i < (int)ft_strlen(init))
 	{
 		if (i == 0 || init[i - 1] == c)
 			j = i;
-		if (init[i] == '\"')
-			i = check_quotes(init, '\"', i);
-		while (init[i] != c && init[i] != '\"' && init[i] != '\0')
-			i++;
+		i = aux_split(init, i, c);
 		if (init[i] == c || i == (int)ft_strlen(init))
 			dst[z++] = ft_substr(init, j, i - j);
-		if (init[i] != '\"' && i != (int)ft_strlen(init))
+		if ((init[i] != '\'' && init[i] != '\"') \
+				&& i != (int)ft_strlen(init))
 			i++;
 	}
 	dst[z] = NULL;
@@ -63,14 +82,10 @@ char	**st_split(char const *s, char c)
 		return (NULL);
 	while (i < (int)ft_strlen(s))
 	{
-		if (s[i] == '\"')
-			i = check_quotes(s, '\"', i);
-		if (s[i] != c)
-			while (s[i] != c && s[i] != '\"' && s[i] != '\0')
-				i++;
+		i = aux_split(s, i, c);
 		if (s[i] == c)
 			count++;
-		if (s[i] != '\"')
+		if (s[i] != '\'' && s[i] != '\"')
 			i++;
 	}
 	dst = (char **)malloc((count + 2) * sizeof(char *));
@@ -85,7 +100,7 @@ int main()
 	char	**str;
 
 	//str = st_split("echo hola \"|\" | hola | ls -la$\"|\"", '|');
-	str = st_split("uno \"|\"  | dos -\"|\"| tres\"|\"", '|');
+	str = st_split("uno \"|\"  | dos -\'| simple\'| tres\"|\"", '|');
 	i = -1;
 	while (str[++i] != NULL)
 		printf("%s\n", str[i]);
