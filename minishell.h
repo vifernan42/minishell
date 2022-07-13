@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/12 19:32:34 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/13 20:08:58 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,12 @@ typedef struct s_data {
 	char	**spt_pipes;
 }		t_data;
 
-int		echos(char **argv, int fd);
+int		pipe_parse(t_data *data);
+int		even_quotes(char *s, int count, char x);
+//int		echos(char **argv, int fd);
 //char|\\\*pwdcurrent();
+char	*get_promt(char *user, t_data *data);
+int		syntax_char(char *ch, int fd);
 
 #endif
 

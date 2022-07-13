@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:01:20 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/12 18:23:04 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:28:16 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,12 @@ char	**ft_cacho(char **dst, char const *init, char c)
 			j = i;
 		i = aux_split(init, i, c);
 		if (init[i] == c || i == (int)ft_strlen(init))
-			dst[z++] = ft_substr(init, j, i - j);
+		{
+			if ((i - j) == 0)
+				dst[z++] = ft_strdup("\0");
+			else
+				dst[z++] = ft_substr(init, j, i - j);
+		}
 		if ((init[i] != '\'' && init[i] != '\"') \
 				&& i != (int)ft_strlen(init))
 			i++;
