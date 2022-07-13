@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/13 20:09:23 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/13 20:56:30 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,64 +39,7 @@ char	*get_promt(char *user, t_data *data)
 		data->env_user = strdup("ghost");
 	return (ft_strjoin(data->env_user, "@minishell: $ "));
 }
-/*
-int	pipe_parse(t_data *data)
-{
-	char	**aux;
-	int		j;
-	int		i;
-	int		count;
 
-	j = -1;
-	while (data->spt_pipes[++j] != NULL)
-	{
-		aux = st_split(data->spt_pipes[j], ' ');
-		i = -1;
-		count = 0;
-		while (aux[++i] != NULL)
-		{
-			if (aux[i][0] == '\0')
-				count++;
-		}
-		if (i == count)
-		{
-			syntax_char(ft_charjoin('|'), STDERR_FILENO);
-			free(aux);
-			return (1);
-		}
-		free(aux);
-	}
-	return (0);
-}
-
-int	even_quotes(char *s, int count, char x)
-{
-	int		i;
-
-	i = -1;
-	while (s[++i] != '\0')
-	{
-		if (s[i] == '\"' || s[i] == '\'')
-		{
-			count++;
-			if (s[i] == '\'')
-				x = '\'';
-			else
-				x = '\"';
-			i++;
-			while (s[i] != x && s[i] != '\0')
-				i++;
-			if (s[i] == x)
-				count++;
-		}
-		if (count % 2 != 0)
-			return (syntax_char(ft_charjoin(x), STDERR_FILENO));
-	}
-	if (--i && s[i] == '|')
-		return (syntax_char(ft_charjoin('|'), STDERR_FILENO));
-	return (0);
-}
-*/
 int	main(void) /* get_env */
 {
 	t_data	data;
