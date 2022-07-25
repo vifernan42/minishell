@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/21 19:01:29 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/25 19:53:02 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,43 +40,61 @@ char	*get_promt(char *user, t_data *data)
 	return (ft_strjoin(data->env_user, "@minishell: $ "));
 }
 
-void	fill_list(char **aux_cmd)
-{
-	int i;
-
-	i = -1;
-	while (aux_cmd[++i] != NULL)
-		printf("%s$\n", aux_cmd[i]);
-}
-
-void	cmd_arg_quottes(t_data *data, int i)
+char	**cmd_arg_quottes(char	*pipe)
 {
 	char	**aux_cmd;
 	char	*aux;
 	int		x;
 
+	aux_cmd = spqu_split(skip_spaces(pipe), ' ');
+	x = -1;
+	while (aux_cmd[++x] != NULL)
+	{
+		if (aux_cmd[x][0] != '$')
+			aux = skip_quotes(skip_spaces(aux_cmd[x]));
+		else
+			aux = skip_spaces(aux_cmd[x]);
+		free(aux_cmd[x]);
+		aux_cmd[x] = ft_strdup(aux);
+		free(aux);
+	}
+	return (aux_cmd);
+}
+
+void	tokenizator(t_data *data, int i)
+{
+	char	**cmd_sp;
+	int		x;
+
 	while (data->spt_pipes[++i] != NULL)
 	{
-		aux_cmd = spqu_split(skip_spaces(data->spt_pipes[i]), ' ');
+		cmd_sp = cmd_arg_quottes(data->spt_pipes[i]);
 		x = -1;
-		while (aux_cmd[++x] != NULL)
+		while (cmd_sp[++x] != NULL)
 		{
-			if (aux_cmd[x][0] != '$')
-				aux = skip_quotes(skip_spaces(aux_cmd[x]));
-			else
-				aux = skip_spaces(aux_cmd[x]);
-			free(aux_cmd[x]);
-			aux_cmd[x] = ft_strdup(aux);
-			free(aux);
+			printf("%s\n", cmd_sp[x]);
+			free(cmd_sp[x]);
 		}
-		fill_list(aux_cmd);
-		free(aux_cmd);
+		/*if (i == 0)
+		{
+			to_free = orders;
+			ret = create_node(cmd_sp, env);
+			new = ret;
+		}
+		else
+		{
+			new->next = create_node(cmd_sp, env);
+			new = new->next;
+		}*/
+		free(cmd_sp);
+		printf("---------------------\n");
 	}
 }
 
 int	main(void) /* get_env */
 {
 	t_data	data;
+	//t_pipe	pipe;
 	char	*cmd_line;
 
 	//atexit(leaks);
@@ -88,7 +106,7 @@ int	main(void) /* get_env */
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
 			if (pipe_parse(&data) == 0)
-				cmd_arg_quottes(&data, -1);
+				tokenizator(&data, -1);
 		}
 		free (cmd_line);
 	}

@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/13 20:08:58 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/25 19:53:05 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ typedef struct s_pipe
 	char			**argv; //ls -la lewn lwleel
 	int				in_fd; //fd entrada
 	int				out_fd; //fd de salidaa
-	char			**out_name; //fichero de salida?
-	char			**in_name; //fichero de entrada?
+	char			*out_name; //fichero de salida?
+	char			*in_name; //fichero de entrada?
+	char			*err;
 	struct s_pipe	*next;
 }				t_pipe;
 
