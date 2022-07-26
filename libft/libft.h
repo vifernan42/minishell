@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 18:06:56 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/21 16:50:28 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/26 19:51:39 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+void	free_matrix(char **matrix);
+char	**copy_matrix(char **matrix);
 
 typedef struct s_list
 {

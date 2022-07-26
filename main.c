@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/25 19:53:02 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/26 20:35:06 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,40 +61,126 @@ char	**cmd_arg_quottes(char	*pipe)
 	return (aux_cmd);
 }
 
-void	tokenizator(t_data *data, int i)
+/* --tokenizator START-- */
+
+int	find_heredoc(char **cmd_sp, int i)
+{
+	while (cmd_sp[++i] != NULL)
+	{
+		if (ft_strnstr(cmd_sp[i], "<<<", 3))
+			printf("Error");
+		if (ft_strnstr(cmd_sp[i], "<<", 2))
+			break ;
+	}
+	if (cmd_sp[i] == NULL)
+		return (-1);
+	return (i);
+}
+
+char	**delete_used_cmd(char **cmd_sp, int join, int i)
+{
+	char	**aux;
+	int		x;
+	int		j;
+
+	if (i == -1)
+		return (NULL);
+	x = -1;
+	while (cmd_sp[++x] != NULL);
+	if (join > 0)
+		aux = malloc(sizeof(char **) * x +1);
+	else
+		aux = malloc(sizeof(char**) * x);
+	x = -1;
+	j = 0;
+	while (cmd_sp[++x] != NULL)
+	{
+		if ((join == 0 && x != i && x - 1 != i) || (join == 1 && x != i))
+			aux[j++] = ft_strdup(cmd_sp[x]);
+	}
+	aux[j] = NULL;
+	return (aux);
+}
+
+int	take_heredoc(char **cmd_sp, int i)
+{
+	char	*key;
+	int		join;
+	int		fd;
+	char	**aux;
+
+	join = 0;
+	fd = 0;
+	i = find_heredoc(cmd_sp, -1);
+	aux = NULL;
+	if ((int)ft_strlen(cmd_sp[i]) > 2)
+	{
+		key = ft_substr(cmd_sp[i], 2, (int)ft_strlen(cmd_sp[i]) - 2);
+		join++;
+	}
+	else
+		key = ft_strdup(cmd_sp[i + 1]);
+	if (i != -1)
+	{
+		aux = delete_used_cmd(cmd_sp, join, i);
+		system("leaks -q minishell");
+		//free_matrix(cmd_sp);
+		cmd_sp = copy_matrix(aux);
+		free_matrix(aux);
+	}
+	//fd = do_heredoc(key);
+	/*if (find_heredoc(cmd_sp, -1) == -1)
+		return (fd);
+	return (take_heredoc(cmd_sp, -1));*/
+	return (0);
+}
+
+t_pipe	*create_node(char **cmd_sp)
+{
+	t_pipe	*ret;
+
+	if (!cmd_sp)
+		return (NULL);
+	ret = malloc(sizeof(t_pipe));
+	ft_bzero(ret, sizeof(t_pipe));
+	ret->in_fd = take_heredoc(cmd_sp, -1);
+	//take_redirections(ret, cmd_sp);
+	//take_args_path(ret_cmd_sp);
+	return (ret);
+}
+
+t_pipe	*tokenizator(t_data *data, int i)
 {
 	char	**cmd_sp;
-	int		x;
+	t_pipe	*ret;
+	t_pipe	*new;
 
+	if (!data->spt_pipes)
+		return (NULL);
 	while (data->spt_pipes[++i] != NULL)
 	{
 		cmd_sp = cmd_arg_quottes(data->spt_pipes[i]);
-		x = -1;
-		while (cmd_sp[++x] != NULL)
+		if (i == 0)
 		{
-			printf("%s\n", cmd_sp[x]);
-			free(cmd_sp[x]);
-		}
-		/*if (i == 0)
-		{
-			to_free = orders;
-			ret = create_node(cmd_sp, env);
+			ret = create_node(cmd_sp);
 			new = ret;
 		}
 		else
 		{
-			new->next = create_node(cmd_sp, env);
+			new->next = create_node(cmd_sp);
 			new = new->next;
-		}*/
+		}
 		free(cmd_sp);
-		printf("---------------------\n");
 	}
+	return (ret);
 }
+
+/* --tokenizator END-- */
 
 int	main(void) /* get_env */
 {
 	t_data	data;
-	//t_pipe	pipe;
+	t_pipe	*pipe;
 	char	*cmd_line;
 
 	//atexit(leaks);
@@ -106,7 +192,7 @@ int	main(void) /* get_env */
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
 			if (pipe_parse(&data) == 0)
-				tokenizator(&data, -1);
+				pipe = tokenizator(&data, -1);
 		}
 		free (cmd_line);
 	}
