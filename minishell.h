@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/27 19:50:24 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/27 21:03:01 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,17 @@ int		even_quotes(char *s, int count, char x);
 //int		echos(char **argv, int fd);
 //char|\\\*pwdcurrent();
 char	*get_promt(char *user);
+
+/* errors */
 int		syntax_char(char *ch, int fd);
+
+char	**cmd_arg_quottes(char	*pipe);
+
+/* tokenizator */
+int	find_heredoc(char **cmd_sp, int i);
+int	take_heredoc(char *cmd_stg, int i);
+t_pipe	*create_node(char *cmd_stg);
+t_pipe	*tokenizator(t_data *data, int i);
 
 #endif
 

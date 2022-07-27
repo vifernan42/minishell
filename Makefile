@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/07/13 20:23:28 by vifernan         ###   ########.fr        #
+#    Updated: 2022/07/27 21:08:22 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,10 @@ NAME = minishell
 
 SRCS = main.c \
 	   ./parse/parse.c \
+	   ./tokenizator/tokenizator.c \
+	   ./tokenizator/heredoc.c \
+	   ./tokenizator/rm_arg_quotes.c \
+	   ./errors/syntax_err.c \
 
 #	echo.c \
 		#pwd.c \
