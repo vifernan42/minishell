@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/27 17:22:43 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/27 19:53:08 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,15 @@ int	syntax_char(char *ch, int fd)
 		write(fd, ch, ft_strlen(ch));
 	write(fd, "\'\n", 2);
 	free(s);
+	free(ch);
 	return (1);
 }
 
-char	*get_promt(char *user, t_data *data)
+char	*get_promt(char *user)
 {
-	if (user != NULL)
-		data->env_user = strdup(user);
-	else
-		data->env_user = strdup("ghost");
-	return (ft_strjoin(data->env_user, "@minishell: $ "));
+	if (!user)
+		return (ft_strjoin("ghost", "@minishell: $ "));
+	return (ft_strjoin(user, "@minishell: $ "));
 }
 
 char	**cmd_arg_quottes(char	*pipe)
@@ -52,12 +51,15 @@ char	**cmd_arg_quottes(char	*pipe)
 	while (aux_cmd[++x] != NULL)
 	{
 		if (aux_cmd[x][0] != '$')
+		{
 			aux = skip_quotes(skip_spaces(aux_cmd[x]));
+			
+		}
 		else
 			aux = skip_spaces(aux_cmd[x]);
 		free(aux_cmd[x]);
 		aux_cmd[x] = ft_strdup(aux);
-		free(aux);
+		//free(aux);
 	}
 	return (aux_cmd);
 }
@@ -188,14 +190,15 @@ int	main(void) /* get_env */
 	//atexit(leaks);
 	while (1)
 	{
-		data.promt = get_promt(getenv("USER"), &data);
+		data.promt = get_promt(getenv("USER"));
 		cmd_line = readline (data.promt);
 		if (even_quotes(cmd_line, 0, 0) == 0)
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
-
 			if (pipe_parse(&data) == 0)
+			{
 				pipe = tokenizator(&data, -1);
+			}
 		}
 		free(cmd_line);
 		free(data.promt);

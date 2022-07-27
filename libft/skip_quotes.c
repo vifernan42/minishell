@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:25:06 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/21 19:01:32 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/27 19:07:39 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*skip_result(char *str, char c, int count)
 			s[j++] = str[i];
 	}
 	s[j] = '\0';
+	free(str);
 	return (skip_quotes(s));
 }
 
@@ -69,6 +70,7 @@ char	*skip_quotes(char *str)
 	i = -1;
 	count = 0;
 	c = 0;
+	aux = NULL;
 	while (str[++i] != '\0')
 	{
 		
@@ -91,6 +93,8 @@ char	*skip_quotes(char *str)
 		str = skip_quotes2(aux);
 		free(aux);
 	}
+	else
+		free(aux);
 	return (str);
 }
 /*
