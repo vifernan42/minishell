@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/26 20:35:06 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:22:43 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	syntax_char(char *ch, int fd)
 	if (ch != NULL)
 		write(fd, ch, ft_strlen(ch));
 	write(fd, "\'\n", 2);
+	free(s);
 	return (1);
 }
 
@@ -77,6 +78,7 @@ int	find_heredoc(char **cmd_sp, int i)
 	return (i);
 }
 
+/*
 char	**delete_used_cmd(char **cmd_sp, int join, int i)
 {
 	char	**aux;
@@ -101,18 +103,24 @@ char	**delete_used_cmd(char **cmd_sp, int join, int i)
 	aux[j] = NULL;
 	return (aux);
 }
+*/
 
-int	take_heredoc(char **cmd_sp, int i)
+int	take_heredoc(char *cmd_stg, int i)
 {
 	char	*key;
 	int		join;
 	int		fd;
-	char	**aux;
+	char	**cmd_sp;
 
 	join = 0;
 	fd = 0;
+	cmd_sp = cmd_arg_quottes(cmd_stg);
 	i = find_heredoc(cmd_sp, -1);
-	aux = NULL;
+	if (i == -1)
+	{
+		free_matrix(cmd_sp);
+		return (0);
+	}
 	if ((int)ft_strlen(cmd_sp[i]) > 2)
 	{
 		key = ft_substr(cmd_sp[i], 2, (int)ft_strlen(cmd_sp[i]) - 2);
@@ -120,30 +128,25 @@ int	take_heredoc(char **cmd_sp, int i)
 	}
 	else
 		key = ft_strdup(cmd_sp[i + 1]);
-	if (i != -1)
-	{
-		aux = delete_used_cmd(cmd_sp, join, i);
-		system("leaks -q minishell");
-		//free_matrix(cmd_sp);
-		cmd_sp = copy_matrix(aux);
-		free_matrix(aux);
-	}
+	printf("key->%s\n", key);
 	//fd = do_heredoc(key);
 	/*if (find_heredoc(cmd_sp, -1) == -1)
 		return (fd);
 	return (take_heredoc(cmd_sp, -1));*/
+	free(key);
+	free_matrix(cmd_sp);
 	return (0);
 }
 
-t_pipe	*create_node(char **cmd_sp)
+t_pipe	*create_node(char *cmd_stg)
 {
 	t_pipe	*ret;
 
-	if (!cmd_sp)
+	if (!cmd_stg)
 		return (NULL);
 	ret = malloc(sizeof(t_pipe));
 	ft_bzero(ret, sizeof(t_pipe));
-	ret->in_fd = take_heredoc(cmd_sp, -1);
+	ret->in_fd = take_heredoc(cmd_stg, -1);
 	//take_redirections(ret, cmd_sp);
 	//take_args_path(ret_cmd_sp);
 	return (ret);
@@ -151,7 +154,6 @@ t_pipe	*create_node(char **cmd_sp)
 
 t_pipe	*tokenizator(t_data *data, int i)
 {
-	char	**cmd_sp;
 	t_pipe	*ret;
 	t_pipe	*new;
 
@@ -159,19 +161,19 @@ t_pipe	*tokenizator(t_data *data, int i)
 		return (NULL);
 	while (data->spt_pipes[++i] != NULL)
 	{
-		cmd_sp = cmd_arg_quottes(data->spt_pipes[i]);
 		if (i == 0)
 		{
-			ret = create_node(cmd_sp);
+			ret = create_node(data->spt_pipes[i]);
 			new = ret;
 		}
 		else
 		{
-			new->next = create_node(cmd_sp);
+			new->next = create_node(data->spt_pipes[i]);
 			new = new->next;
 		}
-		free(cmd_sp);
+		free(data->spt_pipes[i]);
 	}
+	free(data->spt_pipes);
 	return (ret);
 }
 
@@ -191,9 +193,12 @@ int	main(void) /* get_env */
 		if (even_quotes(cmd_line, 0, 0) == 0)
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
+
 			if (pipe_parse(&data) == 0)
 				pipe = tokenizator(&data, -1);
 		}
-		free (cmd_line);
+		free(cmd_line);
+		free(data.promt);
+		leaks();
 	}
 }

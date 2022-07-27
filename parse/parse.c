@@ -6,7 +6,7 @@
 /*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/13 20:07:16 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:22:45 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	pipe_parse(t_data *data)
 		if (i == count)
 		{
 			syntax_char(ft_charjoin('|'), STDERR_FILENO);
-			free(aux);
+			free_matrix(aux);
 			return (1);
 		}
-		free(aux);
+		free_matrix(aux);
 	}
 	return (0);
 }
