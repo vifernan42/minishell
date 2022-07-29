@@ -6,7 +6,7 @@
 /*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:34:06 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/21 16:05:12 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/29 17:42:57 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static	int skip_quo(char const *s, int i, char c)
 	while (s[i] != c && s[i] != '\'' \
 		&& s[i] != '\"'  && s[i] != '\0')
 		i++;
+
 	return (i);
 }
 
@@ -70,6 +71,7 @@ char	**ft_inend(char **dst, char const *init, char c)
 		if ((init[i] != '\'' && init[i] != '\"') \
 				&& i != (int)ft_strlen(init))
 			i++;
+		printf("------%p\n", (void *)init);
 	}
 	dst[z] = NULL;
 	return (dst);
@@ -95,7 +97,11 @@ char	**spqu_split(char const *s, char c)
 	}
 	dst = (char **)malloc((count + 2) * sizeof(char *));
 	if (!dst)
+	{
+		free(dst);
+		free((void *)s);
 		return (NULL);
+	}
 	return (ft_inend(dst, s, c));
 }
 /*

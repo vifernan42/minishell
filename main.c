@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/27 21:10:55 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/29 17:06:19 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(void) /* get_env */
 		}
 		free(cmd_line);
 		free(data.promt);
+		//free_matrix(data.spt_pipes);
 		leaks();
 	}
 }

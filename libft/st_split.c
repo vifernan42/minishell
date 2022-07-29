@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:01:20 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/13 18:28:16 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/29 17:38:48 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ char	**st_split(char const *s, char c)
 	}
 	dst = (char **)malloc((count + 2) * sizeof(char *));
 	if (!dst)
+	{
+		free(dst);
 		return (NULL);
+	}
 	return (ft_cacho(dst, s, c));
 }
 /*
