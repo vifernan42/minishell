@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/01 17:26:57 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/01 17:51:05 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	ft_lstdelete(t_data *data, char(*del)(void *))
 	data = NULL;
 }*/
 
-/* En el main damos tamaño en el st split*/
+/* En el main damos tamaño en el st split y en tokenizator*/
 int	main(void) /* get_env */
 {
 	t_data	data;
