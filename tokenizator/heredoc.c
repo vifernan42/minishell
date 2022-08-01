@@ -6,7 +6,7 @@
 /*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/01 17:39:24 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/01 19:33:56 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,12 @@ int	take_heredoc(char **cmd_stg, int i, char **cmd_sp, char *aux)
 	if (find_heredoc(cmd_arg_quottes(*cmd_stg), -1) == -1)
 	{
 		free_matrix(cmd_sp); /*necesario*/
+		//leaks();
 		write(1, "EXIT\n", 5);
 		return (fd);
 	}
 	free_matrix(cmd_sp);   /*necesario*/
+	//leaks();
 	return (take_heredoc(cmd_stg, -1, cmd_arg_quottes(*cmd_stg), NULL));
 	/*free_matrix(cmd_sp);*/
 	//return (0);

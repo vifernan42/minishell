@@ -6,7 +6,7 @@
 /*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/01 17:39:25 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/01 19:33:54 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,21 @@
 t_pipe	*create_node(char **cmd_stg)
 {
 	t_pipe	*ret;
-	//char	cmd2;
+	char	*aux;
 
 	if (!cmd_stg)
 		return (NULL);
+	aux = ft_strdup(*cmd_stg);
 	ret = malloc(sizeof(t_pipe));
 	ft_bzero(ret, sizeof(t_pipe));
-	ret->in_fd = take_heredoc(cmd_stg, -1, cmd_arg_quottes(*cmd_stg), NULL);
+	ret->in_fd = take_heredoc(&aux, -1, cmd_arg_quottes(aux), NULL);
 	write(STDERR_FILENO, "AFTER: ", 7);
-	write(STDERR_FILENO, *cmd_stg, ft_strlen(*cmd_stg));
+	write(STDERR_FILENO, aux, ft_strlen(aux));
 	write(STDERR_FILENO, "\n", 1);
 	//take_redirections(ret, cmd_sp);
 	//take_args_path(ret_cmd_sp);
+	free(aux);
+	//leaks();
 	return (ret);
 }
 
@@ -54,5 +57,6 @@ t_pipe	*tokenizator(t_data *data, int i)
 		free(data->spt_pipes[i]);
 	}
 	free(data->spt_pipes);
+//	leaks();
 	return (ret);
 }
