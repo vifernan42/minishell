@@ -6,7 +6,7 @@
 /*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:34:06 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/29 17:42:57 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/07/31 19:59:22 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**ft_inend(char **dst, char const *init, char c)
 		if ((init[i] != '\'' && init[i] != '\"') \
 				&& i != (int)ft_strlen(init))
 			i++;
-		printf("------%p\n", (void *)init);
+		//printf("------%p\n", (void *)init);
 	}
 	dst[z] = NULL;
 	return (dst);

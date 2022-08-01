@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:05:32 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/29 17:12:09 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:06:01 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*sk_front(char *str)
 	int		j;
 	char	*aux;
 
+	aux = NULL; /*no necesario*/
 	i = 0;
 	j = ft_strlen(str) - 1;
 	while (str[j] == ' ' && j >= 0)
@@ -44,14 +45,15 @@ char	*skip_spaces(char *str)
 	int		i;
 	char	*aux;
 
+	aux = NULL; /*no es necesario*/
 	if (!str)
 		return (NULL);
 	i = 0;
 	while (str[i] == ' ')
 		i++;
 	aux = ft_strdup(str);
-	free(str);
-	str = ft_substr(aux, i, ft_strlen(aux) - i);
+//	free(str);				/*este no nos gusta hay que quitarlo*/
+	str = ft_substr(str, i, ft_strlen(aux) - i);
 	free(aux);
 	return (sk_front(str));
 }

@@ -6,7 +6,7 @@
 /*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/29 17:10:11 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/01 17:39:24 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	find_heredoc(char **cmd_sp, int i)
 char	*ft_strjoin_swap(char	*str, char	*str2)
 {
 	char	*aux;
-	
+
 	aux = ft_strdup(str);
 	free(str);
 	str = ft_strjoin(aux, str2);
@@ -59,6 +59,7 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 			ret = ft_strjoin_swap(ret, " ");
 		}
 	}
+	//free_matrix(cmd_sp); /*no hay que liberar aqui en principio*/
 	return (ret);
 }
 
@@ -114,23 +115,21 @@ int	take_heredoc(char **cmd_stg, int i, char **cmd_sp, char *aux)
 		else
 			key = ft_strdup(cmd_sp[i + 1]);
 		aux = rm_heredoc(cmd_sp, i, join);
-		free(*cmd_stg);
+		//free(*cmd_stg);                     /*lo quite porque al parecer hace double free*/
 		//printf("***%s\n", *cmd_stg);
 		//printf("%s | %p\n", *cmd_stg);
 		*cmd_stg = aux;
-		//if (aux)
-		//free (aux);
 		fd = do_heredoc(key);
 		write(STDERR_FILENO, "EH\n", 3);
 		free(key);
 	}
 	if (find_heredoc(cmd_arg_quottes(*cmd_stg), -1) == -1)
 	{
-		free_matrix(cmd_sp);
+		free_matrix(cmd_sp); /*necesario*/
 		write(1, "EXIT\n", 5);
 		return (fd);
 	}
-	free_matrix(cmd_sp);
+	free_matrix(cmd_sp);   /*necesario*/
 	return (take_heredoc(cmd_stg, -1, cmd_arg_quottes(*cmd_stg), NULL));
 	/*free_matrix(cmd_sp);*/
 	//return (0);

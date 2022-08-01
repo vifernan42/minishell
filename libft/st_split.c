@@ -6,7 +6,7 @@
 /*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:01:20 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/29 17:38:48 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/01 17:39:22 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,9 @@ char	**ft_cacho(char **dst, char const *init, char c)
 	int			i;
 	int			j;
 	int			z;
-	char		x;
 
 	i = 0;
 	z = 0;
-	x = 0;
 	while (i < (int)ft_strlen(init))
 	{
 		if (i == 0 || init[i - 1] == c)
@@ -95,10 +93,7 @@ char	**st_split(char const *s, char c)
 	}
 	dst = (char **)malloc((count + 2) * sizeof(char *));
 	if (!dst)
-	{
-		free(dst);
 		return (NULL);
-	}
 	return (ft_cacho(dst, s, c));
 }
 /*

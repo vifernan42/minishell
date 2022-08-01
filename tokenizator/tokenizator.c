@@ -6,7 +6,7 @@
 /*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/29 17:37:00 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/01 17:39:25 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_pipe	*tokenizator(t_data *data, int i)
 		}
 		write(STDERR_FILENO, "TOK: ", 5);
 		write(STDERR_FILENO, "lola\n", 5);
-		//free(data->spt_pipes[i]);
+		free(data->spt_pipes[i]);
 	}
 	free(data->spt_pipes);
 	return (ret);

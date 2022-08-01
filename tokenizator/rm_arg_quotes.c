@@ -6,7 +6,7 @@
 /*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:37 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/29 18:27:47 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:59:24 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ char	**cmd_arg_quottes(char	*pipe)
 			aux = skip_quotes(skip_spaces(aux_cmd[x]));
 		else
 			aux = skip_spaces(aux_cmd[x]);
-		free(aux_cmd[x]);
+		free(aux_cmd[x]);   /*ya se libera en skip_spaces asi que no hay que liberarlo ya que hace double free*/
 		aux_cmd[x] = ft_strdup(aux);
-		//free(aux);
+		free(aux);  /*yes*/
 	}
 	return (aux_cmd);
 }
