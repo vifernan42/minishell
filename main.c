@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/01 19:33:52 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/02 15:23:30 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ static void	ft_lstdelete(t_data *data, char(*del)(void *))
 	data = NULL;
 }*/
 
-/* En el main damos tamaño en el st split y en tokenizator*/
+/* En el main damos tamaño a PIPE con tokenizator,
+ * tambien a cmd_line le damos tamañ con el readline
+ * aunque lo liberamos al final del main*/
+
 int	main(void) /* get_env */
 {
 	t_data	data;
