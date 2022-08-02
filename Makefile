@@ -6,7 +6,7 @@
 #    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/08/02 16:02:02 by ialvarez         ###   ########.fr        #
+#    Updated: 2022/08/02 16:30:54 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ PRINTF_NAME = $(PRINTF_NAME)libftprintf.a
 INCLUDES = -I. -I$(LIBFT_DIR) -I$(PRINTF_DIR)
 FSANITIZE = -g3 -fsanitize=address
 READLINE = -L ~/.brew/opt/readline/lib -lreadline
-CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include -g3 $(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include $(INCLUDES)
 
 all: $(NAME)
 
@@ -46,7 +46,8 @@ $(NAME): $(OBJECTS)
 	@echo "$(BCyan)[COMPILED]$(NO_COLOR)"
 	@make -s -C $(LIBFT_DIR) 
 	@make -s -C $(PRINTF_DIR)
-	@$(CC) $(READLINE) $(CFLAGS) $(OBJECTS) ./printf/libftprintf.a  ./libft/libft.a -o $(NAME)
+	@$(CC) $(READLINE) $(CFLAGS) $(OBJECTS) ./printf/libftprintf.a \
+											./libft/libft.a -o $(NAME)
 
 debug: $(OBJECTS)
 	@make -s -C $(LIBFT_DIR)

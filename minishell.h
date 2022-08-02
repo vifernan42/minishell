@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/02 16:02:41 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:30:52 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include	<readline/readline.h>
 # include	<readline/history.h>
 # include	"libft/libft.h"
+# include	"printf/ft_printf.h"
 
 # define RD_END	0
 # define WR_END	1

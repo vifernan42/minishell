@@ -6,7 +6,7 @@
 #    By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 18:00:35 by ialvarez          #+#    #+#              #
-#    Updated: 2021/09/13 17:32:21 by ialvarez         ###   ########.fr        #
+#    Updated: 2022/08/02 16:30:50 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,16 +33,16 @@ OBJSBN	= ${SRCSBN:.c=.o}
 OBJS	= ${SRCS:.c=.o}
 
 ${NAME}:	${SRCS}
-			${GCC} -c ${CFLAGS} ${SRCS}
-			ar -rcs ${NAME} ${OBJS}
+			@${GCC} -c ${CFLAGS} ${SRCS}
+			@ar -rcs ${NAME} ${OBJS}
 
 all:		${NAME}
 
 clean:
-			${RM} ${OBJS} ${OBJSBN}
+			@${RM} ${OBJS} ${OBJSBN}
 
 fclean:		clean
-			${RM} ${NAME}
+			@${RM} ${NAME}
 
 re:			fclean ${NAME}
 

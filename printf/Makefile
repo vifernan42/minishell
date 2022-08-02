@@ -6,7 +6,7 @@
 #    By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 18:00:35 by ialvarez          #+#    #+#              #
-#    Updated: 2022/08/02 16:03:14 by ialvarez         ###   ########.fr        #
+#    Updated: 2022/08/02 16:29:41 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,17 +27,17 @@ all: 		$(NAME)
 
 
 $(NAME):	$(OBJS)
-					$(MAKE) all -C $(LIBFT_DIR)
-					cp libft/libft.a $(NAME)
-					ar -rcs $(NAME) $(OBJS)
+					@$(MAKE) all -C $(LIBFT_DIR)
+					@cp libft/libft.a $(NAME)
+					@ar -rcs $(NAME) $(OBJS)
 
 clean:
-			$(MAKE) -C $(LIBFT_DIR) clean
-			$(RM) $(OBJS)
+			@$(MAKE) -C $(LIBFT_DIR) clean
+			@$(RM) $(OBJS)
 
 fclean:		clean
-			$(MAKE) -C $(LIBFT_DIR) fclean
-			$(RM) $(NAME)
+			@$(MAKE) -C $(LIBFT_DIR) fclean
+			@$(RM) $(NAME)
 
 re:			fclean all
 
