@@ -6,7 +6,7 @@
 #    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/08/02 16:30:54 by ialvarez         ###   ########.fr        #
+#    Updated: 2022/08/03 16:33:46 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS = main.c \
 	   ./tokenizator/heredoc.c \
 	   ./tokenizator/rm_arg_quotes.c \
 	   ./errors/syntax_err.c \
+	   ./tokenizator/redirec.c \
 
 OBJECTS = $(SRCS:.c=.o)
 LIBFT_DIR = libft/

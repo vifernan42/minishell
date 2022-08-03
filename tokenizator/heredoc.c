@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/03 13:46:29 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/03 17:09:01 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,11 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 		fd = do_heredoc(key);
 		free(key);
 	}
+	else
+		return (0);
 	if (find_heredoc(cmd_arg_quottes(*aux_cmd), 0) == -1)
 	{
+		write(1, "\n", 1);
 		free_matrix(cmd_sp);
 		return (fd);
 	}
