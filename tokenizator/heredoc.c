@@ -129,8 +129,6 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 		fd = do_heredoc(key);
 		free(key);
 	}
-	else
-		return (0);
 	if (find_heredoc(cmd_arg_quottes(*aux_cmd), 0) == -1)
 	{
 		free_matrix(cmd_sp);
