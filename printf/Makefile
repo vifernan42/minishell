@@ -12,8 +12,6 @@
 
 NAME = libftprintf.a
 
-LIBFT_DIR = libft
-
 GCC = gcc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
@@ -27,16 +25,12 @@ all: 		$(NAME)
 
 
 $(NAME):	$(OBJS)
-					@$(MAKE) all -C $(LIBFT_DIR)
-					@cp libft/libft.a $(NAME)
 					@ar -rcs $(NAME) $(OBJS)
 
 clean:
-			@$(MAKE) -C $(LIBFT_DIR) clean
 			@$(RM) $(OBJS)
 
 fclean:		clean
-			@$(MAKE) -C $(LIBFT_DIR) fclean
 			@$(RM) $(NAME)
 
 re:			fclean all
