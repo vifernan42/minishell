@@ -3,16 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 18:00:35 by ialvarez          #+#    #+#              #
-#    Updated: 2022/08/02 16:29:41 by ialvarez         ###   ########.fr        #
+#    Updated: 2022/08/03 16:12:47 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-
-LIBFT_DIR = libft
 
 GCC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -27,16 +25,12 @@ all: 		$(NAME)
 
 
 $(NAME):	$(OBJS)
-					@$(MAKE) all -C $(LIBFT_DIR)
-					@cp libft/libft.a $(NAME)
 					@ar -rcs $(NAME) $(OBJS)
 
 clean:
-			@$(MAKE) -C $(LIBFT_DIR) clean
 			@$(RM) $(OBJS)
 
 fclean:		clean
-			@$(MAKE) -C $(LIBFT_DIR) fclean
 			@$(RM) $(NAME)
 
 re:			fclean all
