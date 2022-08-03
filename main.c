@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/02 16:26:42 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:54:54 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	main(void) /* get_env */
 	t_pipe	*pipe;
 	char	*cmd_line;
 
-	//atexit(leaks);
 	while (1)
 	{
 		data.promt = get_promt(getenv("USER"));
@@ -54,12 +53,12 @@ int	main(void) /* get_env */
 		if (even_quotes(cmd_line, 0, 0) == 0)
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
-			if (pipe_parse(&data) == 0)
+			if (pipe_parse(&data) == 0) /* revisar <<< o >>> */
 				pipe = tokenizator(&data, -1);
 		}
 		free(cmd_line);
 		free(data.promt);
-	//	free_matrix(data.spt_pipes);
-		leaks();
+		//pipe
+		//system("leaks minishell");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/02 16:30:52 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/02 18:16:54 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**cmd_arg_quottes(char	*pipe);
 
 /* tokenizator */
 int	find_heredoc(char **cmd_sp, int i);
-int	take_heredoc(char **cmd_stg, int i, char **cmd_sp, char *aux);
+int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux);
 t_pipe	*create_node(char *cmd_stg);
 t_pipe	*tokenizator(t_data *data, int i);
 

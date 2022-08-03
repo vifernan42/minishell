@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/02 16:03:08 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/03 13:46:29 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,27 @@
 
 int	find_heredoc(char **cmd_sp, int i)
 {
+	int		flag;
+
 	if (!cmd_sp)
 		return (-1);
-	while (cmd_sp[++i] != NULL)
+	flag = 0;
+	if (i == 0)
 	{
-		if (ft_strnstr(cmd_sp[i], "<<<", 3))
-			printf("Error");
+		i = -1;
+		flag = 1;
+	}
+	while (cmd_sp[++i] != NULL)
 		if (ft_strnstr(cmd_sp[i], "<<", 2))
 			break ;
-	}
 	if (cmd_sp[i] == NULL)
+	{
+		if (flag > 0)
+			free_matrix(cmd_sp);
 		return (-1);
+	}
+	if (flag > 0)
+			free_matrix(cmd_sp);
 	return (i);
 }
 
@@ -59,7 +69,6 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 			ret = ft_strjoin_swap(ret, " ");
 		}
 	}
-	//free_matrix(cmd_sp); /*no hay que liberar aqui en principio*/
 	return (ret);
 }
 
@@ -81,7 +90,6 @@ void	rdline_heredoc(char *key, int fd_w)
 	}
 	if (wr_on)
 		free(wr_on);
-	write(STDERR_FILENO, "AH\n", 3);
 }
 
 static int	do_heredoc(char *key)
@@ -95,7 +103,7 @@ static int	do_heredoc(char *key)
 	return (pip[RD_END]);
 }
 
-int	take_heredoc(char **cmd_stg, int i, char **cmd_sp, char *aux)
+int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 {
 	char	*key;
 	int		fd;
@@ -115,24 +123,17 @@ int	take_heredoc(char **cmd_stg, int i, char **cmd_sp, char *aux)
 		else
 			key = ft_strdup(cmd_sp[i + 1]);
 		aux = rm_heredoc(cmd_sp, i, join);
-		//free(*cmd_stg);                     /*lo quite porque al parecer hace double free*/
-		//printf("***%s\n", *cmd_stg);
-		//printf("%s | %p\n", *cmd_stg);
-		*cmd_stg = aux;
+		free(*aux_cmd);
+		*aux_cmd = ft_strdup(aux);
+		free(aux);
 		fd = do_heredoc(key);
-		write(STDERR_FILENO, "EH\n", 3);
 		free(key);
 	}
-	if (find_heredoc(cmd_arg_quottes(*cmd_stg), -1) == -1)
+	if (find_heredoc(cmd_arg_quottes(*aux_cmd), 0) == -1)
 	{
-		free_matrix(cmd_sp); /*necesario*/
-		//leaks();
-		write(1, "EXIT\n", 5);
+		free_matrix(cmd_sp);
 		return (fd);
 	}
-	free_matrix(cmd_sp);   /*necesario*/
-	//leaks();
-	return (take_heredoc(cmd_stg, -1, cmd_arg_quottes(*cmd_stg), NULL));
-	/*free_matrix(cmd_sp);*/
-	//return (0);
+	free_matrix(cmd_sp);
+	return (take_heredoc(aux_cmd, -1, cmd_arg_quottes(*aux_cmd), NULL));
 }

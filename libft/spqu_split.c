@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spqu_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:34:06 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/31 19:59:22 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/02 20:59:34 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	**ft_inend(char **dst, char const *init, char c)
 		//printf("------%p\n", (void *)init);
 	}
 	dst[z] = NULL;
+	free((void *)init);
 	return (dst);
 }
 
@@ -104,15 +105,3 @@ char	**spqu_split(char const *s, char c)
 	}
 	return (ft_inend(dst, s, c));
 }
-/*
-int main()
-{
-	int		i;
-	char	**str;
-
-	//str = st_split("echo hola \"|\" | hola | ls -la$\"|\"", '|');
-	str = spqu_split("uno    \" hola celkec\"    dos -\'gola    simple\'     tres\"|\"", ' ');
-	i = -1;
-	while (str[++i] != NULL)
-		printf("%s\n", str[i]);
-}*/

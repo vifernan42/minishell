@@ -6,18 +6,12 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:05:32 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/01 15:06:01 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/02 20:46:42 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
-
-/*void	leaks3(void)
-{
-	system("leaks minishell");
-	printf("Entra\n");
-}*/
 
 char	*sk_front(char *str)
 {
@@ -25,7 +19,6 @@ char	*sk_front(char *str)
 	int		j;
 	char	*aux;
 
-	aux = NULL; /*no necesario*/
 	i = 0;
 	j = ft_strlen(str) - 1;
 	while (str[j] == ' ' && j >= 0)
@@ -33,11 +26,9 @@ char	*sk_front(char *str)
 		i++;
 		j--;
 	}
-	aux = ft_strdup(str);
+	aux = ft_substr(str, 0, ft_strlen(str) - i);
 	free(str);
-	str = ft_substr(aux, 0, ft_strlen(aux) - i);
-	free(aux);
-	return (str);
+	return (aux);
 }
 
 char	*skip_spaces(char *str)
@@ -45,20 +36,11 @@ char	*skip_spaces(char *str)
 	int		i;
 	char	*aux;
 
-	aux = NULL; /*no es necesario*/
 	if (!str)
 		return (NULL);
 	i = 0;
 	while (str[i] == ' ')
 		i++;
-	aux = ft_strdup(str);
-//	free(str);				/*este no nos gusta hay que quitarlo*/
-	str = ft_substr(str, i, ft_strlen(aux) - i);
-	free(aux);
-	return (sk_front(str));
+	aux =  ft_substr(str, i, ft_strlen(str) - i);
+	return (sk_front(aux));
 }
-/*
-int main()
-{
-	printf(">%s\n", skip_spaces("        hola como estas            "));
-}*/
