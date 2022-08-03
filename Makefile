@@ -6,7 +6,7 @@
 #    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/07/27 21:08:22 by vifernan         ###   ########.fr        #
+#    Updated: 2022/08/02 16:30:54 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,13 @@ SRCS = main.c \
 
 OBJECTS = $(SRCS:.c=.o)
 LIBFT_DIR = libft/
+PRINTF_DIR = printf/
 LIB_NAME = $(LIBFT_DIR)libft.a
-INCLUDES = -I. -I$(LIBFT_DIR)
+PRINTF_NAME = $(PRINTF_NAME)libftprintf.a
+INCLUDES = -I. -I$(LIBFT_DIR) -I$(PRINTF_DIR)
 FSANITIZE = -g3 -fsanitize=address
 READLINE = -L ~/.brew/opt/readline/lib -lreadline
-CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include -g3 $(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include $(INCLUDES)
 
 all: $(NAME)
 
@@ -42,8 +44,10 @@ NO_COLOR = \033[0m
 
 $(NAME): $(OBJECTS)
 	@echo "$(BCyan)[COMPILED]$(NO_COLOR)"
-	@make -s -C $(LIBFT_DIR)
-	@$(CC) $(READLINE) $(CFLAGS) $(OBJECTS) ./libft/libft.a -o $(NAME)
+	@make -s -C $(LIBFT_DIR) 
+	@make -s -C $(PRINTF_DIR)
+	@$(CC) $(READLINE) $(CFLAGS) $(OBJECTS) ./printf/libftprintf.a \
+											./libft/libft.a -o $(NAME)
 
 debug: $(OBJECTS)
 	@make -s -C $(LIBFT_DIR)
@@ -53,11 +57,13 @@ debug: $(OBJECTS)
 clean:
 	@echo "$(Yellow)[CLEAN]$(NO_COLOR)"
 	@make -C $(LIBFT_DIR) clean
+	@make -C $(PRINTF_DIR) clean
 	@rm -f $(OBJECTS)
 
 fclean: clean
 	@echo "$(Red)[FCLEAN]$(NO_COLOR)"
 	@make -C $(LIBFT_DIR) fclean
+	@make -C$(PRINTF_DIR) fclean
 	@rm -f $(NAME)
 
 test: fclean all

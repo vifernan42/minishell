@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:25:06 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/27 19:07:39 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/02 20:25:22 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,3 @@ char	*skip_quotes(char *str)
 		free(aux);
 	return (str);
 }
-/*
-int main()
-{
-	printf("%s\n", skip_quotes("hola\"com\'o\"\"estas\""));
-}*/

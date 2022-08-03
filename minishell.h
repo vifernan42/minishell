@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/27 21:03:01 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/02 18:16:54 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include	<readline/readline.h>
 # include	<readline/history.h>
 # include	"libft/libft.h"
+# include	"printf/ft_printf.h"
+
+# define RD_END	0
+# define WR_END	1
 
 typedef struct s_pipe
 {
@@ -52,9 +56,11 @@ char	**cmd_arg_quottes(char	*pipe);
 
 /* tokenizator */
 int	find_heredoc(char **cmd_sp, int i);
-int	take_heredoc(char *cmd_stg, int i);
+int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux);
 t_pipe	*create_node(char *cmd_stg);
 t_pipe	*tokenizator(t_data *data, int i);
+
+void	leaks(void);
 
 #endif
 
