@@ -20,10 +20,6 @@ SRCS = main.c \
 	   ./tokenizator/rm_arg_quotes.c \
 	   ./errors/syntax_err.c \
 
-#	echo.c \
-		#pwd.c \
-		main.c \
-
 OBJECTS = $(SRCS:.c=.o)
 LIBFT_DIR = libft/
 PRINTF_DIR = printf/
