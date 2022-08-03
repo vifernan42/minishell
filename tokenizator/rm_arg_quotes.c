@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:37 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/02 20:57:04 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:41:54 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**cmd_arg_quottes(char	*pipe)
 	x = -1;
 	while (aux_cmd[++x] != NULL)
 	{
-		if (aux_cmd[x][0] != '$')
+		if (aux_cmd[x][0] != '$' && aux_cmd[x][0] != '<')
 			aux = skip_quotes(skip_spaces(aux_cmd[x]));
 		else
 			aux = skip_spaces(aux_cmd[x]);

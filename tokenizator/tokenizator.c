@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/03 14:16:52 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/03 17:05:01 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_pipe	*create_node(char *cmd_stg)
 	ft_bzero(ret, sizeof(t_pipe));
 	aux_cmd = ft_strdup(cmd_stg);
 	ret->in_fd = take_heredoc(&aux_cmd, -1, cmd_arg_quottes(cmd_stg), NULL);
-	//take_redirec(&aux_cmd, -1, cmd_arg_quottes(aux_cmd));
-	ft_printf("DES: %p\n", (void *)ret);
+	ft_printf("DES: %d\n", ret->in_fd);
+	take_redirec(&aux_cmd, -1, cmd_arg_quottes(aux_cmd));
 	free(aux_cmd);
 	return (ret);
 }
