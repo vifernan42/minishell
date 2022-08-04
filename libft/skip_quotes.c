@@ -28,7 +28,9 @@ char	*skip_result(char *str, char c, int count)
 			s[j++] = str[i];
 	}
 	s[j] = '\0';
-	free(str);
+	printf("----4---%p\n", str);
+	printf("----4---%s\n", str);
+	//free(str);
 	return (skip_quotes(s));
 }
 
