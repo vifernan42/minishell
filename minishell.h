@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/03 16:32:20 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:53:54 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include	<stdio.h>
 # include	<readline/readline.h>
 # include	<readline/history.h>
+# include	<fcntl.h>
 # include	"libft/libft.h"
 # include	"printf/ft_printf.h"
 
@@ -38,6 +39,7 @@ typedef struct s_pipe
 
 typedef struct s_data {
 	char	**env;
+	char	*all_path;
 	char	*env_user;
 	char	*promt;
 	char	**spt_pipes;
@@ -55,11 +57,14 @@ int		syntax_char(char *ch, int fd);
 char	**cmd_arg_quottes(char	*pipe);
 
 /* tokenizator */
-int	find_heredoc(char **cmd_sp, int i);
 int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux);
-t_pipe	*create_node(char *cmd_stg);
+t_pipe	*create_node(char *cmd_stg, char *all_path);
 t_pipe	*tokenizator(t_data *data, int i);
-void 	take_redirec(char **aux_cmd, int i, char **cmd_sp);
+void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret);
+char	*ft_strjoin_swap(char	*str, char	*str2);
+char	*rm_heredoc(char **cmd_sp, int i, int join);
+int	find_heredoc(char **cmd_sp, int i, int x);
+void	take_args(char **cmd_sp, t_pipe *ret, char *all_path);
 
 void	leaks(void);
 

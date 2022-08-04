@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 18:06:07 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/03 16:10:55 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/03 17:57:57 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include "../libft/libft.h"
+# include "../minishell.h"
 
 # define SPECIFIERS "cspdiuxX%"
 

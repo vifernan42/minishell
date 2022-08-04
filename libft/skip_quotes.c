@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:25:06 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/02 20:25:22 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/03 19:22:43 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*skip_result(char *str, char c, int count)
 	int		j;
 	int		i;
 
+	if (!str)
+		return(NULL);
 	s = malloc(sizeof(char) * ft_strlen(str) - count + 1);
 	i = -1;
 	j = 0;
@@ -28,9 +30,6 @@ char	*skip_result(char *str, char c, int count)
 			s[j++] = str[i];
 	}
 	s[j] = '\0';
-	printf("----4---%p\n", str);
-	printf("----4---%s\n", str);
-	//free(str);
 	return (skip_quotes(s));
 }
 
@@ -90,10 +89,13 @@ char	*skip_quotes(char *str)
 	}
 	if (count % 2 == 0 && count > 0)
 	{
-		aux = strdup(str);
+		aux = str;
 		free(str);
 		str = skip_quotes2(aux);
+<<<<<<< HEAD
 		free(aux);       /*mirar este free*/
+=======
+>>>>>>> vifernan
 	}
 	else
 		free(aux);
