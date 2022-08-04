@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   st_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:01:20 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/01 17:39:22 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/03 19:22:31 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,3 @@ char	**st_split(char const *s, char c)
 		return (NULL);
 	return (ft_cacho(dst, s, c));
 }
-/*
-int main()
-{
-	int		i;
-	char	**str;
-
-	//str = st_split("echo hola \"|\" | hola | ls -la$\"|\"", '|');
-	str = st_split("uno \"|\"  | dos -\'| simple\'| tres\"|\"", '|');
-	i = -1;
-	while (str[++i] != NULL)
-		printf("%s\n", str[i]);
-}*/
