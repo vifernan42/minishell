@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:25:06 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/03 19:22:43 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/04 17:51:42 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,6 @@ char	*skip_quotes(char *str)
 		aux = str;
 		free(str);
 		str = skip_quotes2(aux);
-<<<<<<< HEAD
-		free(aux);       /*mirar este free*/
-=======
->>>>>>> vifernan
 	}
 	else
 		free(aux);
