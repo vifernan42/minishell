@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:04:52 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/04 17:36:59 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/04 17:46:37 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*find_path(char *cmd, char *all_path, int i)
 			if (access(aux_path, F_OK) == 0)
 				break ;
 			free(aux_path);
+			aux_path = NULL;
 		}
 	}
 	free_matrix(path_sp);
