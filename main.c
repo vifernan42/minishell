@@ -79,6 +79,6 @@ int	main(void) /* get_env */
 		free(data.promt);
 		free(data.all_path);
 		//free(pipe);
-		system("leaks minishell");
+	//	system("leaks minishell");
 	}
 }

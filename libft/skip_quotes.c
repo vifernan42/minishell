@@ -92,10 +92,6 @@ char	*skip_quotes(char *str)
 		aux = str;
 		free(str);
 		str = skip_quotes2(aux);
-<<<<<<< HEAD
-		free(aux);       /*mirar este free*/
-=======
->>>>>>> vifernan
 	}
 	else
 		free(aux);
