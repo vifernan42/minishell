@@ -93,7 +93,7 @@ char	*skip_quotes(char *str)
 		aux = strdup(str);
 		free(str);
 		str = skip_quotes2(aux);
-		free(aux);
+		free(aux);       /*mirar este free*/
 	}
 	else
 		free(aux);
