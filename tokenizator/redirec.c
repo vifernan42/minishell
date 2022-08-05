@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/04 15:52:47 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/05 16:20:26 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ char	*take_fname(char **cmd_sp, int i, int x, int *join)
 	flag = -1;
 	if ((int)ft_strlen(cmd_sp[i]) > x)
 	{
-		fname = ft_substr(cmd_sp[i], x, ft_strlen(cmd_sp[i]) - x);
+		if (ft_strnstr(cmd_sp[i], ">>", 2))
+			fname = ft_substr(cmd_sp[i], 2, ft_strlen(cmd_sp[i]) - 2);
+		else
+			fname = ft_substr(cmd_sp[i], 1, ft_strlen(cmd_sp[i]) - 1);
 		*join = 1;
 	}
 	else

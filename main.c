@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/04 17:46:53 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/05 16:52:11 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	print_pipe(t_pipe *pipe)
 		while (pipe->argv[++i] != NULL)
 			printf("args[%d]:%s$\n", i, pipe->argv[i]);
 	}
-	printf("out_fd: %d\n\n", pipe->out_fd);
-	
+	printf("out_fd: %d\n\n", pipe->out_fd);	
 }
 
 int	main(void) /* get_env */
@@ -66,7 +65,7 @@ int	main(void) /* get_env */
 		data.all_path = get_promt(getenv("PATH"));
 		data.promt = get_promt(getenv("USER"));
 		cmd_line = readline (data.promt);
-		if (even_quotes(cmd_line, 0, 0) == 0)
+		if (cmd_line[0] != '\0' && even_quotes(cmd_line, 0, 0) == 0)
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
 			if (pipe_parse(&data) == 0) /* revisar <<< o >>> */
