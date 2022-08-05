@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/05 19:32:02 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/05 19:56:59 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,32 @@ char	*get_promt(char *user)
 	return (ft_strjoin(user, "@minishell: $ "));
 }
 
-static void	ft_lstdelete(t_pipe *pipe, char(*del)(void *))
+static  void	ft_lstdelete(t_pipe *pipe)
 {
+	t_pipe	*aux;
+	
 	if (!pipe)
 		return ;
-	del(pipe->exec_path);
-	del(pipe->argv);
-	del(pipe->in_fd));
-	del(pipe->out_fd);
-	del(pipe->out_name);
-	del(pipe->in_name);
-	del(pipe->err);
-	free(pipe);
-	pipe = NULL;
+	while(pipe)
+	{
+		if (pipe->exec_path)
+			free(pipe->exec_path);
+		if (pipe->argv)
+			free_matrix(pipe->argv);
+		if (pipe->in_fd)
+			close(pipe->in_fd);
+		if (pipe->out_fd)
+			close(pipe->out_fd);
+		if (pipe->out_name)
+			free(pipe->out_name);
+		if (pipe->in_name)
+			free(pipe->in_name);
+		if (pipe->err)
+			free(pipe->err);
+		aux = pipe->next;
+		free(pipe);
+		pipe = aux;
+	}
 }
 
 /* En el main damos tamaño a PIPE con tokenizator,
@@ -55,16 +68,6 @@ void	print_pipe(t_pipe *pipe)
 			printf("args[%d]:%s$\n", i, pipe->argv[i]);
 	}
 	printf("out_fd: %d\n\n", pipe->out_fd);	
-}
-
-static void ft_memdel_range(void *mem, size_t mem_size)
-{
-    if (mem)
-    {
-        free(mem);
-        mem = NULL;
-    }
-    (void)mem_size;
 }
 
 int	main(void) /* get_env */
@@ -90,7 +93,7 @@ int	main(void) /* get_env */
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		//free(pipe);
-		//system("leaks minishell");
+		ft_lstdelete(pipe);
+		system("leaks minishell");
 	}
 }
