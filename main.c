@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/04 16:37:43 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/05 16:50:57 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,21 @@ char	*get_promt(char *user)
 		return (ft_strjoin("ghost", "@minishell: $ "));
 	return (ft_strjoin(user, "@minishell: $ "));
 }
-/*
-static void	ft_lstdelete(t_data *data, char(*del)(void *))
+
+static void	ft_lstdelete(t_pipe *pipe, char(*del)(void *))
 {
-	if (!data)
+	if (!pipe)
 		return ;
-	del(data->env_user);
-	del(data->env);
-	del(data->promt);
-	del(data->spt_pipes);
-	free(data);
-	data = NULL;
-}*/
+	del(pipe->exec_path);
+	del(pipe->argv);
+	del(pipe->in_fd));
+	del(pipe->out_fd);
+	del(pipe->out_name);
+	del(pipe->in_name);
+	del(pipe->err);
+	free(pipe);
+	pipe = NULL;
+}
 
 /* En el main damos tamaño a PIPE con tokenizator,
  * tambien a cmd_line le damos tamañ con el readline
@@ -53,6 +56,16 @@ void	print_pipe(t_pipe *pipe)
 	}
 	printf("out_fd: %d\n\n", pipe->out_fd);
 	
+}
+
+static void ft_memdel_range(void *mem, size_t mem_size)
+{
+    if (mem)
+    {
+        free(mem);
+        mem = NULL;
+    }
+    (void)mem_size;
 }
 
 int	main(void) /* get_env */
@@ -78,7 +91,7 @@ int	main(void) /* get_env */
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		//free(pipe);
-	//	system("leaks minishell");
+		ft_lstdelete(pipe, ft_memdel_range);
+		system("leaks minishell");
 	}
 }
