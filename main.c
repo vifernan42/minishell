@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/05 16:50:57 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/05 19:32:02 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ void	print_pipe(t_pipe *pipe)
 		while (pipe->argv[++i] != NULL)
 			printf("args[%d]:%s$\n", i, pipe->argv[i]);
 	}
-	printf("out_fd: %d\n\n", pipe->out_fd);
-	
+	printf("out_fd: %d\n\n", pipe->out_fd);	
 }
 
 static void ft_memdel_range(void *mem, size_t mem_size)
@@ -79,7 +78,7 @@ int	main(void) /* get_env */
 		data.all_path = get_promt(getenv("PATH"));
 		data.promt = get_promt(getenv("USER"));
 		cmd_line = readline (data.promt);
-		if (even_quotes(cmd_line, 0, 0) == 0)
+		if (cmd_line[0] != '\0' && even_quotes(cmd_line, 0, 0) == 0)
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
 			if (pipe_parse(&data) == 0) /* revisar <<< o >>> */
@@ -91,7 +90,7 @@ int	main(void) /* get_env */
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		ft_lstdelete(pipe, ft_memdel_range);
-		system("leaks minishell");
+		//free(pipe);
+		//system("leaks minishell");
 	}
 }
