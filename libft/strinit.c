@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   strinit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 18:15:00 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/06 18:29:41 by vifernan         ###   ########.fr       */
+/*   Created: 2022/08/05 16:48:05 by vifernan          #+#    #+#             */
+/*   Updated: 2022/08/05 16:48:20 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strinit(char *str, char x)
 {
-	int		a;
-	int		len;
-	char	x;
-
-	x = c;
-	a = 0;
-	len = ft_strlen(s);
-	while (a < len + 1)
+	int		i;
+	char	*aux;
+	
+	if (!str)
+		return (NULL);
+	i = -1;
+	while (str[++i] != '\0')
 	{
-		if (s[a] == x)
-			return ((char *)s + a);
-		a++;
+		if (str[i] == x)
+			break ;
 	}
-	return (NULL);
+	aux = malloc(sizeof(char *) * i + 1);
+	i = -1;
+	while (str[++i] != '\0')
+	{
+		aux[i] = str[i];
+		if (str[i] == x)
+			break ;
+	}
+	aux[i] = '\0';
+	return (aux);
 }

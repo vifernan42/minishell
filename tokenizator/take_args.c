@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:04:52 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/04 17:36:59 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/04 17:58:57 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*find_path(char *cmd, char *all_path, int i)
 			if (access(aux_path, F_OK) == 0)
 				break ;
 			free(aux_path);
+			aux_path = NULL;
 		}
 	}
 	free_matrix(path_sp);
@@ -46,4 +47,6 @@ void	take_args(char **cmd_sp, t_pipe *ret, char *all_path)
 	ret->exec_path = find_path(cmd_sp[0], all_path, -1);
 	if (ret->exec_path)
 		ret->argv = cmd_sp;
+	else
+		free_matrix(cmd_sp);
 }

@@ -47,10 +47,12 @@ $(NAME): $(OBJECTS)
 	@$(CC) $(READLINE) $(CFLAGS) $(OBJECTS) ./printf/libftprintf.a \
 											./libft/libft.a -o $(NAME)
 
-debug: $(OBJECTS)
+debug: fclean all
 	@make -s -C $(LIBFT_DIR)
-	@$(CC) $(CFLAGS) $(FSANITIZE) $^ -L ./libft/ -l ft -o $(NAME)
-
+	@make -s -C $(PRINTF_DIR)
+	@$(CC) $(READLINE) $(CFLAGS) $(FSANITIZE) $(OBJECTS) ./printf/libftprintf.a \
+								./libft/libft.a -o $(NAME)
+	@./minishell				
 
 clean:
 	@echo "$(Yellow)[CLEAN]$(NO_COLOR)"
