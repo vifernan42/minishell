@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/05 16:47:41 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/06 18:27:56 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	find_heredoc(char **cmd_sp, int i, int x)
 		(ft_strnstr(cmd_sp[i], "<", ft_strlen(cmd_sp[i])) ||
 		ft_strnstr(cmd_sp[i], ">", ft_strlen(cmd_sp[i])) ||
 		ft_strnstr(cmd_sp[i], ">>", ft_strlen(cmd_sp[i])))))
-		{
-			//printf("	Entra\n");
 			break ;
-		}
 	}
 	if (cmd_sp[i] == NULL)
 	{
@@ -92,8 +89,8 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 	ret = NULL;
 	aux = NULL;
 	while (cmd_sp[++x] != NULL)
-	{
-		if (join > 0 && cmd_sp[x][0] != '<' && x == i)
+	{ /* controlar >a>>b>c = >>b >c */
+		if (join > 0 && x == i && (cmd_sp[x][0] != '<' && cmd_sp[x][0] != '>'))
 		{
 			if (!ret)
 				ret  = ft_strinit(cmd_sp[x], '<');

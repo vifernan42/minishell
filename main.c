@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/05 19:56:59 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/06 17:53:31 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,37 @@ char	*get_promt(char *user)
 	return (ft_strjoin(user, "@minishell: $ "));
 }
 
-static  void	ft_lstdelete(t_pipe *pipe)
+void	nodedelete(t_pipe *pipe, t_pipe *next)
 {
-	t_pipe	*aux;
+	if (pipe->exec_path)
+		free(pipe->exec_path);
+	if (pipe->argv)
+		free_matrix(pipe->argv);
+	if (pipe->in_fd)
+		close(pipe->in_fd);
+	if (pipe->out_fd)
+		close(pipe->out_fd);
+	if (pipe->out_name)
+		free(pipe->out_name);
+	if (pipe->in_name)
+		free(pipe->in_name);
+	if (pipe->err)
+		free(pipe->err);
+	next = pipe->next;
+	free(pipe);
+}
+
+void	lstdelete(t_pipe *pipe)
+{
+	t_pipe	*next;
 	
 	if (!pipe)
 		return ;
+	next = NULL;
 	while(pipe)
 	{
-		if (pipe->exec_path)
-			free(pipe->exec_path);
-		if (pipe->argv)
-			free_matrix(pipe->argv);
-		if (pipe->in_fd)
-			close(pipe->in_fd);
-		if (pipe->out_fd)
-			close(pipe->out_fd);
-		if (pipe->out_name)
-			free(pipe->out_name);
-		if (pipe->in_name)
-			free(pipe->in_name);
-		if (pipe->err)
-			free(pipe->err);
-		aux = pipe->next;
-		free(pipe);
-		pipe = aux;
+		nodedelete(pipe, next);
+		pipe = next;
 	}
 }
 
@@ -93,7 +99,7 @@ int	main(void) /* get_env */
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		ft_lstdelete(pipe);
+		lstdelete(pipe);
 		system("leaks minishell");
 	}
 }
