@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/06 18:24:56 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:46:55 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*take_fname(char **cmd_sp, int i, int x, int *join)
 	int		flag;
 	
 	flag = -1;
-	if ((int)ft_strlen(cmd_sp[i]) > x)
+	if ((int)ft_strlen(cmd_sp[i]) > x) /* >a>b return: a */
 	{
 		if (ft_strnstr(cmd_sp[i], ">>", 2))
 			fname = ft_substr(cmd_sp[i], 2, ft_strlen(cmd_sp[i]) - 2);
@@ -34,7 +34,7 @@ char	*take_fname(char **cmd_sp, int i, int x, int *join)
 void	do_redirec(char	*id, char *fname, t_pipe *ret)
 {
 	int	fd;
-	
+
 	if (ft_strnstr(id, "<", 1))
 	{
 		fd = open(fname, O_RDONLY, 0666);
@@ -64,7 +64,7 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 	i = find_heredoc(cmd_sp, -1, 2);
 	if (i != -1)
 	{
-		if (ft_strnstr(cmd_sp[i], "<", 1))
+		if (ft_strnstr(cmd_sp[i], "<", 1) || ft_strnstr(cmd_sp[i], ">", 1))
 			fname = take_fname(cmd_sp, i, 1, &join);
 		else
 			fname = take_fname(cmd_sp, i, 2, &join);

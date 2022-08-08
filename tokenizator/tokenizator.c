@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/06 17:54:01 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:33:39 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ t_pipe	*create_node(char *cmd_stg, char *all_path)
 	ft_bzero(ret, sizeof(t_pipe));
 	aux_cmd = ft_strdup(cmd_stg);
 	ret->in_fd = take_heredoc(&aux_cmd, -1, cmd_arg_quottes(cmd_stg), NULL);
+	printf("+	%s\n", aux_cmd);
 	if (aux_cmd)
 		take_redirec(&aux_cmd, -1, cmd_arg_quottes(aux_cmd), ret);
+	//printf("+	%s\n", aux_cmd);
 	if (aux_cmd)
 		take_args(cmd_arg_quottes(aux_cmd), ret, all_path);
 	free(aux_cmd);
@@ -52,8 +54,6 @@ t_pipe	*tokenizator(t_data *data, int i)
 			new->next = create_node(data->spt_pipes[i], data->all_path);
 			new = new->next;
 		}
-		free(data->spt_pipes[i]);
 	}
-	free(data->spt_pipes);
 	return (ret);
 }

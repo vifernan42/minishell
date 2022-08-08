@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/06 18:27:56 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:33:26 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,21 @@ char	*ft_strjoin_swap(char	*str, char	*str2)
 
 char	*rm_heredoc(char **cmd_sp, int i, int join)
 {
-	char	*aux;
 	char	*ret;
 	int		x;
 
 	x = -1;
 	ret = NULL;
-	aux = NULL;
 	while (cmd_sp[++x] != NULL)
 	{ /* controlar >a>>b>c = >>b >c */
-		if (join > 0 && x == i && (cmd_sp[x][0] != '<' && cmd_sp[x][0] != '>'))
+		if (join > 0 && ft_str2chr(cmd_sp[x], '>') && x == i)
+		{
+			if (!ret)
+				ret  = ft_strdup(ft_str2chr(cmd_sp[x], '>'));
+			else
+				ret = ft_strjoin_swap(ret, ft_str2chr(cmd_sp[x], '>'));
+		}
+		else if (join > 0 && x == i && (cmd_sp[x][0] != '<' && cmd_sp[x][0] != '>'))
 		{
 			if (!ret)
 				ret  = ft_strinit(cmd_sp[x], '<');
@@ -106,5 +111,6 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 		}
 		ret = ft_strjoin_swap(ret, " ");
 	}
+	//printf("=	%s$\n", ret);
 	return (ret);
 }
