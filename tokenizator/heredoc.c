@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 17:06:32 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/09 17:16:23 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,12 @@ static int	do_heredoc(char *key)
 	close(pip[WR_END]);
 	return (pip[RD_END]);
 }
-
+/*
+char	*find_key(char *str)
+{
+	
+}
+*/
 int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 {
 	char	*key;
@@ -57,17 +62,18 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 	{
 		if ((int)ft_strlen(cmd_sp[i]) > 2)
 		{
-			key = ft_strchr2(cmd_sp[i], '<');
+			key = ft_strdup(ft_strchr2(cmd_sp[i], '<'));
 			join++;
 		}
 		else
-			key = cmd_sp[i + 1];
+			key = ft_strdup(cmd_sp[i + 1]);
 		aux = rm_heredoc(cmd_sp, i, join);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
 		free(aux);
 		fd = do_heredoc(skip_quotes(key));
-		ft_printf("aaaaaaaaa %s\n", key);
+		if (key)
+			free(key);
 	}
 	else
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizator_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/08 21:01:58 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/09 17:01:06 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,44 @@ int	find_heredoc(char **cmd_sp, int i, int x)
 	return (i);
 }
 
-char	*ft_strjoin_swap(char	*str, char	*str2)
+char	*ft_strjoin_swap(char	*ret, char	*str)
 {
 	char	*aux;
 
-	aux = ft_strdup(str);
-	free(str);
-	str = ft_strjoin(aux, str2);
-	free (aux);
-	return (str);
+	if (!ret)
+		return (ft_strdup(ret));
+	else
+	{
+		aux = ft_strdup(ret);
+		free(ret);
+		ret = ft_strjoin(aux, str);
+		free (aux);
+	}
+	return (ret);
 }
+/*
+char	*rm_heredoc(char **cmd_sp, int i, int join)
+{
+	char	*ret;
+	int		x;
+	int		flag;
+
+	cat >>hola >gola >ljeknr
+	
+	x = -1;
+	ret = NULL;
+	flag = 0;
+	if (ft_strnstr(cmd_sp[i], ">>", 2) || ft_strnstr(cmd_sp[i], "<<", 2))
+		flag++;
+	while (cmd_sp[++x] != NULL)
+	{
+		if (join % 2 != 0 &&  && x != i)
+			ret = ft_strjoin_swap(ret, cmd_sp[x]);
+		else if ()
+	}
+}
+*/
+
 
 char	*rm_heredoc(char **cmd_sp, int i, int join)
 {
@@ -87,15 +115,15 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 	x = -1;
 	ret = NULL;
 	while (cmd_sp[++x] != NULL)
-	{ /* controlar >a>>b>c = >>b >c */
-		if (join > 0 && ft_str2chr(cmd_sp[x], '>') && x == i)
+	{
+		if (join == 1 && ft_str2chr(cmd_sp[x], '>') && x == i)
 		{
 			if (!ret)
 				ret  = ft_strdup(ft_str2chr(cmd_sp[x], '>'));
 			else
 				ret = ft_strjoin_swap(ret, ft_str2chr(cmd_sp[x], '>'));
 		}
-		else if (join > 0 && x == i && (cmd_sp[x][0] != '<' && cmd_sp[x][0] != '>'))
+		else if (join == 1 && x == i && (cmd_sp[x][0] != '<' && cmd_sp[x][0] != '>'))
 		{
 			if (!ret)
 				ret  = ft_strinit(cmd_sp[x], '<');
@@ -108,6 +136,7 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 				ret = ft_strdup(cmd_sp[x]);
 			else
 				ret = ft_strjoin_swap(ret, cmd_sp[x]);
+			printf("ret:	%s\n", ret);
 		}
 		ret = ft_strjoin_swap(ret, " ");
 	}
