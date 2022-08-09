@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 13:12:59 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/09 17:01:57 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,50 @@ char	*take_fname(char **cmd_sp, int i, int x, int *join)
 {
 	char	*fname;
 	char	*aux;
-	int		o;
-	int		flag;
-	
-	flag = -1;
-	o = -1;
+	int		j;
+
 	fname = NULL;
 	aux = NULL;
-	if ((int)ft_strlen(cmd_sp[i]) > x) /* >a>b return: a */
+	if ((int)ft_strlen(cmd_sp[i]) > x)
 	{
-		if (ft_strnstr(cmd_sp[i], ">>", 2))
-		{
-			aux = ft_strchr(cmd_sp[i], '>') + 2; /*me da a mi que esto no*/
-			while (aux[++o] != '\0')
-				if (aux[o] == '>' || aux[o] == '<')
-					break ;
-			fname = ft_substr(aux, 0, ft_strlen(aux) - (ft_strlen(aux) - o));
-			/*fname = ft_substr(cmd_sp[i], 2, ft_strlen(cmd_sp[i]) - 2);*/
-			printf("----  %s\n", cmd_sp[i]);	
-		}
-		else if(ft_str2chr(cmd_sp[i], '>'))
-		{
-			o = -1;
+		if (x == 2)
+			aux = ft_strchr(cmd_sp[i], '>') + 2;
+		else
 			aux = ft_strchr(cmd_sp[i], '>') + 1;
-			while (aux[++o] != '\0')
-				if (aux[o] == '>' || aux[o] == '<')
+		if (ft_strchr(aux, '<') || ft_strchr(aux, '>'))
+		{
+			j = -1;
+			while (aux[++j] != '\0')
+				if (aux[j] == '>' || aux[j] == '<')
 					break ;
-			fname = ft_substr(aux, 0, ft_strlen(aux) - (ft_strlen(aux) - o));
+			fname = ft_substr(aux, 0, ft_strlen(aux) - (ft_strlen(aux) - j));
+			//*join = -1; /* junto y encuentra */
 		}
 		else
-			fname = ft_substr(cmd_sp[i], 1, ft_strlen(cmd_sp[i]) - 1);
+		{
+			fname = ft_substr(cmd_sp[i], x, ft_strlen(cmd_sp[i]) - x);
+			//*join = 1; /* junto y no encuentra */
+		}
 		*join = 1;
 	}
 	else
-		fname = ft_strdup(cmd_sp[i + 1]);
+	{
+		if (ft_strchr(cmd_sp[i + 1], '<') || ft_strchr(cmd_sp[i + 1], '>'))
+		{
+			j = -1;
+			while (cmd_sp[i + 1][++j] != '\0')
+				if (cmd_sp[i + 1][j] == '>' || cmd_sp[i + 1][j] == '<')
+					break ;
+			fname = ft_substr(cmd_sp[i + 1], 0, ft_strlen(cmd_sp[i + 1]) - (ft_strlen(cmd_sp[i + 1]) - j));
+			//*join = -2; /* separado y encuentra */
+		}
+		else
+		{
+			fname = ft_strdup(cmd_sp[i + 1]);
+			//*join = 2
+		}
+		/* *join = 0 | separado y no encuentra */
+	}
 	return (fname);
 }
 
@@ -86,10 +96,10 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 	i = find_heredoc(cmd_sp, -1, 2);
 	if (i != -1)
 	{
-		if (ft_strnstr(cmd_sp[i], "<", 1) || ft_strnstr(cmd_sp[i], ">", 1))
-			fname = take_fname(cmd_sp, i, 1, &join);
-		else
+		if (ft_strnstr(cmd_sp[i], "<<", 2) || ft_strnstr(cmd_sp[i], ">>", 2))
 			fname = take_fname(cmd_sp, i, 2, &join);
+		else
+			fname = take_fname(cmd_sp, i, 1, &join);
 		do_redirec(cmd_sp[i], skip_quotes(fname), ret);
 		free(fname);
 		fname = rm_heredoc(cmd_sp, i, join);
