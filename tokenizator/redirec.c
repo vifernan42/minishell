@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 13:12:59 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/09 17:03:39 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ char	*take_fname(char **cmd_sp, int i, int x, int *join)
 	o = -1;
 	fname = NULL;
 	aux = NULL;
+	//printf ("")
 	if ((int)ft_strlen(cmd_sp[i]) > x) /* >a>b return: a */
 	{
-		if (ft_strnstr(cmd_sp[i], ">>", 2))
+		if (ft_strnstr(cmd_sp[i], ">>", 2) && x == 2)
 		{
 			aux = ft_strchr(cmd_sp[i], '>') + 2; /*me da a mi que esto no*/
 			while (aux[++o] != '\0')
 				if (aux[o] == '>' || aux[o] == '<')
 					break ;
 			fname = ft_substr(aux, 0, ft_strlen(aux) - (ft_strlen(aux) - o));
-			/*fname = ft_substr(cmd_sp[i], 2, ft_strlen(cmd_sp[i]) - 2);*/
 			printf("----  %s\n", cmd_sp[i]);	
 		}
-		else if(ft_str2chr(cmd_sp[i], '>'))
+		else if(ft_str2chr(cmd_sp[i], '>') && x == 1)
 		{
 			o = -1;
 			aux = ft_strchr(cmd_sp[i], '>') + 1;
@@ -43,6 +43,7 @@ char	*take_fname(char **cmd_sp, int i, int x, int *join)
 				if (aux[o] == '>' || aux[o] == '<')
 					break ;
 			fname = ft_substr(aux, 0, ft_strlen(aux) - (ft_strlen(aux) - o));
+			printf("----  %s\n", cmd_sp[i]);
 		}
 		else
 			fname = ft_substr(cmd_sp[i], 1, ft_strlen(cmd_sp[i]) - 1);
@@ -86,10 +87,10 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 	i = find_heredoc(cmd_sp, -1, 2);
 	if (i != -1)
 	{
-		if (ft_strnstr(cmd_sp[i], "<", 1) || ft_strnstr(cmd_sp[i], ">", 1))
-			fname = take_fname(cmd_sp, i, 1, &join);
-		else
+		if (ft_strnstr(cmd_sp[i], "<<", 2) || ft_strnstr(cmd_sp[i], ">>", 2))
 			fname = take_fname(cmd_sp, i, 2, &join);
+		else
+			fname = take_fname(cmd_sp, i, 1, &join);
 		do_redirec(cmd_sp[i], skip_quotes(fname), ret);
 		free(fname);
 		fname = rm_heredoc(cmd_sp, i, join);
