@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 18:08:22 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/10 16:28:16 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 	{
 		if ((int)ft_strlen(cmd_sp[i]) > 2)
 		{
-			key = ft_strdup(ft_strchr2(cmd_sp[i], '<')); /*modificar*/
+			key = find_key(ft_strchr2(cmd_sp[i], '<'), -1, 0);
 			join++;
 		}
 		else
-			key = ft_strdup(cmd_sp[i + 1]);
-		aux = rm_heredoc(cmd_sp, i, join);  /*rm modificar  >>ho"la>a" c archivo hola>a */
+			key = find_key(cmd_sp[i + 1], -1, 0);
+		aux = rm_heredoc(cmd_sp, i, join);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
 		free(aux);
