@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/10 14:05:30 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/10 17:08:43 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,17 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 {
 	char	*key;
 	int		fd;
-	int		join;
 
 	fd = 0;
-	join = 0;
 	i = find_heredoc(cmd_sp, -1, 1);
 	key = NULL;
 	if (i != -1)
 	{
 		if ((int)ft_strlen(cmd_sp[i]) > 2)
-		{
 			key = find_key(ft_strchr2(cmd_sp[i], '<'), -1, 0);
-			join++;
-		}
 		else
 			key = find_key(cmd_sp[i + 1], -1, 0);
-		aux = rm_heredoc(cmd_sp, i, join);
+		aux = rm_heredoc(cmd_sp, i, 0);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
 		free(aux);

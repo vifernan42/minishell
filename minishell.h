@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/10 14:05:23 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/10 17:08:56 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_pipe	*create_node(char *cmd_stg, char *all_path);
 t_pipe	*tokenizator(t_data *data, int i);
 void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret);
 char	*ft_strjoin_swap(char	*str, char	*str2);
-char	*rm_heredoc(char **cmd_sp, int i, int join);
+char	*rm_heredoc(char **cmd_sp, int i, int lock);
 int	find_heredoc(char **cmd_sp, int i, int x);
 void	take_args(char **cmd_sp, t_pipe *ret, char *all_path);
 char	*find_key(char *str, int i, int j);
