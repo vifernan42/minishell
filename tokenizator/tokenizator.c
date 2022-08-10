@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 17:07:36 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/09 20:15:18 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ t_pipe	*create_node(char *cmd_stg, char *all_path)
 	ft_bzero(ret, sizeof(t_pipe));
 	aux_cmd = ft_strdup(cmd_stg);
 	ret->in_fd = take_heredoc(&aux_cmd, -1, cmd_arg_quottes(cmd_stg), NULL);
-	ft_printf("+	%s\n", aux_cmd);
 	if (aux_cmd)
 		take_redirec(&aux_cmd, -1, cmd_arg_quottes(aux_cmd), ret);
-	//printf("+	%s\n", aux_cmd);
 	if (aux_cmd)
 		take_args(cmd_arg_quottes(aux_cmd), ret, all_path);
 	free(aux_cmd);

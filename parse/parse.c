@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/08 17:26:40 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/09 20:14:16 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ int	more_redir(t_data *data, int i, int j, char **aux)
 			if ((((ft_strnstr(aux[j], "<<", ft_strlen(aux[j]))
 					|| (ft_strnstr(aux[j], ">>", ft_strlen(aux[j]))))
 					&& ft_strlen(aux[j]) && (aux[j + 1] != NULL))
-					&& ((aux[j + 1][0] == '<') || (aux[j + 1][0] == '>')))
+					&& ((aux[j + 1][0] == '<') || (aux[j + 1][0] == '>')) && ft_strlen(aux[j]) == 2)
 					|| (ft_strnstr(aux[j], "<<<", ft_strlen(aux[j]))
-					|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j]))))
+					|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j]))) || (((ft_strnstr(aux[j], "<", ft_strlen(aux[j]))
+					|| (ft_strnstr(aux[j], ">", ft_strlen(aux[j]))))
+					&& ft_strlen(aux[j]) && (aux[j + 1] != NULL))
+					&& ((aux[j + 1][0] == '<') || (aux[j + 1][0] == '>')) && ft_strlen(aux[j]) == 1))
 			{
 				if (ft_strnstr(aux[j], "<", ft_strlen(aux[j])))
 					syntax_char(ft_charjoin('<'), STDERR_FILENO);
@@ -55,7 +58,6 @@ int	pipe_parse(t_data *data)
 		count = 0;
 		while (aux[++i] != NULL)
 		{
-			//printf("-	%s\n", aux[i]);
 			if (aux[i][0] == '\0')
 				count++;
 		}
@@ -69,7 +71,6 @@ int	pipe_parse(t_data *data)
 		free_matrix(aux);
 	}
 	return(more_redir(data, -1, -1, NULL));
-	//return (0);
 }
 
 int	even_quotes(char *s, int count, char x, t_data *data)

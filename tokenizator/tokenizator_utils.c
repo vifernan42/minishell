@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizator_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 17:01:06 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/10 16:19:08 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 */
 
 
+
 char	*rm_heredoc(char **cmd_sp, int i, int join)
 {
 	char	*ret;
@@ -119,9 +120,13 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 		if (join == 1 && ft_str2chr(cmd_sp[x], '>') && x == i)
 		{
 			if (!ret)
+			{
+				
 				ret  = ft_strdup(ft_str2chr(cmd_sp[x], '>'));
+			}
 			else
 				ret = ft_strjoin_swap(ret, ft_str2chr(cmd_sp[x], '>'));
+			printf("ret2:	%s\n", ret);
 		}
 		else if (join == 1 && x == i && (cmd_sp[x][0] != '<' && cmd_sp[x][0] != '>'))
 		{
@@ -129,16 +134,25 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 				ret  = ft_strinit(cmd_sp[x], '<');
 			else
 				ret = ft_strjoin_swap(ret, ft_strinit(cmd_sp[x], '<'));
+			printf("ret3:	%s\n", ret);
 		}
-		else if ((join == 1 && x != i) || (join == 0 && x != i && x -1 != i))
+		else if ((join == 1 && x != i) || (join == 0 && x != i && x - 1 != i))
 		{
 			if (!ret)
+			{
 				ret = ft_strdup(cmd_sp[x]);
+				printf("---%s$\n", ret);
+			}
 			else
+			{
 				ret = ft_strjoin_swap(ret, cmd_sp[x]);
-			printf("ret:	%s\n", ret);
+				ret = skip_redir(ret, &x);
+				printf("ret4:	%s$\n", ret);
+			}
 		}
 		ret = ft_strjoin_swap(ret, " ");
+		printf("ret:	%s$\n", ret);
+		
 	}
 	//printf("=	%s$\n", ret);
 	return (ret);

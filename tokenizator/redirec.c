@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 17:16:51 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/09 18:07:14 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 		if (ft_strnstr(cmd_sp[i], "<<", 2) || ft_strnstr(cmd_sp[i], ">>", 2))
 			fname = take_fname(cmd_sp, i, 2, &join);
 		else
-			fname = take_fname(cmd_sp, i, 1, &join);
+			fname = take_fname(cmd_sp, i, 1, &join); /*modificar */
 		do_redirec(cmd_sp[i], skip_quotes(fname), ret);
 		free(fname);
 		fname = rm_heredoc(cmd_sp, i, join);
