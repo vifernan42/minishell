@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/10 16:28:33 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/10 18:28:53 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,8 @@ char	*ret_key(char *str, int i, int j, char c)
 	j = 0;
 	while (str[++i] != '\0')
 	{
-		printf("*	%d\n", lock);
 		if ((str[i] == '<' || str[i] == '>') && lock == 0)
-		{
-			printf("	entra\n");
 			break ;
-		}
 		if ((str[i] == '\'' || str[i] == '\"') && lock == 0)
 		{
 			if (str[i] == '\'')
@@ -35,10 +31,11 @@ char	*ret_key(char *str, int i, int j, char c)
 			else
 				c = '\"';
 			lock++;
+			i++;
 		}
 		else if ((c == '\'' || c == '\"') && str[i] == c)
 			lock--;
-		if ((str[i] != '\'' && str[i] != '\"'))
+		if ((str[i] != '\'' && str[i] != '\"') || lock == 1)
 			ret[j++] = str[i];
 	}
 	ret[j] = '\0';
@@ -52,11 +49,12 @@ char	*find_key(char *str, int i, int j)
 
 	c = '\0';
 	lock = 0;
+	printf("<	%s\n", str);
 	while (str[++i] != '\0')
 	{
-		if ((str[i] == '<' || str[i] == '>') && lock == 0)
+		if ((str[i] == '<' || str[i] == '>') && lock % 2 == 0)
 			break ;
-		if ((str[i] == '\'' || str[i] == '\"') && (c == '\0' && lock == 0))
+		if ((str[i] == '\'' || str[i] == '\"') && (c == '\0' && lock % 2 == 0))
 		{
 			if (str[i] == '\'')
 				c = '\'';
@@ -65,12 +63,13 @@ char	*find_key(char *str, int i, int j)
 			lock++;
 		}
 		else if ((c == '\'' || c == '\"') && str[i] == c)
-			lock--;
-		if ((str[i] != '\'' && str[i] != '\"'))
+			lock++;
+		if ((str[i] != '\'' && str[i] != '\"') || lock % 2 != 0)
 			j++;
 	}
 	return (ret_key(str, -1, j, '\0'));
 }
+
 
 char	**cmd_arg_quottes(char	*pipe)
 {
@@ -134,7 +133,7 @@ char	*ft_strjoin_swap(char	*ret, char	*str)
 	char	*aux;
 
 	if (!ret)
-		return (ft_strdup(ret));
+		return (ft_strdup(str));
 	else
 	{
 		aux = ft_strdup(ret);
@@ -144,32 +143,72 @@ char	*ft_strjoin_swap(char	*ret, char	*str)
 	}
 	return (ret);
 }
-/*
-char	*rm_heredoc(char **cmd_sp, int i, int join)
+
+int		find_rm_size(char *str, int i, int j, int *lock)
+{
+	char	c;
+
+	c = '\0';
+	while (str[++i] != '\0')
+	{
+		if ((str[i] == '<' || str[i] == '>') && *lock % 2 == 0)
+			break ;
+		if ((str[i] == '\'' || str[i] == '\"') && (c == '\0' && *lock % 2 == 0))
+		{
+			if (str[i] == '\'')
+				c = '\'';
+			else
+				c = '\"';
+			*lock += 1;
+		}
+		else if ((c == '\'' || c == '\"') && str[i] == c)
+			*lock += 1;
+		if ((str[i] != '\'' && str[i] != '\"') || *lock % 2 != 0)
+			j++;
+	}
+	return (j);
+}
+
+char	*rm_heredoc(char **cmd_sp, int i, int lock)
 {
 	char	*ret;
 	int		x;
 	int		flag;
+	int		start;
 
-	cat >>hola >gola >ljeknr
-	
 	x = -1;
 	ret = NULL;
 	flag = 0;
-	if (ft_strnstr(cmd_sp[i], ">>", 2) || ft_strnstr(cmd_sp[i], "<<", 2))
-		flag++;
 	while (cmd_sp[++x] != NULL)
 	{
-		if (join % 2 != 0 &&  && x != i)
-			ret = ft_strjoin_swap(ret, cmd_sp[x]);
-		else if ()
+		lock = 0;
+		if ((ft_strnstr(cmd_sp[i], ">>", 2) && (int)ft_strlen(cmd_sp[i]) == 2)
+				|| (ft_strnstr(cmd_sp[i], ">", 1) && (int)ft_strlen(cmd_sp[i]) == 1))
+		{
+			start = find_rm_size(cmd_sp[i + 1], -1, 0, &lock) + lock;
+			if ((start != (int)ft_strlen(cmd_sp[i + 1])))
+				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[i + 1], start, (int)ft_strlen(cmd_sp[i + 1]) - start));
+			x += 2;
+		}
+		else if (ft_strnstr(cmd_sp[i], ">>", 2) && (int)ft_strlen(cmd_sp[i]) > 2)
+		{
+			start = find_rm_size(ft_strchr2(cmd_sp[i], '>'), -1, 0, &lock) + lock;
+			if ((start != (int)ft_strlen(ft_strchr2(cmd_sp[i], '>'))))
+				ret = ft_strjoin_swap(ret, ft_substr(ft_strchr2(cmd_sp[i], '>'), start, (int)ft_strlen(ft_strchr2(cmd_sp[i], '>')) - start));
+			x++;
+		}
+		else if (ft_strnstr(cmd_sp[i], ">", 1) && (int)ft_strlen(cmd_sp[i]) > 1)
+		{
+			start = find_rm_size(ft_strchr(cmd_sp[i], '>'), -1, 0, &lock) + lock;
+			if ((start != (int)ft_strlen(ft_strchr(cmd_sp[i], '>'))))
+				ret = ft_strjoin_swap(ret, ft_substr(ft_strchr(cmd_sp[i], '>'), start, (int)ft_strlen(ft_strchr(cmd_sp[i], '>')) - start));
+			x++;
+		}
 	}
+	return (ret);
 }
-*/
-
-
-
-char	*rm_heredoc(char **cmd_sp, int i, int join)
+/*
+char	*rm_heredoc(char **cmd_sp, int i)
 {
 	char	*ret;
 	int		x;
@@ -178,7 +217,7 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 	ret = NULL;
 	while (cmd_sp[++x] != NULL)
 	{
-		if (join == 1 && ft_str2chr(cmd_sp[x], '>') && x == i)
+		if (ft_str2chr(cmd_sp[x], '>') && x == i)
 		{
 			if (!ret)
 			{
@@ -189,7 +228,7 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 				ret = ft_strjoin_swap(ret, ft_str2chr(cmd_sp[x], '>'));
 			printf("ret2:	%s\n", ret);
 		}
-		else if (join == 1 && x == i && (cmd_sp[x][0] != '<' && cmd_sp[x][0] != '>'))
+		else if (x == i && (cmd_sp[x][0] != '<' && cmd_sp[x][0] != '>'))
 		{
 			if (!ret)
 				ret  = ft_strinit(cmd_sp[x], '<');
@@ -197,7 +236,7 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 				ret = ft_strjoin_swap(ret, ft_strinit(cmd_sp[x], '<'));
 			printf("ret3:	%s\n", ret);
 		}
-		else if ((join == 1 && x != i) || (join == 0 && x != i && x - 1 != i))
+		else if ((x != i) || (x != i && x -1 != i))
 		{
 			if (!ret)
 			{
@@ -217,4 +256,4 @@ char	*rm_heredoc(char **cmd_sp, int i, int join)
 	}
 	//printf("=	%s$\n", ret);
 	return (ret);
-}
+}*/
