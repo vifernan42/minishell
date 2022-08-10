@@ -6,11 +6,71 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 17:01:06 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/10 16:24:43 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ret_key(char *str, int i, int j, char c)
+{
+	char	lock;
+	char	*ret;
+
+	lock = 0;
+	ret = malloc(sizeof(char) * j + 1);
+	j = 0;
+	while (str[++i] != '\0')
+	{
+		printf("*	%d\n", lock);
+		if ((str[i] == '<' || str[i] == '>') && lock == 0)
+		{
+			printf("	entra\n");
+			break ;
+		}
+		if ((str[i] == '\'' || str[i] == '\"') && lock == 0)
+		{
+			if (str[i] == '\'')
+				c = '\'';
+			else
+				c = '\"';
+			lock++;
+		}
+		else if ((c == '\'' || c == '\"') && str[i] == c)
+			lock--;
+		if ((str[i] != '\'' && str[i] != '\"'))
+			ret[j++] = str[i];
+	}
+	ret[j] = '\0';
+	return (ret);
+}
+
+char	*find_key(char *str, int i, int j)
+{
+	char	c;
+	char	lock;
+
+	c = '\0';
+	lock = 0;
+	while (str[++i] != '\0')
+	{
+		if ((str[i] == '<' || str[i] == '>') && lock == 0)
+			break ;
+		if ((str[i] == '\'' || str[i] == '\"') && (c == '\0' && lock == 0))
+		{
+			if (str[i] == '\'')
+				c = '\'';
+			else
+				c = '\"';
+			lock++;
+		}
+		else if ((c == '\'' || c == '\"') && str[i] == c)
+			lock--;
+		if ((str[i] != '\'' && str[i] != '\"'))
+			j++;
+	}
+	return (ret_key(str, -1, j, '\0'));
+}
 
 char	**cmd_arg_quottes(char	*pipe)
 {
@@ -25,7 +85,8 @@ char	**cmd_arg_quottes(char	*pipe)
 	x = -1;
 	while (aux_cmd[++x] != NULL)
 	{
-		if (aux_cmd[x][0] != '$' && aux_cmd[x][0] != '<' && aux_cmd[x][0] != '>')
+		if (aux_cmd[x][0] != '$' && aux_cmd[x][0] != '<' && aux_cmd[x][0] != '>'
+				&& aux_cmd[x - 1][0] != '<' && aux_cmd[x - 1][0] != '>')
 		{
 			aux = skip_quotes(skip_spaces(aux_cmd[x]));
 		}

@@ -6,13 +6,13 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 17:01:57 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/10 14:06:16 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*take_fname(char **cmd_sp, int i, int x, int *join)
+/*char	*take_fname(char **cmd_sp, int i, int x, int *join)
 {
 	char	*fname;
 	char	*aux;
@@ -33,12 +33,10 @@ char	*take_fname(char **cmd_sp, int i, int x, int *join)
 				if (aux[j] == '>' || aux[j] == '<')
 					break ;
 			fname = ft_substr(aux, 0, ft_strlen(aux) - (ft_strlen(aux) - j));
-			//*join = -1; /* junto y encuentra */
 		}
 		else
 		{
 			fname = ft_substr(cmd_sp[i], x, ft_strlen(cmd_sp[i]) - x);
-			//*join = 1; /* junto y no encuentra */
 		}
 		*join = 1;
 	}
@@ -51,17 +49,14 @@ char	*take_fname(char **cmd_sp, int i, int x, int *join)
 				if (cmd_sp[i + 1][j] == '>' || cmd_sp[i + 1][j] == '<')
 					break ;
 			fname = ft_substr(cmd_sp[i + 1], 0, ft_strlen(cmd_sp[i + 1]) - (ft_strlen(cmd_sp[i + 1]) - j));
-			//*join = -2; /* separado y encuentra */
 		}
 		else
 		{
 			fname = ft_strdup(cmd_sp[i + 1]);
-			//*join = 2
 		}
-		/* *join = 0 | separado y no encuentra */
 	}
 	return (fname);
-}
+}*/
 
 void	do_redirec(char	*id, char *fname, t_pipe *ret)
 {
@@ -96,10 +91,13 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 	i = find_heredoc(cmd_sp, -1, 2);
 	if (i != -1)
 	{
-		if (ft_strnstr(cmd_sp[i], "<<", 2) || ft_strnstr(cmd_sp[i], ">>", 2))
-			fname = take_fname(cmd_sp, i, 2, &join);
+		if (ft_strnstr(cmd_sp[i], ">", 2) && (int)ft_strlen(cmd_sp[i]) > 1)
+			fname = find_key(ft_strchr(cmd_sp[i], '>') + 1, -1, 0);
+		else if (ft_strnstr(cmd_sp[i], ">>", 2) && (int)ft_strlen(cmd_sp[i]) > 2)
+			fname = find_key(ft_strchr2(cmd_sp[i], '>'), -1, 0);
 		else
-			fname = take_fname(cmd_sp, i, 1, &join);
+			fname = find_key(cmd_sp[i + 1], -1, 0);
+		printf("-	%s\n", fname);
 		do_redirec(cmd_sp[i], skip_quotes(fname), ret);
 		free(fname);
 		fname = rm_heredoc(cmd_sp, i, join);

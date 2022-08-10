@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 17:13:21 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/10 14:05:30 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,7 @@ static int	do_heredoc(char *key)
 	close(pip[WR_END]);
 	return (pip[RD_END]);
 }
-/*
-char	*find_key(char *str)
-{
-	
-}
-*/
+
 int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 {
 	char	*key;
@@ -62,11 +57,11 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 	{
 		if ((int)ft_strlen(cmd_sp[i]) > 2)
 		{
-			key = ft_strdup(ft_strchr2(cmd_sp[i], '<'));
+			key = find_key(ft_strchr2(cmd_sp[i], '<'), -1, 0);
 			join++;
 		}
 		else
-			key = ft_strdup(cmd_sp[i + 1]);
+			key = find_key(cmd_sp[i + 1], -1, 0);
 		aux = rm_heredoc(cmd_sp, i, join);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
