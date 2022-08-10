@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/10 18:28:38 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/10 18:33:25 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 			fname = find_key(ft_strchr(cmd_sp[i], '>') + 1, -1, 0);
 		do_redirec(cmd_sp[i], skip_quotes(fname), ret);
 		free(fname);
+		printf("---- %s\n", cmd_sp[i]);
 		fname = rm_heredoc(cmd_sp, i, 0);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(fname);

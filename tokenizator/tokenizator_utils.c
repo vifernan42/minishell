@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/10 18:28:53 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/10 18:56:44 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,31 +179,37 @@ char	*rm_heredoc(char **cmd_sp, int i, int lock)
 	x = -1;
 	ret = NULL;
 	flag = 0;
+	(void)i;
 	while (cmd_sp[++x] != NULL)
 	{
 		lock = 0;
-		if ((ft_strnstr(cmd_sp[i], ">>", 2) && (int)ft_strlen(cmd_sp[i]) == 2)
-				|| (ft_strnstr(cmd_sp[i], ">", 1) && (int)ft_strlen(cmd_sp[i]) == 1))
+		if (!ret)
+			ft_strdup(cmd_sp[x]);
+		if ((ft_strnstr(cmd_sp[x], ">>", 2) && (int)ft_strlen(cmd_sp[x]) == 2) /*todas las x ponerlas en i , y poner x != i*/
+				|| (ft_strnstr(cmd_sp[x], ">", 1) && (int)ft_strlen(cmd_sp[x]) == 1))
 		{
-			start = find_rm_size(cmd_sp[i + 1], -1, 0, &lock) + lock;
-			if ((start != (int)ft_strlen(cmd_sp[i + 1])))
-				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[i + 1], start, (int)ft_strlen(cmd_sp[i + 1]) - start));
+			start = find_rm_size(cmd_sp[x + 1], -1, 0, &lock) + lock;
+			if ((start != (int)ft_strlen(cmd_sp[x + 1])))
+				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start, (int)ft_strlen(cmd_sp[x + 1]) - start));
 			x += 2;
 		}
-		else if (ft_strnstr(cmd_sp[i], ">>", 2) && (int)ft_strlen(cmd_sp[i]) > 2)
+		else if (ft_strnstr(cmd_sp[x], ">>", 2) && (int)ft_strlen(cmd_sp[x]) > 2)
 		{
-			start = find_rm_size(ft_strchr2(cmd_sp[i], '>'), -1, 0, &lock) + lock;
-			if ((start != (int)ft_strlen(ft_strchr2(cmd_sp[i], '>'))))
-				ret = ft_strjoin_swap(ret, ft_substr(ft_strchr2(cmd_sp[i], '>'), start, (int)ft_strlen(ft_strchr2(cmd_sp[i], '>')) - start));
+			start = find_rm_size(ft_strchr2(cmd_sp[x], '>'), -1, 0, &lock) + lock;
+			if ((start != (int)ft_strlen(ft_strchr2(cmd_sp[x], '>'))))
+				ret = ft_strjoin_swap(ret, ft_substr(ft_strchr2(cmd_sp[x], '>'), start, (int)ft_strlen(ft_strchr2(cmd_sp[x], '>')) - start));
 			x++;
 		}
-		else if (ft_strnstr(cmd_sp[i], ">", 1) && (int)ft_strlen(cmd_sp[i]) > 1)
+		else if (ft_strnstr(cmd_sp[x], ">", 1) && (int)ft_strlen(cmd_sp[x]) > 1)
 		{
-			start = find_rm_size(ft_strchr(cmd_sp[i], '>'), -1, 0, &lock) + lock;
-			if ((start != (int)ft_strlen(ft_strchr(cmd_sp[i], '>'))))
-				ret = ft_strjoin_swap(ret, ft_substr(ft_strchr(cmd_sp[i], '>'), start, (int)ft_strlen(ft_strchr(cmd_sp[i], '>')) - start));
+			start = find_rm_size(ft_strchr(cmd_sp[x], '>'), -1, 0, &lock) + lock;
+			if ((start != (int)ft_strlen(ft_strchr(cmd_sp[x], '>'))))
+				ret = ft_strjoin_swap(ret, ft_substr(ft_strchr(cmd_sp[x], '>'), start, (int)ft_strlen(ft_strchr(cmd_sp[x], '>')) - start));
 			x++;
 		}
+		ret = ft_strjoin_swap(ret, " ");
+		
+	//	printf("+++++ %s\n", ret);
 	}
 	return (ret);
 }
