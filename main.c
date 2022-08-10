@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/06 17:53:31 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/09 17:14:24 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,6 @@ void	lstdelete(t_pipe *pipe)
 	}
 }
 
-/* En el main damos tamaño a PIPE con tokenizator,
- * tambien a cmd_line le damos tamañ con el readline
- * aunque lo liberamos al final del main*/
-
-void	print_pipe(t_pipe *pipe)
-{
-	int i = -1;
-	
-	printf("\nin_fd: %d\n", pipe->in_fd);
-	printf("PATH: %s\n", pipe->exec_path);
-	if (pipe->argv)
-	{
-		while (pipe->argv[++i] != NULL)
-			printf("args[%d]:%s$\n", i, pipe->argv[i]);
-	}
-	printf("out_fd: %d\n\n", pipe->out_fd);	
-}
-
 int	main(void) /* get_env */
 {
 	t_data	data;
@@ -87,19 +69,19 @@ int	main(void) /* get_env */
 		data.all_path = get_promt(getenv("PATH"));
 		data.promt = get_promt(getenv("USER"));
 		cmd_line = readline (data.promt);
-		if (cmd_line[0] != '\0' && even_quotes(cmd_line, 0, 0) == 0)
+		if (cmd_line[0] != '\0')
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
-			if (pipe_parse(&data) == 0) /* revisar <<< o >>> */
-			{
+			if (even_quotes(cmd_line, 0, 0, &data) == 0) /* revisar <<< o >>> */
+			{	
 				pipe = tokenizator(&data, -1);
-				print_pipe(pipe);
+				lstdelete(pipe);
 			}
+			free_matrix(data.spt_pipes);
 		}
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		lstdelete(pipe);
-		system("leaks minishell");
+		//system("leaks minishell");
 	}
 }

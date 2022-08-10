@@ -6,30 +6,39 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/05 19:07:08 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:26:40 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*int	more_redir(t_data *data, int i)
-{
-	char	**aux;
-	int		j;
-	
+int	more_redir(t_data *data, int i, int j, char **aux)
+{	
 	while (data->spt_pipes[++i] != NULL)
 	{
 		aux = cmd_arg_quottes(data->spt_pipes[i]);
 		j = -1;
 		while (aux[++j] != NULL)
 		{
-			if () condicion para return (1) si lo encientra "<<<" || "<< <hola"
-			printf("+	%s\n", aux[j]);
+			if ((((ft_strnstr(aux[j], "<<", ft_strlen(aux[j]))
+					|| (ft_strnstr(aux[j], ">>", ft_strlen(aux[j]))))
+					&& ft_strlen(aux[j]) && (aux[j + 1] != NULL))
+					&& ((aux[j + 1][0] == '<') || (aux[j + 1][0] == '>')))
+					|| (ft_strnstr(aux[j], "<<<", ft_strlen(aux[j]))
+					|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j]))))
+			{
+				if (ft_strnstr(aux[j], "<", ft_strlen(aux[j])))
+					syntax_char(ft_charjoin('<'), STDERR_FILENO);
+				else
+					syntax_char(ft_charjoin('>'), STDERR_FILENO);
+				free_matrix(aux);
+				return (1);
+			}
 		}
 		free_matrix(aux);
 	}
 	return (0);
-}*/
+}
 
 int	pipe_parse(t_data *data)
 {
@@ -46,7 +55,7 @@ int	pipe_parse(t_data *data)
 		count = 0;
 		while (aux[++i] != NULL)
 		{
-			printf("-	%s\n", aux[i]);
+			//printf("-	%s\n", aux[i]);
 			if (aux[i][0] == '\0')
 				count++;
 		}
@@ -54,15 +63,16 @@ int	pipe_parse(t_data *data)
 		{
 			syntax_char(ft_charjoin('|'), STDERR_FILENO);
 			free_matrix(aux);
+			free_matrix(data->spt_pipes);
 			return (1);
 		}
 		free_matrix(aux);
 	}
-	//return(more_redir(data, -1))
-	return (0);
+	return(more_redir(data, -1, -1, NULL));
+	//return (0);
 }
 
-int	even_quotes(char *s, int count, char x)
+int	even_quotes(char *s, int count, char x, t_data *data)
 {
 	int		i;
 
@@ -87,5 +97,5 @@ int	even_quotes(char *s, int count, char x)
 	}
 	if (--i && s[i] == '|')
 		return (syntax_char(ft_charjoin('|'), STDERR_FILENO));
-	return (0);
+	return (pipe_parse(data));
 }

@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/04 13:53:54 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/10 14:05:23 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_data {
 }		t_data;
 
 int		pipe_parse(t_data *data);
-int		even_quotes(char *s, int count, char x);
+int		even_quotes(char *s, int count, char x, t_data *data);
 //int		echos(char **argv, int fd);
 //char|\\\*pwdcurrent();
 char	*get_promt(char *user);
@@ -65,6 +65,8 @@ char	*ft_strjoin_swap(char	*str, char	*str2);
 char	*rm_heredoc(char **cmd_sp, int i, int join);
 int	find_heredoc(char **cmd_sp, int i, int x);
 void	take_args(char **cmd_sp, t_pipe *ret, char *all_path);
+char	*find_key(char *str, int i, int j);
+char	*ret_key(char *str, int i, int j, char c);
 
 void	leaks(void);
 
