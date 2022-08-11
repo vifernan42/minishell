@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/10 18:33:25 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:36:43 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,10 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 		free(fname);
 		printf("---- %s\n", cmd_sp[i]);
 		fname = rm_heredoc(cmd_sp, i, 0);
+		printf("fname--- %s\n", fname);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(fname);
+		printf("aux_cmd--- %s\n", *aux_cmd);
 		free(fname);
 	}
 	if (find_heredoc(cmd_arg_quottes(*aux_cmd), 0, 2) == -1)
