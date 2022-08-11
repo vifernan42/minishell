@@ -6,57 +6,11 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/11 18:36:43 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/11 19:45:35 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*char	*take_fname(char **cmd_sp, int i, int x, int *join)
-{
-	char	*fname;
-	char	*aux;
-	int		j;
-
-	fname = NULL;
-	aux = NULL;
-	if ((int)ft_strlen(cmd_sp[i]) > x)
-	{
-		if (x == 2)
-			aux = ft_strchr(cmd_sp[i], '>') + 2;
-		else
-			aux = ft_strchr(cmd_sp[i], '>') + 1;
-		if (ft_strchr(aux, '<') || ft_strchr(aux, '>'))
-		{
-			j = -1;
-			while (aux[++j] != '\0')
-				if (aux[j] == '>' || aux[j] == '<')
-					break ;
-			fname = ft_substr(aux, 0, ft_strlen(aux) - (ft_strlen(aux) - j));
-		}
-		else
-		{
-			fname = ft_substr(cmd_sp[i], x, ft_strlen(cmd_sp[i]) - x);
-		}
-		*join = 1;
-	}
-	else
-	{
-		if (ft_strchr(cmd_sp[i + 1], '<') || ft_strchr(cmd_sp[i + 1], '>'))
-		{
-			j = -1;
-			while (cmd_sp[i + 1][++j] != '\0')
-				if (cmd_sp[i + 1][j] == '>' || cmd_sp[i + 1][j] == '<')
-					break ;
-			fname = ft_substr(cmd_sp[i + 1], 0, ft_strlen(cmd_sp[i + 1]) - (ft_strlen(cmd_sp[i + 1]) - j));
-		}
-		else
-		{
-			fname = ft_strdup(cmd_sp[i + 1]);
-		}
-	}
-	return (fname);
-}*/
 
 void	do_redirec(char	*id, char *fname, t_pipe *ret)
 {

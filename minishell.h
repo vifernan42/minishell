@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/10 17:08:56 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:00:19 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	find_heredoc(char **cmd_sp, int i, int x);
 void	take_args(char **cmd_sp, t_pipe *ret, char *all_path);
 char	*find_key(char *str, int i, int j);
 char	*ret_key(char *str, int i, int j, char c);
+int		find_rm_size(char *str, int i, int j, int *lock);
 
 void	leaks(void);
 

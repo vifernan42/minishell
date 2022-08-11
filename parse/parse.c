@@ -6,14 +6,14 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/09 20:14:16 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/11 19:45:42 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	more_redir(t_data *data, int i, int j, char **aux)
-{	
+{	/* parsear <<"eo<f">hola <fila1 */
 	while (data->spt_pipes[++i] != NULL)
 	{
 		aux = cmd_arg_quottes(data->spt_pipes[i]);
