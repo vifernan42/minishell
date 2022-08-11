@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:25:06 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/04 17:51:42 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/11 19:33:16 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ char	*skip_quotes(char *str)
 	aux = NULL;
 	while (str[++i] != '\0')
 	{
-		
 		if ((str[i] == '\'' || str[i] == '\"') && ((c == 0)
 				|| (count > 0 && (count % 2 == 0))))
 		{

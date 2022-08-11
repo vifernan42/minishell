@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/09 17:14:24 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:50:29 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	main(void) /* get_env */
 			data.spt_pipes = st_split(cmd_line, '|');
 			if (even_quotes(cmd_line, 0, 0, &data) == 0) /* revisar <<< o >>> */
 			{	
+				printf("SALE\n");
 				pipe = tokenizator(&data, -1);
 				lstdelete(pipe);
 			}

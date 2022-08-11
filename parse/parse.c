@@ -6,14 +6,14 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/08 17:26:40 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/11 19:33:02 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	more_redir(t_data *data, int i, int j, char **aux)
-{	
+{	/* parsear <<"eo<f">hola <fila1 */
 	while (data->spt_pipes[++i] != NULL)
 	{
 		aux = cmd_arg_quottes(data->spt_pipes[i]);
@@ -55,7 +55,6 @@ int	pipe_parse(t_data *data)
 		count = 0;
 		while (aux[++i] != NULL)
 		{
-			//printf("-	%s\n", aux[i]);
 			if (aux[i][0] == '\0')
 				count++;
 		}
@@ -69,7 +68,6 @@ int	pipe_parse(t_data *data)
 		free_matrix(aux);
 	}
 	return(more_redir(data, -1, -1, NULL));
-	//return (0);
 }
 
 int	even_quotes(char *s, int count, char x, t_data *data)
