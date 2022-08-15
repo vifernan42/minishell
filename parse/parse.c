@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/11 19:33:02 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/15 19:07:57 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 int	more_redir(t_data *data, int i, int j, char **aux)
 {	/* parsear <<"eo<f">hola <fila1 */
+	int	found;
+
+	found = 0;
 	while (data->spt_pipes[++i] != NULL)
 	{
 		aux = cmd_arg_quottes(data->spt_pipes[i]);
 		j = -1;
 		while (aux[++j] != NULL)
 		{
-			if ((((ft_strnstr(aux[j], "<<", ft_strlen(aux[j]))
-					|| (ft_strnstr(aux[j], ">>", ft_strlen(aux[j]))))
-					&& ft_strlen(aux[j]) && (aux[j + 1] != NULL))
-					&& ((aux[j + 1][0] == '<') || (aux[j + 1][0] == '>')))
-					|| (ft_strnstr(aux[j], "<<<", ft_strlen(aux[j]))
-					|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j]))))
+			found = find_rm_size(aux[j], 0, &found);
+			/* encontrar posibilidades de fallo */
+			if (ft_strnstr(aux[j], "<<<", ft_strlen(aux[j]))
+					|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j])))
 			{
 				if (ft_strnstr(aux[j], "<", ft_strlen(aux[j])))
 					syntax_char(ft_charjoin('<'), STDERR_FILENO);

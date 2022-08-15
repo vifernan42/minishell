@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/10 17:08:43 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/15 17:55:07 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 	int		fd;
 
 	fd = 0;
-	i = find_heredoc(cmd_sp, -1, 1);
+	i = find_heredoc(cmd_sp, -1, 0);
 	key = NULL;
 	if (i != -1)
 	{
 		if ((int)ft_strlen(cmd_sp[i]) > 2)
-			key = find_key(ft_strchr2(cmd_sp[i], '<'), -1, 0);
+			key = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, &fd) + 2, -1, 0);
 		else
 			key = find_key(cmd_sp[i + 1], -1, 0);
-		aux = rm_heredoc(cmd_sp, i, 0);
+		aux = rm_heredoc(cmd_sp, i, 1, 0);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
 		free(aux);
@@ -70,7 +70,7 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 		free_matrix(cmd_sp);
 		return (0);
 	}
-	if (find_heredoc(cmd_arg_quottes(*aux_cmd), 0, 1) == -1)
+	if (find_heredoc(cmd_arg_quottes(*aux_cmd), 0, 0) == -1)
 	{
 		write(1, "\n", 1);
 		free_matrix(cmd_sp);

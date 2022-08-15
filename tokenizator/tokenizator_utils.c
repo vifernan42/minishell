@@ -6,11 +6,27 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/11 19:39:41 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/15 19:54:38 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_strint(const char *s, char c)
+{
+	int		a;
+	int		len;
+
+	a = 0;
+	len = ft_strlen(s);
+	while (a < len + 1)
+	{
+		if (s[a] == c)
+			return (a);
+		a++;
+	}
+	return (-1);
+}
 
 char	*ret_key(char *str, int i, int j, char c)
 {
@@ -24,18 +40,20 @@ char	*ret_key(char *str, int i, int j, char c)
 	{
 		if ((str[i] == '<' || str[i] == '>') && lock == 0)
 			break ;
-		if ((str[i] == '\'' || str[i] == '\"') && lock == 0)
+		if ((str[i] == '\'' || str[i] == '\"') && (c == 0 && lock == 0))
 		{
 			if (str[i] == '\'')
 				c = '\'';
 			else
 				c = '\"';
-			lock++;
-			i++;
+			lock = 1;
 		}
-		else if ((c == '\'' || c == '\"') && str[i] == c)
-			lock--;
-		if ((str[i] != '\'' && str[i] != '\"') || lock == 1)
+		else if ((c == '\'' || c == '\"') && str[i] == c && lock == 1)
+		{
+			c = 0;
+			lock = 0;
+		}
+		else if ((str[i] != '\'' && str[i] != '\"') || lock == 1)
 			ret[j++] = str[i];
 	}
 	ret[j] = '\0';
@@ -45,25 +63,28 @@ char	*ret_key(char *str, int i, int j, char c)
 char	*find_key(char *str, int i, int j)
 {
 	char	c;
-	char	lock;
+	int		lock;
 
 	c = '\0';
 	lock = 0;
 	while (str[++i] != '\0')
 	{
-		if ((str[i] == '<' || str[i] == '>') && lock % 2 == 0)
+		if ((str[i] == '<' || str[i] == '>') && lock == 0)
 			break ;
-		if ((str[i] == '\'' || str[i] == '\"') && (c == '\0' && lock % 2 == 0))
+		if ((str[i] == '\'' || str[i] == '\"') && (c == 0 && lock == 0))
 		{
 			if (str[i] == '\'')
 				c = '\'';
 			else
 				c = '\"';
-			lock++;
+			lock = 1;
 		}
-		else if ((c == '\'' || c == '\"') && str[i] == c)
-			lock++;
-		if ((str[i] != '\'' && str[i] != '\"') || lock % 2 != 0)
+		else if ((c == '\'' || c == '\"') && str[i] == c && lock == 1)
+		{
+			c = 0;
+			lock = 0;
+		}
+		else if ((str[i] != '\'' && str[i] != '\"') || lock == 1)
 			j++;
 	}
 	return (ret_key(str, -1, j, '\0'));
@@ -75,16 +96,17 @@ char	**cmd_arg_quottes(char	*pipe)
 	char	**aux_cmd;
 	char	*aux;
 	int		x;
+	int		j;
 
 	aux = NULL;
+	j = 0;
 	if (!pipe)
 		return (NULL);
 	aux_cmd = spqu_split(skip_spaces(pipe), ' ');
 	x = -1;
 	while (aux_cmd[++x] != NULL)
 	{
-		if ((aux_cmd[x][0] != '$' && aux_cmd[x][0] != '<' && aux_cmd[x][0] != '>')
-				|| (x > 1 && aux_cmd[x - 1][0] != '<' && aux_cmd[x - 1][0] != '>')) /* revisar */
+		if (aux_cmd[x][0] != '$' && find_rm_size(aux_cmd[x], 0, &j) == (int)ft_strlen(aux_cmd[x]))
 			aux = skip_quotes(skip_spaces(aux_cmd[x]));
 		else
 			aux = skip_spaces(aux_cmd[x]);
@@ -94,8 +116,9 @@ char	**cmd_arg_quottes(char	*pipe)
 	return (aux_cmd);
 }
 
-int	find_heredoc(char **cmd_sp, int i, int x)
+int	find_heredoc(char **cmd_sp, int i, int type)
 {
+	int		lock;
 	int		flag;
 
 	if (!cmd_sp)
@@ -106,12 +129,12 @@ int	find_heredoc(char **cmd_sp, int i, int x)
 		i = -1;
 		flag = 1;
 	}
+	lock = 0;
 	while (cmd_sp[++i] != NULL)
 	{
-		if ((ft_strnstr(cmd_sp[i], "<<", ft_strlen(cmd_sp[i])) && x == 1) || (x == 2 &&
-		(ft_strnstr(cmd_sp[i], "<", ft_strlen(cmd_sp[i])) ||
-		ft_strnstr(cmd_sp[i], ">", ft_strlen(cmd_sp[i])) ||
-		ft_strnstr(cmd_sp[i], ">>", ft_strlen(cmd_sp[i])))))
+		if (ft_strnstr(cmd_sp[i], "<<", 2) || ft_strnstr(cmd_sp[i], "<", 1)
+			|| ft_strnstr(cmd_sp[i], ">>", 2) || ft_strnstr(cmd_sp[i], ">", 1) 
+			|| find_rm_size(cmd_sp[i], 0, &lock) != (int)ft_strlen(cmd_sp[i]))
 			break ;
 	}
 	if (cmd_sp[i] == NULL)
@@ -119,6 +142,12 @@ int	find_heredoc(char **cmd_sp, int i, int x)
 		if (flag > 0)
 			free_matrix(cmd_sp);
 		return (-1);
+	}
+	if (type == 0)
+	{
+		type = find_rm_size(cmd_sp[i], 0, &lock);
+		if (type == (int)ft_strlen(cmd_sp[i]) || (cmd_sp[i][type] != '<' || cmd_sp[i][type + 1] != '<'))
+			return (-1);
 	}
 	if (flag > 0)
 			free_matrix(cmd_sp);
@@ -141,7 +170,7 @@ char	*ft_strjoin_swap(char	*ret, char	*str)
 	return (ret);
 }
 
-int		find_rm_size(char *str, int i, int j, int *lock)
+int		find_rm_size(char *str, int i, int *lock)
 {
 	char	c;
 
@@ -149,8 +178,6 @@ int		find_rm_size(char *str, int i, int j, int *lock)
 	*lock = 0;
 	if (!str)
 		return (0);
-	while (str[i] == '>' || str[i] == '<')
-		i++;
 	while (str[i] != '\0')
 	{
 		if ((str[i] == '<' || str[i] == '>') && *lock % 2 == 0)
@@ -170,15 +197,29 @@ int		find_rm_size(char *str, int i, int j, int *lock)
 		}
 		i++;
 	}
-	if (j == (int)ft_strlen(str))
-	{
-		*lock = 0;
-		return (0);
-	}
 	return (i);
 }
 
-char	*rm_heredoc(char **cmd_sp, int i, int lock)
+char	*find_middle(char *str, int lock)
+{
+	int i;
+	int	init;
+	int	count;
+	int	end;
+	
+	
+	i = -1;
+	count = 0;
+	init = find_rm_size(str, 0, &lock);
+	while (str[init + count] == '>' || str[init + count] == '<')
+		count++;
+	end = find_rm_size((char *)str + init + count, 0, &lock);
+	return(ft_strjoin(ft_strjoin(ft_substr(str, 0, init), " "),
+					(char *)str + end + init + count));
+}
+
+
+char	*rm_heredoc(char **cmd_sp, int i, int f, int lock)
 {
 	char	*ret;
 	int		x;
@@ -186,6 +227,7 @@ char	*rm_heredoc(char **cmd_sp, int i, int lock)
 	int		start;
 
 	x = -1;
+	(void)f;
 	ret = NULL;
 	flag = 0;
 	while (cmd_sp[++x] != NULL)
@@ -194,7 +236,7 @@ char	*rm_heredoc(char **cmd_sp, int i, int lock)
 		if ( x  == i && (((ft_strnstr(cmd_sp[x], ">>", 2) || (ft_strnstr(cmd_sp[x], "<<", 2))) && (int)ft_strlen(cmd_sp[x]) == 2)
 				|| (ft_strnstr(cmd_sp[x], ">", 1) && (int)ft_strlen(cmd_sp[x]) == 1)))
 		{
-			start = find_rm_size(cmd_sp[x + 1], 0, 0, &lock) + lock;
+			start = find_rm_size(cmd_sp[x + 1], 0, &lock) + lock;
 			if (start)
 				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start - lock, (int)ft_strlen(cmd_sp[x + 1]) - (start - lock)));
 			x++;
@@ -203,57 +245,29 @@ char	*rm_heredoc(char **cmd_sp, int i, int lock)
 		}
 		else if (x == i && ((ft_strnstr(cmd_sp[x], ">>", 2) || (ft_strnstr(cmd_sp[x], "<<", 2))) && (int)ft_strlen(cmd_sp[x]) > 2))
 		{
-			start = find_rm_size(cmd_sp[x], 0, 0, &lock) + lock;
+			start = find_rm_size((char *)cmd_sp[x] + 2, 0, &lock);
 			if (start)
-				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start - lock, (int)ft_strlen(cmd_sp[x]) - (start - lock)));
+				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 2, (int)ft_strlen(cmd_sp[x]) - start));
 		}
-		else if (x == i && ((ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1))&& (int)ft_strlen(cmd_sp[x]) > 1))
+		else if (x == i && ((ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)) && (int)ft_strlen(cmd_sp[x]) > 1))
 		{
-			
-			start = find_rm_size(cmd_sp[x], 0, 0, &lock) + lock;
+			start = find_rm_size((char *)cmd_sp[x] + 1, 0, &lock);
 			if (start)
-				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start - lock, (int)ft_strlen(ft_strchr(cmd_sp[x], '>')) - (start - lock)));
+			{
+				if (ft_strnstr(cmd_sp[x], ">", 1))
+					ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 1, (int)ft_strlen(ft_strchr(cmd_sp[x], '>')) - (start - lock)));
+				else
+					ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 1, (int)ft_strlen(ft_strchr(cmd_sp[x], '<')) - (start - lock)));
+			}		
 		}
 		else
-			ret = ft_strjoin_swap(ret, cmd_sp[x]);
+		{
+			if (x == i && find_rm_size(cmd_sp[x], 0, &lock) != (int)ft_strlen(cmd_sp[x]))
+				ret = ft_strjoin_swap(ret, find_middle(cmd_sp[x], 0));
+			else
+				ret = ft_strjoin_swap(ret, cmd_sp[x]);
+		}
 		ret = ft_strjoin_swap(ret, " ");
 	}
 	return (ret);
 }
-/*
-char	*rm_heredoc(char **cmd_sp, int i)
-{
-	char	*ret;
-	int		x;
-
-	x = -1;
-	ret = NULL;
-	while (cmd_sp[++x] != NULL)
-	{
-		if (ft_str2chr(cmd_sp[x], '>') && x == i)
-		{
-			if (!ret)
-				ret  = ft_strdup(ft_str2chr(cmd_sp[x], '>'));
-			else
-				ret = ft_strjoin_swap(ret, ft_str2chr(cmd_sp[x], '>'));
-		}
-		else if (x == i && (cmd_sp[x][0] != '<' && cmd_sp[x][0] != '>'))
-		{
-			if (!ret)
-				ret  = ft_strinit(cmd_sp[x], '<');
-			else
-				ret = ft_strjoin_swap(ret, ft_strinit(cmd_sp[x], '<'));
-		}
-		else if ((x != i) || (x != i && x -1 != i))
-		{
-			if (!ret)
-				ret = ft_strdup(cmd_sp[x]);
-			else
-				ret = ft_strjoin_swap(ret, cmd_sp[x]);
-			printf("ret:	%s\n", ret);
-		}
-		ret = ft_strjoin_swap(ret, " ");
-	}
-	//printf("=	%s$\n", ret);
-	return (ret);
-}*/

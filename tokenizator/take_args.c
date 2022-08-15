@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:04:52 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/04 17:58:57 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/15 19:56:15 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*find_path(char *cmd, char *all_path, int i)
 	char	*aux_path;
 	char	**path_sp;
 
-	aux_cmd = ft_strjoin("/", cmd);
+	aux_cmd = ft_strjoin("/", skip_quotes(cmd));
 	aux_path = NULL;
 	path_sp = ft_split(all_path, ':');
 	if (cmd[0] == '/')
