@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/15 19:09:18 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/16 20:20:30 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret)
 	int	fd;
 	int	found;
 
-	found = find_rm_size(id, 0, &found);
+	found = find_rm_size(id, 0, &found, -1);
 	if (ft_strnstr((char *)id + found, "<", 1))
 	{
 		fd = open(fname, O_RDONLY, 0666);
@@ -45,7 +45,7 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 
 	fname = NULL;
 	j = 0;
-	i = find_heredoc(cmd_sp, -1, 1);
+	i = find_heredoc(cmd_sp, -1, -1);
 	if (i != -1)
 	{
 		if ((ft_strnstr(cmd_sp[i], ">>", 2) && (int)ft_strlen(cmd_sp[i]) == 2)
@@ -61,14 +61,15 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 			fname = find_key(ft_strchr(cmd_sp[i], '<') + 1, -1, 0);
 		else
 		{
-			fname = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, &j) + 1, -1, 0);
+			fname = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, &j, -1) + 1, -1, 0);
 			if (fname[0] == '\0')
-				fname = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, &j) + 2, -1, 0);
+				fname = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, &j, -1) + 2, -1, 0);
 		}
-		printf("fname:	%s\n", fname);
 		do_redirec(cmd_sp[i], skip_quotes(fname), ret);
 		free(fname);
-		fname = rm_heredoc(cmd_sp, i, 2, 0);
+		printf("-----------------------\n");
+		fname = rm_heredoc(cmd_sp, i, -1, 0);
+		printf("rm_redir:	%s\n", fname);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(fname);
 		free(fname);
