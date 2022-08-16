@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:05:32 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/03 19:13:40 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/15 19:59:37 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@ char	*sk_front(char *str)
 
 	i = 0;
 	j = ft_strlen(str) - 1;
-	while (str[j] == ' ' && j >= 0)
+	if (j == 0)
+		return (str);
+	while (j >= 0)
 	{
-		i++;
+		if (str[j] == ' ')
+			i++;
+		else
+			break ;
 		j--;
 	}
 	aux = ft_substr(str, 0, ft_strlen(str) - i);

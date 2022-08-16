@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/08 18:33:39 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:53:46 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ t_pipe	*create_node(char *cmd_stg, char *all_path)
 	ret = (t_pipe *)malloc(sizeof(t_pipe));
 	ft_bzero(ret, sizeof(t_pipe));
 	aux_cmd = ft_strdup(cmd_stg);
+	printf("rm_befo:	%s\n", aux_cmd);
 	ret->in_fd = take_heredoc(&aux_cmd, -1, cmd_arg_quottes(cmd_stg), NULL);
-	printf("+	%s\n", aux_cmd);
+	printf("rm-here:	%s\n", aux_cmd);
 	if (aux_cmd)
 		take_redirec(&aux_cmd, -1, cmd_arg_quottes(aux_cmd), ret);
-	//printf("+	%s\n", aux_cmd);
+	printf("rm_redr:	%s\n", aux_cmd);
 	if (aux_cmd)
 		take_args(cmd_arg_quottes(aux_cmd), ret, all_path);
 	free(aux_cmd);
