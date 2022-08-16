@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/11 19:45:42 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/16 20:44:52 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 
 int	more_redir(t_data *data, int i, int j, char **aux)
 {	/* parsear <<"eo<f">hola <fila1 */
+	int	found;
+
+	found = 0;
 	while (data->spt_pipes[++i] != NULL)
 	{
 		aux = cmd_arg_quottes(data->spt_pipes[i]);
 		j = -1;
 		while (aux[++j] != NULL)
 		{
-			if ((((ft_strnstr(aux[j], "<<", ft_strlen(aux[j]))
-					|| (ft_strnstr(aux[j], ">>", ft_strlen(aux[j]))))
-					&& ft_strlen(aux[j]) && (aux[j + 1] != NULL))
-					&& ((aux[j + 1][0] == '<') || (aux[j + 1][0] == '>')) && ft_strlen(aux[j]) == 2)
-					|| (ft_strnstr(aux[j], "<<<", ft_strlen(aux[j]))
-					|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j]))) || (((ft_strnstr(aux[j], "<", ft_strlen(aux[j]))
-					|| (ft_strnstr(aux[j], ">", ft_strlen(aux[j]))))
-					&& ft_strlen(aux[j]) && (aux[j + 1] != NULL))
-					&& ((aux[j + 1][0] == '<') || (aux[j + 1][0] == '>')) && ft_strlen(aux[j]) == 1))
+			found = find_rm_size(aux[j], 0, &found, -1);
+			/* encontrar posibilidades de fallo */
+			if (ft_strnstr(aux[j], "<<<", ft_strlen(aux[j]))
+					|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j])))
 			{
 				if (ft_strnstr(aux[j], "<", ft_strlen(aux[j])))
 					syntax_char(ft_charjoin('<'), STDERR_FILENO);
