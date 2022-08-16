@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/15 20:02:40 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:19:23 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,17 @@ int	main(void) /* get_env */
 	t_data	data;
 	t_pipe	*pipe;
 	char	*cmd_line;
+	int		i;
 
 	while (1)
 	{
 		data.all_path = get_promt(getenv("PATH"));
 		data.promt = get_promt(getenv("USER"));
 		cmd_line = readline (data.promt);
-		if (cmd_line[0] != '\0')
+		i = 0;
+		while (cmd_line[i] == ' ')
+			i++;
+		if (cmd_line[i] != '\0')
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
 			if (even_quotes(cmd_line, 0, 0, &data) == 0) /* revisar <<< o >>> */
