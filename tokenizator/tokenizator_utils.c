@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/11 19:45:20 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/12 19:26:23 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,38 +193,28 @@ char    *rm_heredoc(char **cmd_sp, int i, int lock)
         if ( x  == i && (((ft_strnstr(cmd_sp[x], ">>", 2) || (ft_strnstr(cmd_sp[x], "<<", 2))) && (int)ft_strlen(cmd_sp[x]) == 2)
                 || (ft_strnstr(cmd_sp[x], ">", 1) && (int)ft_strlen(cmd_sp[x]) == 1)))
         {
-            printf("    ENTRAA!\n");
             start = find_rm_size(cmd_sp[x + 1], -1, 0, &lock) + lock;
             if (start)
                 ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start - lock, (int)ft_strlen(cmd_sp[x + 1]) - (start - lock)));
             x++;
             if (cmd_sp[x] == NULL)
                 break ;
-			printf("ret>>:    %s$\n", ret);
         }
         else if (x == i && ((ft_strnstr(cmd_sp[x], ">>", 2) || (ft_strnstr(cmd_sp[x], "<<", 2))) && (int)ft_strlen(cmd_sp[x]) > 2))
         {
             start = find_rm_size(ft_strchr2(cmd_sp[x], '>'), -1, 0, &lock) + lock;
-			printf("start---> %d$\n", start);
-			printf("lock---> %d$\n", lock);
             if (start)
                 ret = ft_strjoin_swap(ret, ft_substr(ft_strchr2(cmd_sp[x], '>'), start - lock, (int)ft_strlen(ft_strchr2(cmd_sp[x], '>')) - (start - lock)));
-				printf("ret>>   :    %s$\n", ret);
         }
         else if (x == i && ((ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)) && (int)ft_strlen(cmd_sp[x]) > 1))
         {
             start = find_rm_size(ft_strchr(cmd_sp[x], '>') + 1, -1, 0, &lock) + lock;
-			printf("retlock>:    %s$\n", ret);
-			if (!ret)
-				break ;
             if (start)
                 ret = ft_strjoin_swap(ret, ft_substr(ft_strchr(cmd_sp[x], '>'), start - lock, (int)ft_strlen(ft_strchr(cmd_sp[x], '>')) - (start - lock)));
-			printf("ret>:    %s$\n", ret);
         }
         else
 			    ret = ft_strjoin_swap(ret, cmd_sp[x]);
         ret = ft_strjoin_swap(ret, " ");
-   		printf("ret:    %s$\n", ret);
     }
     i = -1;
    	while (ret[++i] != '\0')
