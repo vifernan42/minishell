@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/16 20:45:03 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/17 19:34:17 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 		else
 			key = find_key(cmd_sp[i + 1], -1, 0);
 		aux = rm_heredoc(cmd_sp, i, 0, 0);
-		printf("rm_here:	%s\n", aux);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
 		free(aux);
