@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/17 19:34:22 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/17 19:58:24 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,18 +276,9 @@ char	*rm_heredoc(char **cmd_sp, int i, int type, int lock)
 			if (x == i && find_rm_size(cmd_sp[x], 0, &lock, type) != (int)ft_strlen(cmd_sp[x]))
 				ret = ft_strjoin_swap(ret, find_middle(cmd_sp[x], 0, type), 1);
 			else
-<<<<<<< HEAD
-			{
-				ret = ft_strjoin_swap(ret, cmd_sp[x]);
-		}
-		ret = ft_strjoin_swap(ret, " ");
-		printf("ret:	%s$\n", ret);
-		
-=======
 				ret = ft_strjoin_swap(ret, cmd_sp[x], 0);
 		}
 		ret = ft_strjoin_swap(ret, " ", 0);
->>>>>>> vifernan
 	}
 	i = -1;
 	x = 0;
