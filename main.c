@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/16 13:19:23 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/17 18:41:38 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_promt(char *user)
 	return (ft_strjoin(user, "@minishell: $ "));
 }
 
-void	nodedelete(t_pipe *pipe, t_pipe *next)
+void	nodedelete(t_pipe *pipe, t_pipe **next)
 {
 	if (pipe->exec_path)
 		free(pipe->exec_path);
@@ -40,7 +40,7 @@ void	nodedelete(t_pipe *pipe, t_pipe *next)
 		free(pipe->in_name);
 	if (pipe->err)
 		free(pipe->err);
-	next = pipe->next;
+	*next = pipe->next;
 	free(pipe);
 }
 
@@ -53,13 +53,14 @@ void	lstdelete(t_pipe *pipe)
 	next = NULL;
 	while(pipe)
 	{
-		nodedelete(pipe, next);
+		nodedelete(pipe, &next);
 		pipe = next;
 	}
 }
 
-void	print_node(t_pipe *pipe, t_pipe *next)
+void	print_node(t_pipe *pipe, t_pipe **next)
 {
+	(void)next;
 	if (pipe->exec_path)
 		printf("exec_path:	%s\n", pipe->exec_path);
 	if (pipe->argv)
@@ -69,7 +70,7 @@ void	print_node(t_pipe *pipe, t_pipe *next)
 		printf("in_fd:	%d\n", pipe->in_fd);
 	if (pipe->out_fd)
 		printf("out_fd:	%d\n", pipe->out_fd);
-	next = pipe->next;
+	*next = pipe->next;
 }
 
 void	print_list(t_pipe *pipe)
@@ -84,8 +85,8 @@ void	print_list(t_pipe *pipe)
 	while(pipe)
 	{
 		printf("--NODE %d--\n", num++);
-		print_node(pipe, next);
-		pipe = next;
+		print_node(pipe, &next);
+		pipe = pipe->next;
 	}
 }
 
@@ -115,9 +116,10 @@ int	main(void) /* get_env */
 			}
 			free_matrix(data.spt_pipes);
 		}
+		add_history(cmd_line);
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		//system("leaks minishell");
+		system("leaks minishell");
 	}
 }
