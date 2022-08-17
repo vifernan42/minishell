@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/16 20:42:24 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/17 18:26:29 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,8 @@ int		find_rm_size(char *str, int i, int *lock, int type)
 		return (0);
 	while (str[i] != '\0')
 	{
-		if (*lock % 2 == 0 && ((type == 0 && str[i] == '<' && str[i + 1] == '<') || ( type != 0 && (str[i] == '<' || str[i] == '>'))))
+		if (*lock % 2 == 0 && (((type == 0 || type == 5) && str[i] == '<' && str[i + 1] == '<')
+				|| ( type != 0 && (str[i] == '<' || str[i] == '>'))))
 			break ;
 		if ((str[i] == '\'' || str[i] == '\"') && (c == '\0' && *lock % 2 == 0))
 		{
@@ -191,43 +192,39 @@ char	*find_middle(char *str, int lock, int type)
 	int		end;
 	char	*aux;
 	char	*ret;
-	
+
 	init = find_rm_size(str, 0, &lock, type);
 	end = 0;
 	while (str[init + end] == '>' || str[init + end] == '<')
 		end++;
+	aux = ft_substr(str, 0, init);
 	init += end;
-	end = find_rm_size((char *)str + init, 0, &lock, type);
-	ret = ft_substr(str, 0, find_rm_size(str, 0, &lock, type));
-	aux = ret;
-	free(ret);
-	aux = ft_strjoin(aux, " ");
+	ret = ft_strdup(aux);
+	free(aux);
+	aux = ft_strjoin(ret, " ");
 	free (ret);
+	end = find_rm_size((char *)str + init, 0, &lock, 5);
 	ret = ft_strjoin(aux, (char *)str + end + init);
 	free(aux);
 	return(ret);
 }
 
-char	*ft_strjoin_swap(char	*ret, char	*str)
+char	*ft_strjoin_swap(char	*ret, char	*str, int flag)
 {
 	char	*aux;
 
 	aux = NULL;
 	if (!ret)
-		return (ft_strdup(str));
+		ret = ft_strdup(str);
 	else
-	{ /* leak - cat        <env.c>>file1<<eof */
-		//printf("1 - STR:%s --- %p| AUX:%s --- %p| RET:%s --- %p\n\n", str, str,aux, aux, ret, ret);
-		//aux = ft_strdup(ret);
-		aux = ret;
-		//free(ret);
-		//ret = NULL;
-		//printf("2 - STR:%s --- %p| AUX:%s --- %p| RET:%s --- %p\n\n", str, str,aux, aux, ret, ret);
+	{
+		aux = ft_strdup(ret);
+		free(ret);
 		ret = ft_strjoin(aux, str);
-		//printf("JOIN_	-%s$\n\n", ret);
 		free (aux);
 	}
-	//printf("+++++++++++++++++++++++++++++++++++++++++++++\n");
+	if (flag)
+		free(str);
 	return (ret);
 }
 
@@ -246,16 +243,16 @@ char	*rm_heredoc(char **cmd_sp, int i, int type, int lock)
 		lock = 0;
 		if (x  == i && cmd_sp[x + 1] && (int)ft_strlen(cmd_sp[x]) == 2 && ((ft_strnstr(cmd_sp[x], ">>", 2) && type == 0) || (ft_strnstr(cmd_sp[x], "<<", 2) && type != 0)))
 		{
-			start = find_rm_size(cmd_sp[x + 1], 0, &lock, type) + lock;
-			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start - lock, (int)ft_strlen(cmd_sp[x + 1]) - (start - lock)));
+			start = find_rm_size(cmd_sp[x + 1], 0, &lock, type);
+			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start, (int)ft_strlen(cmd_sp[x + 1]) - start), 1);
 			x++;
 			if (cmd_sp[x] == NULL)
 				break ;
 		}
 		else if (x  == i && cmd_sp[x + 1] && (int)ft_strlen(cmd_sp[x]) == 1 && type != 0 && (ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)))
 		{
-			start = find_rm_size(cmd_sp[x + 1], 0, &lock, type) + lock;
-			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start - lock, (int)ft_strlen(cmd_sp[x + 1]) - (start - lock)));
+			start = find_rm_size(cmd_sp[x + 1], 0, &lock, type);
+			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start, (int)ft_strlen(cmd_sp[x + 1]) - start), 1);
 			x++;
 			if (cmd_sp[x] == NULL)
 				break ;
@@ -263,24 +260,24 @@ char	*rm_heredoc(char **cmd_sp, int i, int type, int lock)
 		else if (x == i && (int)ft_strlen(cmd_sp[x]) > 2 && ((ft_strnstr(cmd_sp[x], ">>", 2) && type != 0) || (ft_strnstr(cmd_sp[x], "<<", 2) && type == 0)))
 		{
 			start = find_rm_size((char *)cmd_sp[x] + 2, 0, &lock, type);
-			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 2, (int)ft_strlen(cmd_sp[x]) - start));
+			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 2, (int)ft_strlen(cmd_sp[x]) - start), 1);
 		}
 		else if (x == i && type != 0 && ((ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)) && (int)ft_strlen(cmd_sp[x]) > 1))
 		{
 			start = find_rm_size((char *)cmd_sp[x] + 1, 0, &lock, type);
 			if (ft_strnstr(cmd_sp[x], ">", 1))
-				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 1, (int)ft_strlen(ft_strchr(cmd_sp[x], '>')) - (start - lock)));
+				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 1, (int)ft_strlen(ft_strchr(cmd_sp[x], '>')) - start), 1);
 			else
-				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 1, (int)ft_strlen(ft_strchr(cmd_sp[x], '<')) - (start - lock)));
+				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 1, (int)ft_strlen(ft_strchr(cmd_sp[x], '<')) - start), 1);
 		}
 		else
 		{
 			if (x == i && find_rm_size(cmd_sp[x], 0, &lock, type) != (int)ft_strlen(cmd_sp[x]))
-				ret = ft_strjoin_swap(ret, find_middle(cmd_sp[x], 0, type));
+				ret = ft_strjoin_swap(ret, find_middle(cmd_sp[x], 0, type), 1);
 			else
-				ret = ft_strjoin_swap(ret, cmd_sp[x]);
+				ret = ft_strjoin_swap(ret, cmd_sp[x], 0);
 		}
-		ret = ft_strjoin_swap(ret, " ");
+		ret = ft_strjoin_swap(ret, " ", 0);
 	}
 	i = -1;
 	x = 0;
