@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/18 17:08:20 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/18 17:41:06 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	main(void) /* get_env */
 		if (cmd_line[i] != '\0')
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
-			if (even_quotes(cmd_line, 0, 0, &data) == 0) /* revisar <<< o >>> */
+			if (even_quotes(cmd_line, 0, 0, &data) == 0)
 			{	
 				pipe = tokenizator(&data, -1);
 				print_list(pipe);

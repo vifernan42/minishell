@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/17 19:34:17 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/18 17:42:06 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,35 @@ static int	do_heredoc(char *key)
 		return (0);
 	rdline_heredoc(key, pip[WR_END]);
 	close(pip[WR_END]);
+	if (key)
+		free(key);
 	return (pip[RD_END]);
+}
+
+char	*key_value(char **cmd_sp, int i)
+{
+	char	*key;
+
+	if ((int)ft_strlen(cmd_sp[i]) > 2)
+		key = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, 0, 0) + 2, -1, 0);
+	else
+		key = find_key(cmd_sp[i + 1], -1, 0);
+	return (key);
 }
 
 int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 {
-	char	*key;
 	int		fd;
 
 	fd = 0;
 	i = find_heredoc(cmd_sp, -1, 0);
-	key = NULL;
 	if (i != -1)
 	{
-		if ((int)ft_strlen(cmd_sp[i]) > 2)
-			key = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, &fd, 0) + 2, -1, 0);
-		else
-			key = find_key(cmd_sp[i + 1], -1, 0);
+		fd = do_heredoc(skip_quotes(key_value(cmd_sp, i)));
 		aux = rm_heredoc(cmd_sp, i, 0, 0);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
 		free(aux);
-		fd = do_heredoc(skip_quotes(key));
-		if (key)
-			free(key);
 	}
 	else
 	{
