@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/17 18:41:38 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/18 17:08:20 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,6 @@ int	main(void) /* get_env */
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		system("leaks minishell");
+	//	system("leaks minishell");
 	}
 }

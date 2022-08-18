@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/17 19:58:24 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/18 17:07:52 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,9 @@ char	*rm_heredoc(char **cmd_sp, int i, int type, int lock)
 		if (ret[i] == ' ')
 			x++;
 	if (x == i)
+	{
+		free (ret);
 		return (NULL);
+	}
 	return (ret);
 }
