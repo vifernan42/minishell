@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/18 19:44:45 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/18 21:11:30 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,44 +225,51 @@ char	*ft_strjoin_swap(char	*ret, char	*str, int flag)
 	return (ret);
 }
 
+static	void aux_rm(char **cmd_sp, int type, char *ret, int x)
+{
+	int		start;
+
+	start = find_rm_size(cmd_sp[x + 1], 0, 0, type);
+	ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start, (int)ft_strlen(cmd_sp[x + 1]) - start), 1);
+	x++;
+	if (cmd_sp[x] == NULL)
+		return ;
+}
+
+static	void check_rm(int i, int x, char *ret)
+{
+	i = -1;
+	x = 0;
+	while (ret[++i] != '\0')
+		if (ret[i] == ' ')
+			x++;
+}
+
 char	*rm_heredoc(char **cmd_sp, int i, int type, int size)
 {
 	char	*ret;
 	int		x;
-	int		flag;
 	int		start;
 
 	size = 1;
 	x = -1;
 	ret = NULL;
-	flag = 0;
-	(void)i;
 	while (cmd_sp[++x] != NULL)
 	{
 		if (x == i && cmd_sp[x + 1] && (int)ft_strlen(cmd_sp[x]) == 2 
 			&& ((ft_strnstr(cmd_sp[x], ">>", 2) && type == 0) || (ft_strnstr(cmd_sp[x], "<<", 2) && type != 0)))
-		{
-			start = find_rm_size(cmd_sp[x + 1], 0, 0, type);
-			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start, (int)ft_strlen(cmd_sp[x + 1]) - start), 1);
-			x++;
-			if (cmd_sp[x] == NULL)
-				break ;
-		}
+			aux_rm(cmd_sp, type, ret, x);
 		else if (x == i && cmd_sp[x + 1] && (int)ft_strlen(cmd_sp[x]) == 1 && type != 0 
 			&& (ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)))
-		{
-			start = find_rm_size(cmd_sp[x + 1], 0, 0, type);
-			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start, (int)ft_strlen(cmd_sp[x + 1]) - start), 1);
-			x++;
-			if (cmd_sp[x] == NULL)
-				break ;
-		}
-		else if (x == i && (int)ft_strlen(cmd_sp[x]) > 2 && ((ft_strnstr(cmd_sp[x], ">>", 2) && type != 0) || (ft_strnstr(cmd_sp[x], "<<", 2) && type == 0)))
+			aux_rm(cmd_sp, type, ret, x);
+		else if (x == i && (int)ft_strlen(cmd_sp[x]) > 2 && ((ft_strnstr(cmd_sp[x], ">>", 2) && type != 0) 
+			|| (ft_strnstr(cmd_sp[x], "<<", 2) && type == 0)))
 		{
 			start = find_rm_size((char *)cmd_sp[x] + 2, 0, 0, type);
 			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 2, (int)ft_strlen(cmd_sp[x]) - start), 1);
 		}
-		else if (x == i && type != 0 && ((ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)) && (int)ft_strlen(cmd_sp[x]) > 1))
+		else if (x == i && type != 0 && ((ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)) 
+			&& (int)ft_strlen(cmd_sp[x]) > 1))
 		{
 			start = find_rm_size((char *)cmd_sp[x] + 1, 0, 0, type);
 			if (ft_strnstr(cmd_sp[x], ">", 1))
@@ -279,11 +286,7 @@ char	*rm_heredoc(char **cmd_sp, int i, int type, int size)
 		}
 		ret = ft_strjoin_swap(ret, " ", 0);
 	}
-	i = -1;
-	x = 0;
-	while (ret[++i] != '\0')
-		if (ret[i] == ' ')
-			x++;
+	check_rm(-1, 0, ret);
 	if (x == i)
 	{
 		free(ret);
