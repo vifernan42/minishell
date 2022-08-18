@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/17 16:13:33 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/18 15:35:19 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret)
 	int	fd;
 	int	found;
 
-	found = find_rm_size(id, 0, &found, -1);
+	found = find_rm_size(id, 0, 0, -1);
 	if (ft_strnstr((char *)id + found, "<", 1))
 	{
 		fd = open(fname, O_RDONLY, 0666);
@@ -36,43 +36,48 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret)
 			close(ret->out_fd);
 		ret->out_fd = fd;
 	}
+	free(fname);
+}
+char	*find_fname(char **cmd_sp, int i)
+{
+	char	*fname;
+
+	fname = NULL;
+	if ((ft_strnstr(cmd_sp[i], ">>", 2) && (int)ft_strlen(cmd_sp[i]) == 2)
+			|| (ft_strnstr(cmd_sp[i], ">", 1) && (int)ft_strlen(cmd_sp[i]) == 1))
+		fname = find_key(cmd_sp[i + 1], -1, 0);
+	else if (ft_strnstr(cmd_sp[i], ">>", 2) && (int)ft_strlen(cmd_sp[i]) > 2)
+		fname = find_key(ft_strchr2(cmd_sp[i], '>'), -1, 0);
+	else if (ft_strnstr(cmd_sp[i], ">", 1) && (int)ft_strlen(cmd_sp[i]) > 1)
+		fname = find_key(ft_strchr(cmd_sp[i], '>') + 1, -1, 0);
+	else if ((ft_strnstr(cmd_sp[i], "<", 1) && (int)ft_strlen(cmd_sp[i]) == 1))
+		fname = find_key(cmd_sp[i + 1], -1, 0);
+	else if (ft_strnstr(cmd_sp[i], "<", 1) && (int)ft_strlen(cmd_sp[i]) > 1)
+		fname = find_key(ft_strchr(cmd_sp[i], '<') + 1, -1, 0);
+	else
+	{
+		fname = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, 0, -1) + 1, -1, 0);
+		if (fname[0] == '\0')
+			fname = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, 0, -1) + 2, -1, 0);
+	}
+	return (fname);
 }
 
 void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 {
-	char	*fname;
+	char	*swap;
 	int		j;
 
-	fname = NULL;
+	swap = NULL;
 	j = 0;
 	i = find_heredoc(cmd_sp, -1, -1);
 	if (i != -1)
 	{
-		if ((ft_strnstr(cmd_sp[i], ">>", 2) && (int)ft_strlen(cmd_sp[i]) == 2)
-				|| (ft_strnstr(cmd_sp[i], ">", 1) && (int)ft_strlen(cmd_sp[i]) == 1))
-			fname = find_key(cmd_sp[i + 1], -1, 0);
-		else if (ft_strnstr(cmd_sp[i], ">>", 2) && (int)ft_strlen(cmd_sp[i]) > 2)
-			fname = find_key(ft_strchr2(cmd_sp[i], '>'), -1, 0);
-		else if (ft_strnstr(cmd_sp[i], ">", 1) && (int)ft_strlen(cmd_sp[i]) > 1)
-			fname = find_key(ft_strchr(cmd_sp[i], '>') + 1, -1, 0);
-		else if ((ft_strnstr(cmd_sp[i], "<", 1) && (int)ft_strlen(cmd_sp[i]) == 1))
-			fname = find_key(cmd_sp[i + 1], -1, 0);
-		else if (ft_strnstr(cmd_sp[i], "<", 1) && (int)ft_strlen(cmd_sp[i]) > 1)
-			fname = find_key(ft_strchr(cmd_sp[i], '<') + 1, -1, 0);
-		else
-		{
-			fname = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, &j, -1) + 1, -1, 0);
-			if (fname[0] == '\0')
-				fname = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, &j, -1) + 2, -1, 0);
-		}
-		do_redirec(cmd_sp[i], skip_quotes(fname), ret);
-		free(fname);
-		//printf("-----------------------\n");
-		fname = rm_heredoc(cmd_sp, i, -1, 0);
-		//printf("rm_redir:	%s\n", fname);
+		do_redirec(cmd_sp[i], skip_quotes(find_fname(cmd_sp, i)), ret); /* revisar skip_quotes >h"o'l'a" -> ho'l'a */ 
+		swap = rm_heredoc(cmd_sp, i, -1, 0);
 		free(*aux_cmd);
-		*aux_cmd = ft_strdup(fname);
-		free(fname);
+		*aux_cmd = ft_strdup(swap);
+		free(swap);
 	}
 	if (find_heredoc(cmd_arg_quottes(*aux_cmd), 0, 1) == -1)
 	{

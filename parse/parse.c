@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/16 14:50:59 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/18 15:00:23 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	more_redir(t_data *data, int i, int j, char **aux)
 		j = -1;
 		while (aux[++j] != NULL)
 		{
-			found = find_rm_size(aux[j], 0, &found, -1);
+			found = find_rm_size(aux[j], 0, 0, -1);
 			/* encontrar posibilidades de fallo */
 			if (ft_strnstr(aux[j], "<<<", ft_strlen(aux[j]))
 					|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j])))
