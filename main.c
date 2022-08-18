@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/18 17:41:06 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/18 19:41:42 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,19 @@ void	print_list(t_pipe *pipe)
 	}
 }
 
-int	main(void) /* get_env */
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	t_pipe	*pipe;
 	char	*cmd_line;
 	int		i;
+	
+	(void)argc;
+	(void)argv;
 
 	while (1)
 	{
+		data.env = keep_env(envp);
 		data.all_path = get_promt(getenv("PATH"));
 		data.promt = get_promt(getenv("USER"));
 		cmd_line = readline (data.promt);
@@ -120,6 +124,7 @@ int	main(void) /* get_env */
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
+		free_matrix(data.env);
 	//	system("leaks minishell");
 	}
 }

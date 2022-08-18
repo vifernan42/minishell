@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/08/04 13:06:36 by vifernan         ###   ########.fr        #
+#    Updated: 2022/08/18 19:19:37 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = main.c \
 	   ./tokenizator/redirec.c \
 	   ./tokenizator/take_args.c \
 	   ./tokenizator/tokenizator_utils.c \
+	   env.c \
 
 OBJECTS = $(SRCS:.c=.o)
 LIBFT_DIR = libft/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/18 14:59:57 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/18 19:19:09 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		even_quotes(char *s, int count, char x, t_data *data);
 //int		echos(char **argv, int fd);
 //char|\\\*pwdcurrent();
 char	*get_promt(char *user);
+char	**keep_env(char **env);
 
 /* errors */
 int		syntax_char(char *ch, int fd);

@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/18 17:42:02 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/18 19:41:22 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 	i = find_heredoc(cmd_sp, -1, -1);
 	if (i != -1)
 	{
-		do_redirec(cmd_sp[i], skip_quotes(find_fname(cmd_sp, i)), ret); /* revisar skip_quotes >h"o'l'a" -> ho'l'a */ 
+		do_redirec(cmd_sp[i], skip_quotes(find_fname(cmd_sp, i)), ret); 
 		swap = rm_heredoc(cmd_sp, i, -1, 0);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(swap);

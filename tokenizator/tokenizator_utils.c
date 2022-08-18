@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/18 17:41:12 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/18 19:44:45 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,8 @@ char	*rm_heredoc(char **cmd_sp, int i, int type, int size)
 	(void)i;
 	while (cmd_sp[++x] != NULL)
 	{
-		if (x  == i && cmd_sp[x + 1] && (int)ft_strlen(cmd_sp[x]) == 2 && ((ft_strnstr(cmd_sp[x], ">>", 2) && type == 0) || (ft_strnstr(cmd_sp[x], "<<", 2) && type != 0)))
+		if (x == i && cmd_sp[x + 1] && (int)ft_strlen(cmd_sp[x]) == 2 
+			&& ((ft_strnstr(cmd_sp[x], ">>", 2) && type == 0) || (ft_strnstr(cmd_sp[x], "<<", 2) && type != 0)))
 		{
 			start = find_rm_size(cmd_sp[x + 1], 0, 0, type);
 			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start, (int)ft_strlen(cmd_sp[x + 1]) - start), 1);
@@ -247,7 +248,8 @@ char	*rm_heredoc(char **cmd_sp, int i, int type, int size)
 			if (cmd_sp[x] == NULL)
 				break ;
 		}
-		else if (x  == i && cmd_sp[x + 1] && (int)ft_strlen(cmd_sp[x]) == 1 && type != 0 && (ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)))
+		else if (x == i && cmd_sp[x + 1] && (int)ft_strlen(cmd_sp[x]) == 1 && type != 0 
+			&& (ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)))
 		{
 			start = find_rm_size(cmd_sp[x + 1], 0, 0, type);
 			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start, (int)ft_strlen(cmd_sp[x + 1]) - start), 1);
