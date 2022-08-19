@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/18 17:42:06 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/19 13:50:54 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 	if (i != -1)
 	{
 		fd = do_heredoc(skip_quotes(key_value(cmd_sp, i)));
-		aux = rm_heredoc(cmd_sp, i, 0, 0);
+		aux = rm_heredoc(cmd_sp, i, 0, 2);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
 		free(aux);
