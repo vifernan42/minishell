@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/18 19:41:22 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/19 16:30:13 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_redirec(char	*id, char *fname, t_pipe *ret)
+void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 {
 	int	fd;
 	int	found;
@@ -28,8 +28,11 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret)
 	else if (ft_strnstr((char *)id + found, ">", 1)
 				|| ft_strnstr((char *)id + found, ">>", 2))
 	{
-		if (ft_strnstr(id, ">>", 2))
+		if (ft_strnstr((char *)id + found, ">>", 2))
+		{
 			fd = open(fname, O_WRONLY | O_CREAT | O_APPEND, 0666);
+			*size = 2;
+		}
 		else
 			fd = open(fname, O_WRONLY | O_CREAT | O_CREAT, 0666);
 		if (ret->out_fd)
@@ -66,15 +69,15 @@ char	*find_fname(char **cmd_sp, int i)
 void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 {
 	char	*swap;
-	int		j;
+	int		size;
 
 	swap = NULL;
-	j = 0;
+	size = 1;
 	i = find_heredoc(cmd_sp, -1, -1);
 	if (i != -1)
 	{
-		do_redirec(cmd_sp[i], skip_quotes(find_fname(cmd_sp, i)), ret); 
-		swap = rm_heredoc(cmd_sp, i, -1, 0);
+		do_redirec(cmd_sp[i], skip_quotes(find_fname(cmd_sp, i)), ret, &size); 
+		swap = rm_heredoc(cmd_sp, i, -1, size);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(swap);
 		free(swap);

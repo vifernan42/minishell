@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/18 19:19:09 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/19 17:05:12 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	take_args(char **cmd_sp, t_pipe *ret, char *all_path);
 char	*find_key(char *str, int i, int j);
 char	*ret_key(char *str, int i, int j, char c);
 int		find_rm_size(char *str, int i, int lock, int type);
+char	*find_middle(char *str, int type);
 
 void	leaks(void);
 

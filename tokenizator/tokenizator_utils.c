@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizator_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/18 19:44:45 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/19 17:17:55 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,10 @@ int	find_heredoc(char **cmd_sp, int i, int type)
 		flag = 1;
 	}
 	while (cmd_sp[++i] != NULL)
-	{
 		if ((type == 0 && ft_strnstr(cmd_sp[i], "<<", 2)) || (type != 0 && (ft_strnstr(cmd_sp[i], "<", 1)
 			|| ft_strnstr(cmd_sp[i], ">>", 2) || ft_strnstr(cmd_sp[i], ">", 1))) 
 			|| find_rm_size(cmd_sp[i], 0, 0, type) != (int)ft_strlen(cmd_sp[i]))
 				break ;
-	}
 	if (cmd_sp[i] == NULL)
 	{
 		if (flag > 0)
@@ -162,7 +160,8 @@ int		find_rm_size(char *str, int i, int lock, int type)
 		return (0);
 	while (str[i] != '\0')
 	{
-		if (lock % 2 == 0 && (((type == 0 || type == 5) && str[i] == '<' && str[i + 1] == '<')
+		if (lock % 2 == 0 && (((type == 0 || type == 5)
+				&& str[i] == '<' && str[i + 1] == '<')
 				|| ( type != 0 && (str[i] == '<' || str[i] == '>'))))
 			break ;
 		if ((str[i] == '\'' || str[i] == '\"') && (c == '\0' && lock % 2 == 0))
@@ -173,14 +172,49 @@ int		find_rm_size(char *str, int i, int lock, int type)
 				c = '\"';
 			lock += 1;
 		}
-		else if ((c == '\'' || c == '\"') && str[i] == c)
-		{
+		else if ((c == '\'' || c == '\"') && str[i] == c && lock++)
 			c = '\0';
-			lock += 1;
-		}
 		i++;
 	}
 	return (i);
+}
+
+
+char	*join_swap(char	*ret, char	*str, int flag)
+{
+	char	*aux;
+
+	aux = NULL;
+	if (!ret)
+		ret = ft_strdup(str);
+	else
+	{
+		aux = ft_strdup(ret);
+		free(ret);
+		ret = ft_strjoin(aux, str);
+		free (aux);
+	}
+	if (flag)
+		free(str);
+	return (ret);
+}
+
+char	*ret_value(char *ret)
+{
+	int	i;
+	int	x;
+
+	i = -1;
+	x = 0;
+	while (ret[++i] != '\0')
+		if (ret[i] == ' ')
+			x++;
+	if (x == i)
+	{
+		free(ret);
+		return (NULL);
+	}
+	return (ret);
 }
 
 char	*find_middle(char *str, int type)
@@ -206,88 +240,26 @@ char	*find_middle(char *str, int type)
 	return(ret);
 }
 
-char	*ft_strjoin_swap(char	*ret, char	*str, int flag)
-{
-	char	*aux;
-
-	aux = NULL;
-	if (!ret)
-		ret = ft_strdup(str);
-	else
-	{
-		aux = ft_strdup(ret);
-		free(ret);
-		ret = ft_strjoin(aux, str);
-		free (aux);
-	}
-	if (flag)
-		free(str);
-	return (ret);
-}
-
 char	*rm_heredoc(char **cmd_sp, int i, int type, int size)
 {
 	char	*ret;
 	int		x;
-	int		flag;
-	int		start;
 
-	size = 1;
 	x = -1;
 	ret = NULL;
-	flag = 0;
-	(void)i;
 	while (cmd_sp[++x] != NULL)
 	{
-		if (x == i && cmd_sp[x + 1] && (int)ft_strlen(cmd_sp[x]) == 2 
-			&& ((ft_strnstr(cmd_sp[x], ">>", 2) && type == 0) || (ft_strnstr(cmd_sp[x], "<<", 2) && type != 0)))
-		{
-			start = find_rm_size(cmd_sp[x + 1], 0, 0, type);
-			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start, (int)ft_strlen(cmd_sp[x + 1]) - start), 1);
-			x++;
-			if (cmd_sp[x] == NULL)
-				break ;
-		}
-		else if (x == i && cmd_sp[x + 1] && (int)ft_strlen(cmd_sp[x]) == 1 && type != 0 
-			&& (ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)))
-		{
-			start = find_rm_size(cmd_sp[x + 1], 0, 0, type);
-			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x + 1], start, (int)ft_strlen(cmd_sp[x + 1]) - start), 1);
-			x++;
-			if (cmd_sp[x] == NULL)
-				break ;
-		}
-		else if (x == i && (int)ft_strlen(cmd_sp[x]) > 2 && ((ft_strnstr(cmd_sp[x], ">>", 2) && type != 0) || (ft_strnstr(cmd_sp[x], "<<", 2) && type == 0)))
-		{
-			start = find_rm_size((char *)cmd_sp[x] + 2, 0, 0, type);
-			ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 2, (int)ft_strlen(cmd_sp[x]) - start), 1);
-		}
-		else if (x == i && type != 0 && ((ft_strnstr(cmd_sp[x], ">", 1) || ft_strnstr(cmd_sp[x], "<", 1)) && (int)ft_strlen(cmd_sp[x]) > 1))
-		{
-			start = find_rm_size((char *)cmd_sp[x] + 1, 0, 0, type);
-			if (ft_strnstr(cmd_sp[x], ">", 1))
-				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 1, (int)ft_strlen(ft_strchr(cmd_sp[x], '>')) - start), 1);
-			else
-				ret = ft_strjoin_swap(ret, ft_substr(cmd_sp[x], start + 1, (int)ft_strlen(ft_strchr(cmd_sp[x], '<')) - start), 1);
-		}
+		if (x != i)
+			ret = join_swap(ret, cmd_sp[x], 0);
 		else
 		{
-			if (x == i && find_rm_size(cmd_sp[x], 0, 0, type) != (int)ft_strlen(cmd_sp[x]))
-				ret = ft_strjoin_swap(ret, find_middle(cmd_sp[x], type), 1);
-			else
-				ret = ft_strjoin_swap(ret, cmd_sp[x], 0);
+			ret = join_swap(ret, find_middle(cmd_sp[x], type), 1);
+			if ((int)ft_strlen(cmd_sp[x]) == size)
+				x++;
 		}
-		ret = ft_strjoin_swap(ret, " ", 0);
+		ret = join_swap(ret, " ", 0);
+		if (cmd_sp[x] == NULL)
+			break ;
 	}
-	i = -1;
-	x = 0;
-	while (ret[++i] != '\0')
-		if (ret[i] == ' ')
-			x++;
-	if (x == i)
-	{
-		free(ret);
-		return (NULL);
-	}
-	return (ret);
+	return (ret_value(ret));
 }
