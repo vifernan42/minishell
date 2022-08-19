@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
+#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/08/18 19:19:37 by ialvarez         ###   ########.fr        #
+#    Updated: 2022/08/19 19:46:02 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = main.c \
 	   ./tokenizator/redirec.c \
 	   ./tokenizator/take_args.c \
 	   ./tokenizator/tokenizator_utils.c \
+	   ./tokenizator/rm_used.c \
 	   env.c \
 
 OBJECTS = $(SRCS:.c=.o)

@@ -6,27 +6,11 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/19 17:17:55 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/19 19:56:56 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_strint(const char *s, char c)
-{
-	int		a;
-	int		len;
-
-	a = 0;
-	len = ft_strlen(s);
-	while (a < len + 1)
-	{
-		if (s[a] == c)
-			return (a);
-		a++;
-	}
-	return (-1);
-}
 
 char	*ret_key(char *str, int i, int j, char c)
 {
@@ -116,7 +100,7 @@ char	**cmd_arg_quottes(char	*pipe)
 	return (aux_cmd);
 }
 
-int	find_heredoc(char **cmd_sp, int i, int type)
+int	find_heredir(char **cmd_sp, int i, int type)
 {
 	int		flag;
 
@@ -177,89 +161,4 @@ int		find_rm_size(char *str, int i, int lock, int type)
 		i++;
 	}
 	return (i);
-}
-
-
-char	*join_swap(char	*ret, char	*str, int flag)
-{
-	char	*aux;
-
-	aux = NULL;
-	if (!ret)
-		ret = ft_strdup(str);
-	else
-	{
-		aux = ft_strdup(ret);
-		free(ret);
-		ret = ft_strjoin(aux, str);
-		free (aux);
-	}
-	if (flag)
-		free(str);
-	return (ret);
-}
-
-char	*ret_value(char *ret)
-{
-	int	i;
-	int	x;
-
-	i = -1;
-	x = 0;
-	while (ret[++i] != '\0')
-		if (ret[i] == ' ')
-			x++;
-	if (x == i)
-	{
-		free(ret);
-		return (NULL);
-	}
-	return (ret);
-}
-
-char	*find_middle(char *str, int type)
-{
-	int		init;
-	int		end;
-	char	*aux;
-	char	*ret;
-
-	init = find_rm_size(str, 0, 0, type);
-	end = 0;
-	while (str[init + end] == '>' || str[init + end] == '<')
-		end++;
-	aux = ft_substr(str, 0, init);
-	init += end;
-	ret = ft_strdup(aux);
-	free(aux);
-	aux = ft_strjoin(ret, " ");
-	free (ret);
-	end = find_rm_size((char *)str + init, 0, 0, 5);
-	ret = ft_strjoin(aux, (char *)str + end + init);
-	free(aux);
-	return(ret);
-}
-
-char	*rm_heredoc(char **cmd_sp, int i, int type, int size)
-{
-	char	*ret;
-	int		x;
-
-	x = -1;
-	ret = NULL;
-	while (cmd_sp[++x] != NULL)
-	{
-		if (x != i)
-			ret = join_swap(ret, cmd_sp[x], 0);
-		else
-		{
-			ret = join_swap(ret, find_middle(cmd_sp[x], type), 1);
-			if ((int)ft_strlen(cmd_sp[x]) == size)
-				x++;
-		}
-		ret = join_swap(ret, " ", 0);
-		if (cmd_sp[x] == NULL)
-			break ;
-	}
-	return (ret_value(ret));
 }
