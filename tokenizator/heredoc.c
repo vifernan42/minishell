@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/19 13:50:54 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/19 19:50:29 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 	int		fd;
 
 	fd = 0;
-	i = find_heredoc(cmd_sp, -1, 0);
+	i = find_heredir(cmd_sp, -1, 0);
 	if (i != -1)
 	{
 		fd = do_heredoc(skip_quotes(key_value(cmd_sp, i)));
-		aux = rm_heredoc(cmd_sp, i, 0, 2);
+		aux = rm_used(cmd_sp, i, 0, 2);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
 		free(aux);
@@ -75,7 +75,7 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 		free_matrix(cmd_sp);
 		return (0);
 	}
-	if (find_heredoc(cmd_arg_quottes(*aux_cmd), 0, 0) == -1)
+	if (find_heredir(cmd_arg_quottes(*aux_cmd), 0, 0) == -1)
 	{
 		write(1, "\n", 1);
 		free_matrix(cmd_sp);

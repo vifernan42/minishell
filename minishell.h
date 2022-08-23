@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/22 17:14:17 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:41:02 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,32 +45,38 @@ typedef struct s_data {
 	char	**spt_pipes;
 }		t_data;
 
+
+/* -- parse -- */
 int		pipe_parse(t_data *data);
 int		even_quotes(char *s, int count, char x, t_data *data);
-//int		echos(char **argv, int fd);
-//char|\\\*pwdcurrent();
+int		syntax_char(char *ch, int fd);
+char	**cmd_arg_quottes(char	*pipe);
+
+/* -- fill struct --*/
 char	*get_promt(char *user);
 char	**keep_env(char **env);
 
-/* errors */
-int		syntax_char(char *ch, int fd);
-
-char	**cmd_arg_quottes(char	*pipe);
-
-/* tokenizator */
-int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux);
-t_pipe	*create_node(char *cmd_stg, char *all_path);
+/* -- tokenizator -- */
 t_pipe	*tokenizator(t_data *data, int i);
+t_pipe	*create_node(char *cmd_stg, char *all_path);
+int		take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux);
 void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret);
-char	*ft_strjoin_swap(char	*str, char	*str2, int flag);
-char	*rm_heredoc(char **cmd_sp, int i, int f, int size);
-int		find_heredoc(char **cmd_sp, int i, int type);
 void	take_args(char **cmd_sp, t_pipe *ret, char *all_path);
+int		find_heredir(char **cmd_sp, int i, int type);
 char	*find_key(char *str, int i, int j);
 char	*ret_key(char *str, int i, int j, char c);
 int		find_rm_size(char *str, int i, int lock, int type);
-char	*find_middle(char *str, int type);
 
+/* -- exec -- */
+void	exec_pipes(t_pipe *pipe);
+
+/* -- rm_used -- */
+char	*rm_used(char **cmd_sp, int i, int f, int size);
+char	*ret_value(char *ret);
+char	*find_middle(char *str, int type);
+char	*join_swap(char	*str, char	*str2, int flag);
+
+/* -- leaks -- */
 void	leaks(void);
 
 #endif

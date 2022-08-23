@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/19 16:30:13 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/19 19:50:26 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,16 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 
 	swap = NULL;
 	size = 1;
-	i = find_heredoc(cmd_sp, -1, -1);
+	i = find_heredir(cmd_sp, -1, -1);
 	if (i != -1)
 	{
 		do_redirec(cmd_sp[i], skip_quotes(find_fname(cmd_sp, i)), ret, &size); 
-		swap = rm_heredoc(cmd_sp, i, -1, size);
+		swap = rm_used(cmd_sp, i, -1, size);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(swap);
 		free(swap);
 	}
-	if (find_heredoc(cmd_arg_quottes(*aux_cmd), 0, 1) == -1)
+	if (find_heredir(cmd_arg_quottes(*aux_cmd), 0, 1) == -1)
 	{
 		free_matrix(cmd_sp);
 		return ;
