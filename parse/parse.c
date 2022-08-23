@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/23 16:48:19 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:49:19 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	more_redir(t_data *data, int i, int j, char **aux)
 				return (1);
 			}
 		}
-		free_matrix(aux)
+		free_matrix(aux);
 	}
 	return (0);
 }
