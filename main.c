@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/19 19:00:09 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/22 19:15:38 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	main(int argc, char **argv, char **envp)
 	
 	(void)argc;
 	(void)argv;
-
 	while (1)
 	{
 		data.env = keep_env(envp);

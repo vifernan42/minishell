@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/18 21:16:24 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:39:12 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,18 @@ int	more_redir(t_data *data, int i, int j, char **aux)
 				free_matrix(aux);
 				return (1);
 			}
+			if (ft_strnstr(aux[j], "<>", ft_strlen(aux[j]))
+					|| ft_strnstr(aux[j], "><", ft_strlen(aux[j])))
+			{
+				if (ft_strnstr(aux[j], "<", ft_strlen(aux[j])))
+					syntax_char(ft_charjoin('>'), STDERR_FILENO);
+				else
+					syntax_char(ft_charjoin('<'), STDERR_FILENO);
+				free_matrix(aux);
+				return (1);
+			}
 		}
-		free_matrix(aux);
+		free_matrix(aux)
 	}
 	return (0);
 }

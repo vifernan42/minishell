@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/19 19:01:36 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/22 17:19:05 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ char	*find_key(char *str, int i, int j)
 	return (ret_key(str, -1, j, '\0'));
 }
 
-
 char	**cmd_arg_quottes(char	*pipe)
 {
 	char	**aux_cmd;
@@ -150,7 +149,6 @@ int	find_heredoc(char **cmd_sp, int i, int type)
 	return (i);
 }
 
-
 int		find_rm_size(char *str, int i, int lock, int type)
 {
 	char	c;
@@ -178,7 +176,6 @@ int		find_rm_size(char *str, int i, int lock, int type)
 	}
 	return (i);
 }
-
 
 char	*join_swap(char	*ret, char	*str, int flag)
 {
