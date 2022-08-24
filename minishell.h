@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/23 16:41:02 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/24 18:57:34 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_data {
 	char	*env_user;
 	char	*promt;
 	char	**spt_pipes;
+	int		wait;
 }		t_data;
 
 
@@ -68,7 +69,7 @@ char	*ret_key(char *str, int i, int j, char c);
 int		find_rm_size(char *str, int i, int lock, int type);
 
 /* -- exec -- */
-void	exec_pipes(t_pipe *pipe);
+void	exec_pipes(t_pipe *list, t_data *data);
 
 /* -- rm_used -- */
 char	*rm_used(char **cmd_sp, int i, int f, int size);
