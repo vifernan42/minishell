@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/23 16:49:47 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/24 19:34:48 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,45 @@ int	pipe_parse(t_data *data)
 	return(more_redir(data, -1, -1, NULL));
 }
 
+static int	check_line(char *line, t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (line[++i] != '\0')
+	{
+		if(line[i] == '<' && (line[i + 1] == ' ' || line[i + 1] == '\0'))
+		{
+			i++;
+			while (line[i] == ' ')
+				i++;
+			if (line[i] == '<')
+				syntax_char(ft_charjoin('<'), STDERR_FILENO);
+			if (line[i] == '>')
+				syntax_char(ft_charjoin('>'), STDERR_FILENO);
+			if (line[i] == ';')
+				syntax_char(ft_charjoin(';'), STDERR_FILENO);
+			if (line[i] == '\\')
+				syntax_char(ft_charjoin('\\'), STDERR_FILENO);
+			if (line[i] == '\0')
+				syntax_char(ft_charjoin('\0'), STDERR_FILENO);
+			if (line[i] == '<' || line[i] == '>' || line[i] == ';' || line[i] == '\\' || line[i] == '\0')
+				return (1);
+		}
+		else if(line[i] == '>' && line[i + 1] == ' ')
+		{
+			while(line[i] == ' ' && line)
+				i++;
+			if (line[i] == '<' || line[i] == '>' || line[i] == ';' || line[i] == '\\')
+			{	
+				syntax_char(ft_charjoin('>'), STDERR_FILENO);
+				return (1);
+			}
+		}
+	}
+	return (pipe_parse(data));
+}
+
 int	even_quotes(char *s, int count, char x, t_data *data)
 {
 	int		i;
@@ -106,5 +145,5 @@ int	even_quotes(char *s, int count, char x, t_data *data)
 	}
 	if (--i && s[i] == '|')
 		return (syntax_char(ft_charjoin('|'), STDERR_FILENO));
-	return (pipe_parse(data));
+	return (check_line(s, data));
 }

@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/22 19:15:38 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/08/24 19:11:14 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	main(int argc, char **argv, char **envp)
 		data.env = keep_env(envp);
 		data.all_path = get_promt(getenv("PATH"));
 		data.promt = get_promt(getenv("USER"));
-		cmd_line = readline (data.promt);
+		cmd_line = readline(data.promt);
 		i = 0;
 		while (cmd_line[i] == ' ')
 			i++;
