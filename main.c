@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/09/07 16:01:54 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:06:27 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	while (1)
 	{
+		data.wait = 0;
 		data.env = keep_env(envp);
 		data.all_path = get_promt(getenv("PATH"));
 		data.promt = get_promt(getenv("USER"));
@@ -115,6 +116,7 @@ int	main(int argc, char **argv, char **envp)
 			{	
 				pipe = tokenizator(&data, -1);
 				print_list(pipe);
+				exec_pipes(pipe, &data);
 				lstdelete(pipe);
 			}
 			free_matrix(data.spt_pipes);

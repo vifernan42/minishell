@@ -6,7 +6,7 @@
 #    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/08/19 19:46:02 by vifernan         ###   ########.fr        #
+#    Updated: 2022/08/23 19:36:19 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS = main.c \
 	   ./tokenizator/take_args.c \
 	   ./tokenizator/tokenizator_utils.c \
 	   ./tokenizator/rm_used.c \
+	   ./exec/exec.c \
 	   env.c \
 
 OBJECTS = $(SRCS:.c=.o)
