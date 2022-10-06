@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/18 17:41:47 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/10/06 18:54:33 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ t_pipe	*create_node(char *cmd_stg, char *all_path)
 		return (NULL);
 	ret = (t_pipe *)malloc(sizeof(t_pipe));
 	ft_bzero(ret, sizeof(t_pipe));
+	ret->out_fd = 1;
+	ret->in_fd = 0;
 	aux_cmd = ft_strdup(cmd_stg);
-	ft_printf("*rm_befo:	%s\n", aux_cmd);
+	// ft_printf("*rm_befo:	%s\n", aux_cmd);
 	ret->in_fd = take_heredoc(&aux_cmd, -1, cmd_arg_quottes(cmd_stg), NULL);
-	ft_printf("*rm-here:	%s\n", aux_cmd);
+	// ft_printf("*rm-here:	%s\n", aux_cmd);
 	if (aux_cmd)
 		take_redirec(&aux_cmd, -1, cmd_arg_quottes(aux_cmd), ret);
-	ft_printf("*rm_redr:	%s\n", aux_cmd);
+	// ft_printf("*rm_redr:	%s\n", aux_cmd);
 	if (aux_cmd)
 		take_args(cmd_arg_quottes(aux_cmd), ret, all_path);
 	free(aux_cmd);
