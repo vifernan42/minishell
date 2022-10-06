@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/10/06 19:56:53 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/10/07 00:31:38 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,8 @@ int	main(int argc, char **argv, char **envp)
 			{	
 				pipe = tokenizator(&data, -1);
 				//print_list(pipe);
-				exec_pipes(pipe, &data);
-				while (data.wait-- > 0)
-				{
-					// printf("	=%d\n", data.wait);
-					waitpid(-1, NULL, 0);
-				}
+				if (data.err != -1)
+					exec_pipes(pipe, &data);
 				//lstdelete(pipe);
 			}
 			free_matrix(data.spt_pipes);

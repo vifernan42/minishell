@@ -61,11 +61,6 @@ void	exec_pipes(t_pipe *list, t_data *data)
 {
 	t_pipe	*next;
 	int		pipe_fd[2];
-	//int		status;
-
-	//ft_printf("PATH:	%s\n", list->exec_path);
-	pipe_fd[0] = -1;
-	pipe_fd[1] = -1;
 
 	if (pipe(pipe_fd) < 0)
 	{
@@ -78,4 +73,6 @@ void	exec_pipes(t_pipe *list, t_data *data)
 	next = list->next;
 	if (next)
 		exec_pipes(next, data);
+	while (data->wait-- > 0)
+		waitpid(-1, NULL, 0);
 }

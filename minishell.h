@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/24 18:57:34 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/10/07 00:33:42 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data {
 	char	*promt;
 	char	**spt_pipes;
 	int		wait;
+	int		err;
 }		t_data;
 
 
@@ -59,7 +60,7 @@ char	**keep_env(char **env);
 
 /* -- tokenizator -- */
 t_pipe	*tokenizator(t_data *data, int i);
-t_pipe	*create_node(char *cmd_stg, char *all_path);
+t_pipe	*create_node(char *cmd_stg, char *all_path, t_data *data);
 int		take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux);
 void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret);
 void	take_args(char **cmd_sp, t_pipe *ret, char *all_path);

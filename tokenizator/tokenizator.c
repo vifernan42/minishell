@@ -6,13 +6,13 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2022/10/06 18:54:33 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/10/07 00:32:54 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_pipe	*create_node(char *cmd_stg, char *all_path)
+t_pipe	*create_node(char *cmd_stg, char *all_path, t_data *data)
 {
 	t_pipe	*ret;
 	char	*aux_cmd;
@@ -34,6 +34,11 @@ t_pipe	*create_node(char *cmd_stg, char *all_path)
 	if (aux_cmd)
 		take_args(cmd_arg_quottes(aux_cmd), ret, all_path);
 	free(aux_cmd);
+	if (ret->in_fd == -1)
+	{
+		printf("minishell: Bad file fd\n");
+		data->err = -1;
+	}
 	return (ret);
 }
 
@@ -49,12 +54,12 @@ t_pipe	*tokenizator(t_data *data, int i)
 	{
 		if (i == 0)
 		{
-			ret = create_node(data->spt_pipes[i], data->all_path);
+			ret = create_node(data->spt_pipes[i], data->all_path, data);
 			new = ret;
 		}
 		else
 		{
-			new->next = create_node(data->spt_pipes[i], data->all_path);
+			new->next = create_node(data->spt_pipes[i], data->all_path, data);
 			new = new->next;
 		}
 	}
