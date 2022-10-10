@@ -1,81 +1,78 @@
-		/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/23 16:45:52 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/10/10 18:21:01 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-/*int		pipe_ret(t_pipe *list, t_data *data, int in_check)
+void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 {
+	int pid;
 
-}*/
-
+	pid = fork();
+	if (pid < 0)
+	{
+		close(pipe_fd[WR_END]);
+		close(pipe_fd[RD_END]);
+		perror("minishell: PID error\n");
+	}
+	else if (pid == 0)
+	{
+		// printf("IN-> %d | %d\n", pid, list->in_fd);
+		// printf("OUT-> %d | %d\n", pid, list->out_fd);
+		close(pipe_fd[RD_END]);
+		if (list->in_fd)
+		{
+			dup2(list->in_fd, STDIN_FILENO);
+			close(list->in_fd);
+		}
+		if (!list->next && list->out_fd != 1)
+		{
+			dup2(list->out_fd, STDOUT_FILENO);
+			close(list->out_fd);
+		}
+		if(list->next)
+			dup2(pipe_fd[WR_END], STDOUT_FILENO);
+		close(pipe_fd[WR_END]);
+		if (execve(list->exec_path, list->argv, data->env) == -1)
+			perror("Execution error\n");
+		exit (0);
+	}
+	else
+	{
+		close(pipe_fd[WR_END]);
+		if (list->next && !list->next->in_fd)
+			list->next->in_fd = pipe_fd[RD_END];
+		else
+			close(pipe_fd[RD_END]);
+		data->wait++;
+	}
+}
 
 void	exec_pipes(t_pipe *list, t_data *data)
 {
 	t_pipe	*next;
 	int		pipe_fd[2];
-	int		pid;
-	int		status;
 
-	ft_printf("PATH:	%s\n", list->exec_path);
-	if (list->next)
+	if (pipe(pipe_fd) < 0)
 	{
-		if (list->next->in_fd)
-			close(list->next->in_fd);
-		if (pipe(pipe_fd) < 0)
-		{
-			ft_printf("Error PIPE\n");
-			return ;
-		}
-		pid = fork();
-		if (pid == 0)
-		{
-			if (!list->in_fd)
-				list->in_fd = pipe_fd[RD_END];
-			list->next->in_fd = pipe_fd[RD_END];
-			close(pipe_fd[RD_END]);
-			dup2(list->in_fd, STDIN_FILENO);
-			if (!list->out_fd)
-				list->out_fd = pipe_fd[WR_END];
-			close(pipe_fd[WR_END]);
-			dup2(list->out_fd, STDOUT_FILENO);
-			data->wait++;
-			ft_printf("1-data->wait:	%d\n", data->wait);
-			execve(list->exec_path, list->argv, data->env);
-		//	exit (0);
-		}
-		else
-		{
-			next = list->next;
-			if(list->next)
-				exec_pipes(next, data);
-		}
+		perror("minishell: PIPE error\n");
+		return ;
 	}
-	else
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (!list->in_fd)
-				dup2(list->in_fd, STDIN_FILENO);
-			if (!list->out_fd)
-				dup2(list->out_fd, STDIN_FILENO);
-			data->wait++;
-			ft_printf("2-data->wait:	%d\n", data->wait);
-			execve(list->exec_path, list->argv, data->env);
-		//	exit (0);
-		}
-	}
-	ft_printf("data->wait:	%d\n", data->wait);
-	while (data->wait-- >= 0)
-		waitpid(-1, &status, 0);
+	if (!list->next && !list->out_fd)
+	  	list->out_fd = STDOUT_FILENO;
+	execution(list, data, pipe_fd);
+	next = list->next;
+	if (next)
+		exec_pipes(next, data);
+	while (data->wait-- > 0)
+		waitpid(-1, NULL, 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/09/07 16:06:27 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/10/07 00:31:38 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,12 @@ int	main(int argc, char **argv, char **envp)
 	
 	(void)argc;
 	(void)argv;
+	data.env = keep_env(envp);
 	while (1)
 	{
 		data.wait = 0;
-		data.env = keep_env(envp);
 		data.all_path = get_promt(getenv("PATH"));
+		//printf("AQUI\n");
 		data.promt = get_promt(getenv("USER"));
 		cmd_line = readline(data.promt);
 		i = 0;
@@ -115,9 +116,10 @@ int	main(int argc, char **argv, char **envp)
 			if (even_quotes(cmd_line, 0, 0, &data) == 0)
 			{	
 				pipe = tokenizator(&data, -1);
-				print_list(pipe);
-				exec_pipes(pipe, &data);
-				lstdelete(pipe);
+				//print_list(pipe);
+				if (data.err != -1)
+					exec_pipes(pipe, &data);
+				//lstdelete(pipe);
 			}
 			free_matrix(data.spt_pipes);
 		}
@@ -125,7 +127,6 @@ int	main(int argc, char **argv, char **envp)
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		free_matrix(data.env);
 	//	system("leaks minishell");
 	}
 }
