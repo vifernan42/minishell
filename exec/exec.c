@@ -51,6 +51,7 @@ void	exec_pipes(t_pipe *list, t_data *data)
 			data->wait++;
 			ft_printf("1-data->wait:	%d\n", data->wait);
 			execve(list->exec_path, list->argv, data->env);
+		//	exit (0);
 		}
 		else
 		{
@@ -71,6 +72,7 @@ void	exec_pipes(t_pipe *list, t_data *data)
 			data->wait++;
 			ft_printf("2-data->wait:	%d\n", data->wait);
 			execve(list->exec_path, list->argv, data->env);
+		//	exit (0);
 		}
 	}
 	ft_printf("data->wait:	%d\n", data->wait);
