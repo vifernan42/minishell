@@ -48,6 +48,10 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 	}
 	else
 	{
+		if (list->in_fd > 2)
+			close(list->in_fd);
+		if (list->out_fd > 2)
+			close(list->out_fd);
 		close(pipe_fd[WR_END]);
 		if (list->next && !list->next->in_fd)
 			list->next->in_fd = pipe_fd[RD_END];
