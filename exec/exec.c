@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/10/13 18:48:20 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/11/04 19:25:57 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,16 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 		if(list->next)
 			dup2(pipe_fd[WR_END], STDOUT_FILENO);
 		close(pipe_fd[WR_END]);
-		printf("ppppppp--OUT-> %d | %d\n", pid, list->out_fd);
 		if (execve(list->exec_path, list->argv, data->env) == -1)
 			perror("Execution error\n");
 		exit (0);
 	}
 	else
 	{
+		if (list->in_fd > 2)
+			close(list->in_fd);
+		if (list->out_fd > 2)
+			close(list->out_fd);
 		close(pipe_fd[WR_END]);
 		if (list->next && !list->next->in_fd)
 			list->next->in_fd = pipe_fd[RD_END];
