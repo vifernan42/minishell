@@ -18,7 +18,7 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 	int pid;
 
 	pid = fork();
-	printf("pid--> %d\n %s\n", pid, *list->argv);
+	//printf("pid--> %d\n %s\n", pid, *list->argv);
 	if (pid < 0)
 	{
 		close(pipe_fd[WR_END]);
@@ -43,7 +43,7 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 		if(list->next)
 			dup2(pipe_fd[WR_END], STDOUT_FILENO);
 		close(pipe_fd[WR_END]);
-		write(1, "entra\n", 6);
+	//	write(1, "entra\n", 6);
 		if (execve(list->exec_path, list->argv, data->env) == -1)
 			perror("Execution error\n");
 		exit (0);
@@ -60,7 +60,7 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 		else
 			close(pipe_fd[RD_END]);
 		data->wait++;
-		write(1, "ent\n", 4);
+	//	write(1, "ent\n", 4);
 	}
 }
 
