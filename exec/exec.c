@@ -6,13 +6,13 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/04 19:25:57 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:46:41 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+//int		exec_built(t_data *data, t_pipe *list, )
 void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 {
 	int pid;
@@ -75,6 +75,7 @@ void	exec_pipes(t_pipe *list, t_data *data)
 	}
 	if (!list->next && !list->out_fd)
 	  	list->out_fd = STDOUT_FILENO;
+	printf("path--> %s\n", list->exec_path);
 	execution(list, data, pipe_fd);
 	next = list->next;
 	if (next)
