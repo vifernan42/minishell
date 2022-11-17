@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/19 19:50:26 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/17 18:19:44 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 		}
 		else
 			fd = open(fname, O_WRONLY | O_CREAT | O_CREAT, 0666);
-		if (ret->out_fd)
+		if (ret->out_fd > 2)
 			close(ret->out_fd);
 		ret->out_fd = fd;
 	}
@@ -76,7 +76,7 @@ void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 	i = find_heredir(cmd_sp, -1, -1);
 	if (i != -1)
 	{
-		do_redirec(cmd_sp[i], skip_quotes(find_fname(cmd_sp, i)), ret, &size); 
+		do_redirec(cmd_sp[i], skip_quotes(find_fname(cmd_sp, i), -1), ret, &size); 
 		swap = rm_used(cmd_sp, i, -1, size);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(swap);
