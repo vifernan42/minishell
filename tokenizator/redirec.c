@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/17 19:03:54 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/11/17 19:09:02 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ char	*find_fname(char **cmd_sp, int i)
 		if (fname[0] == '\0')
 			fname = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, 0, -1) + 2, -1, 0);
 	}
-	printf("aas: %s\n", fname);
 	return (fname);
 }
 
