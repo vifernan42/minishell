@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/16 20:11:54 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/11/16 20:45:44 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ char	**cmd_arg_quottes(char	*pipe)
 	{
 		if (aux_cmd[x][0] != '$'
 			&& find_rm_size(aux_cmd[x], 0, 0, -1) == (int)ft_strlen(aux_cmd[x]))
-			{
 				aux = skip_quotes(skip_spaces(aux_cmd[x]), -1);
-				printf("auux--> %s\n", aux);
-			}
 		else
 			aux = skip_spaces(aux_cmd[x]);
 		free(aux_cmd[x]);

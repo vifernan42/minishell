@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/15 19:10:00 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/11/16 20:16:22 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int echos(char **argv, int fd)
 	while (argv[i] != NULL)
 	{
 		if (argv[i] == "\"")
-			argv = skip_quotes(argv);
+			argv = skip_quotes(argv, -1);
 		ft_putstr_fd(argv[i], fd);
 		if (argv[i + 1] != NULL)
 			ft_putstr_fd(" ", fd);
