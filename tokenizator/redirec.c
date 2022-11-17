@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/17 15:45:36 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/11/17 19:03:54 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 		}
 		else
 			fd = open(fname, O_WRONLY | O_CREAT | O_CREAT, 0666);
-		if (ret->out_fd >= 2)
+		if (ret->out_fd > 2)
 			close(ret->out_fd);
 		ret->out_fd = fd;
 	}

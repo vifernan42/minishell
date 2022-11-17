@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/10/07 00:33:42 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:29:47 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ char	*join_swap(char	*str, char	*str2, int flag);
 
 /* -- leaks -- */
 void	leaks(void);
+
+/* -- built-ins -- */
+int		env(char **envu, int fd);
+int		echos(char **argv, int fd);
 
 #endif
 
