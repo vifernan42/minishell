@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/19 19:50:26 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/04 20:00:28 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 	found = find_rm_size(id, 0, 0, -1);
 	if (ft_strnstr((char *)id + found, "<", 1))
 	{
+		//printf("fname-> %s\n", fname);
 		fd = open(fname, O_RDONLY, 0666);
-		if (ret->in_fd)
+		if (ret->in_fd > 2)
 			close(ret->in_fd);
 		ret->in_fd = fd;
+		
 	}
 	else if (ft_strnstr((char *)id + found, ">", 1)
 				|| ft_strnstr((char *)id + found, ">>", 2))
 	{
+		if (ret->out_fd > 2)
+			close(ret->out_fd);
 		if (ft_strnstr((char *)id + found, ">>", 2))
 		{
 			fd = open(fname, O_WRONLY | O_CREAT | O_APPEND, 0666);
@@ -35,8 +39,6 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 		}
 		else
 			fd = open(fname, O_WRONLY | O_CREAT | O_CREAT, 0666);
-		if (ret->out_fd)
-			close(ret->out_fd);
 		ret->out_fd = fd;
 	}
 	free(fname);

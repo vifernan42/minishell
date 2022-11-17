@@ -54,7 +54,9 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 			close(list->out_fd);
 		close(pipe_fd[WR_END]);
 		if (list->next && !list->next->in_fd)
+		{
 			list->next->in_fd = pipe_fd[RD_END];
+		}
 		else
 			close(pipe_fd[RD_END]);
 		data->wait++;
