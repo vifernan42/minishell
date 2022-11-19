@@ -28,20 +28,20 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 	{
 		// printf("IN-> %d | %d\n", pid, list->in_fd);
 		// printf("OUT-> %d | %d\n", pid, list->out_fd);
-		close(pipe_fd[RD_END]);
 		if (list->in_fd)
 		{
 			dup2(list->in_fd, STDIN_FILENO);
 			close(list->in_fd);
 		}
-		if (!list->next && list->out_fd != 1)
+		if (list->out_fd != 1)
 		{
 			dup2(list->out_fd, STDOUT_FILENO);
 			close(list->out_fd);
 		}
-		if(list->next)
+		else if(list->next && list->out_fd)
 			dup2(pipe_fd[WR_END], STDOUT_FILENO);
 		close(pipe_fd[WR_END]);
+		close(pipe_fd[RD_END]);
 		if (execve(list->exec_path, list->argv, data->env) == -1)
 			perror("Execution error\n");
 		exit (0);

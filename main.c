@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/10/07 00:31:38 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/19 16:34:11 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	main(int argc, char **argv, char **envp)
 			{	
 				pipe = tokenizator(&data, -1);
 				//print_list(pipe);
-				if (data.err != -1)
+				if (data.err != -1) /* la -ls (example) */
 					exec_pipes(pipe, &data);
 				//lstdelete(pipe);
 			}
