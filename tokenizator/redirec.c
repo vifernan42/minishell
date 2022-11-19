@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/17 18:19:44 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/19 15:43:57 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 	{
 		if (ft_strnstr((char *)id + found, ">>", 2))
 		{
-			fd = open(fname, O_WRONLY | O_CREAT | O_APPEND, 0666);
+			fd = open(fname, O_CREAT | O_WRONLY | O_APPEND, 0666);
+			// printf("ENTRA APEND %s  %d\n", fname, fd);
 			*size = 2;
 		}
 		else
-			fd = open(fname, O_WRONLY | O_CREAT | O_CREAT, 0666);
-		if (ret->out_fd > 2)
+			fd = open(fname, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+		// printf("FUERA %s  %d\n", fname, ret->out_fd);
+		if (ret->out_fd > 1)
 			close(ret->out_fd);
 		ret->out_fd = fd;
 	}

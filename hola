@@ -1,0 +1,20 @@
+total 196
+drwxr-xr-x  10 vifernan  2019   4096 Nov 19 16:23 .
+drwx------  27 vifernan  2019   4096 Aug 23 16:34 ..
+drwxr-xr-x   7 vifernan  2019   4096 Nov 19 16:22 .git
+-rw-r--r--   1 vifernan  2019   2477 Nov 17 18:06 Makefile
+drwxr-xr-x   2 vifernan  2019   4096 Nov 17 18:23 builtins
+-rw-r--r--   1 vifernan  2019   1310 Aug 23 16:47 env.c
+-rw-r--r--   1 vifernan  2019   2564 Nov 19 16:23 env.o
+drwxr-xr-x   2 vifernan  2019   4096 Nov 19 16:23 errors
+drwxr-xr-x   2 vifernan  2019   4096 Nov 19 16:23 exec
+-rw-r--r--   1 vifernan  2019      0 Nov 19 16:23 hola
+drwxr-xr-x   2 vifernan  2019   4096 Nov 19 16:23 libft
+-rw-r--r--   1 vifernan  2019   3034 Nov 19 16:23 main.c
+-rw-r--r--   1 vifernan  2019   6580 Nov 19 16:23 main.o
+-rwxr-xr-x   1 vifernan  2019  37640 Nov 19 16:23 minishell
+-rw-r--r--   1 vifernan  2019   2697 Nov 17 16:46 minishell.h
+-rw-r--r--   1 vifernan  2019   1088 Nov 19 16:05 ola
+drwxr-xr-x   2 vifernan  2019   4096 Nov 19 16:23 parse
+drwxr-xr-x   2 vifernan  2019   4096 Nov 19 16:23 printf
+drwxr-xr-x   2 vifernan  2019   4096 Nov 19 16:23 tokenizator
