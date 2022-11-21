@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/17 19:09:02 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/11/17 19:50:10 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,16 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 		if (ft_strnstr((char *)id + found, ">>", 2))
 		{
 			fd = open(fname, O_WRONLY | O_CREAT | O_APPEND, 0666);
+			//ft_printf("entra %s\n", fname);
 			*size = 2;
 		}
-		else
+		else if (ft_strnstr((char *)id + found, ">", 1))
+		{
+			//ft_printf("ena\n");
 			fd = open(fname, O_WRONLY | O_CREAT | O_CREAT, 0666);
+		}
+		else
+			fd = open(fname, O_RDONLY, 0666);
 		if (ret->out_fd > 2)
 			close(ret->out_fd);
 		ret->out_fd = fd;
