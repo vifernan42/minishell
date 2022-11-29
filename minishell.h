@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/10/07 00:33:42 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/29 19:11:53 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ char	*rm_used(char **cmd_sp, int i, int f, int size);
 char	*ret_value(char *ret);
 char	*find_middle(char *str, int type);
 char	*join_swap(char	*str, char	*str2, int flag);
+
+/* -- built-ins -- */
+int		pwdcurrent();
+int echos(char **argv, int fd);
+
 
 /* -- leaks -- */
 void	leaks(void);

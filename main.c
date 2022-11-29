@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/19 16:34:11 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/29 19:40:00 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	print_node(t_pipe *pipe, t_pipe **next)
 		printf("in_fd:	%d\n", pipe->in_fd);
 	if (pipe->out_fd)
 		printf("out_fd:	%d\n", pipe->out_fd);
-	*next = pipe->next;
 }
 
 void	print_list(t_pipe *pipe)
