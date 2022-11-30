@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/11/29 19:12:53 by vifernan         ###   ########.fr        #
+#    Updated: 2022/11/30 17:48:13 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ PRINTF_NAME = $(PRINTF_NAME)libftprintf.a
 INCLUDES = -I. -I$(LIBFT_DIR) -I$(PRINTF_DIR)
 FSANITIZE = -g3 -fsanitize=address
 READLINE = -L ~/.brew/opt/readline/lib -lreadline
-CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include -g3 $(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include -g $(INCLUDES)
 
 all: $(NAME)
 
@@ -57,7 +57,7 @@ debug: fclean all
 	@make -s -C $(PRINTF_DIR)
 	@$(CC) $(READLINE) $(CFLAGS) $(FSANITIZE) $(OBJECTS) ./printf/libftprintf.a \
 								./libft/libft.a -o $(NAME)
-	@./minishell				
+#	@./minishell				
 
 clean:
 	@echo "$(Yellow)[CLEAN]$(NO_COLOR)"

@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 {
 	int pid;

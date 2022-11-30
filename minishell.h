@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/30 17:48:47 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:59:22 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ char	*find_middle(char *str, int type);
 char	*join_swap(char	*str, char	*str2, int flag);
 
 /* -- built-ins -- */
-int	pwdcurrent(t_pipe *list);
-int echos(char **argv, int fd);
+int		pwdcurrent(t_pipe *list);
+int 	echos(char **argv, int fd);
+int		env(char **envu, int fd);
 
 
 /* -- leaks -- */
