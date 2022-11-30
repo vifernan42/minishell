@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/29 19:38:50 by vifernan         ###   ########.fr       */
+/*   Created: 2021/04/08 19:59:12 by ialvarez          #+#    #+#             */
+/*   Updated: 2022/11/29 19:15:25 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int echos(char **argv, int fd)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int flag;
-	int i;
-
-	flag = 0;
-	i = 1;
-	if (ft_strcmp(argv[1], "-n"))
-		flag = 1;
-	i = 1;
-	while (argv[i] != NULL)
+	if (n == 0)
+		return (0);
+	n--;
+	while (n > 0 && *s1 == *s2 && *s1 && *s2)
 	{
-		ft_putstr_fd(argv[i], fd);
-		if (argv[i + 1] != NULL)
-			ft_putstr_fd(" ", fd);
-		i++;
+		s1++;
+		s2++;
+		n--;
 	}
-	if (flag == 1)
-		ft_putstr_fd("\n", fd);
-	return (1);
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

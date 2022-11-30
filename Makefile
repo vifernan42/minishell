@@ -6,7 +6,7 @@
 #    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/11/24 17:25:21 by ialvarez         ###   ########.fr        #
+#    Updated: 2022/11/30 17:48:13 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ SRCS = main.c \
 	   ./tokenizator/tokenizator_utils.c \
 	   ./tokenizator/rm_used.c \
 	   ./exec/exec.c \
-	   keep_env.c \
+	   ./builtins/pwd.c \
+	   ./builtins/echo.c \
+	   env.c \
 
 OBJECTS = $(SRCS:.c=.o)
 LIBFT_DIR = libft/

@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:04:52 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/17 18:19:51 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:41:21 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ char	*find_path(char *cmd, char *all_path, int i)
 
 void	take_args(char **cmd_sp, t_pipe *ret, char *all_path)
 {
+
 	ret->exec_path = find_path(cmd_sp[0], all_path, -1);
-	if (ret->exec_path)
-		ret->argv = cmd_sp;
-	else
-		free_matrix(cmd_sp);
+	ret->argv = cmd_sp;
+	if (!ft_strcmp("cd", ret->argv[0]) || !ft_strcmp("echo", ret->argv[0]) || !ft_strcmp("pwd", ret->argv[0]))
+		ret->exec_path = NULL;
 }

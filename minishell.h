@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/17 16:29:47 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:48:18 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ char	*rm_used(char **cmd_sp, int i, int f, int size);
 char	*ret_value(char *ret);
 char	*find_middle(char *str, int type);
 char	*join_swap(char	*str, char	*str2, int flag);
+
+/* -- built-ins -- */
+int		pwdcurrent();
+int echos(char **argv, int fd);
+
 
 /* -- leaks -- */
 void	leaks(void);

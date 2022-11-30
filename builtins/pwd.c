@@ -3,29 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:27:00 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/06 18:04:29 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:08:10 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*pwdcurrent()
+int	pwdcurrent()
 {
-	char	buff[FILENAME_MAX];
-	char	*current;
+	char	*pwd;
 
-	getcwd(buff, FILENAME_MAX);
-	current = ft_strdup(buff);
-	return (current);
+	pwd = NULL;
+	pwd = getcwd(pwd, 0);
+	if (!pwd)
+	{
+		write(1, "entra\n", 6);
+		return (-1);
+	}
+	ft_printf("%s\n", pwd);
+	free(pwd);
+	return (1);
 }
-/*
-int main(void)
-{
-	ft_putstr_fd(pwdcurrent(), 1);
-	return (0);
-}
-*/
-//mirar el error si el getcwd recoge un path que este vacio
