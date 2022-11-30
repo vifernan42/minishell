@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/29 19:13:20 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/30 19:12:55 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,16 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 	}
 }
 
-void	exec_builtins(t_pipe *list)
+void	exec_builtins(t_pipe *list, t_data *data)
 {
 	if (!ft_strcmp("pwd", list->argv[0]))
 		pwdcurrent();
 	else if (!ft_strcmp("echo", list->argv[0]))
 		echos(list->argv, list->out_fd);
+	else if (!ft_strcmp("exit", list->argv[0]))
+		my_exit();
+	else if (!ft_strcmp("env", list->argv[0]))
+		env(data->env, list->out_fd);
 	else
 		printf("YES: 	%s\n", list->argv[0]);
 }
@@ -83,7 +87,7 @@ void	exec_pipes(t_pipe *list, t_data *data)
 	if (!list->next && !list->out_fd)
 	  	list->out_fd = STDOUT_FILENO;
 	if (!list->exec_path)
-		exec_builtins(list);
+		exec_builtins(list, data);
 	else
 		execution(list, data, pipe_fd);
 	next = list->next;

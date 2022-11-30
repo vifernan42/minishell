@@ -6,7 +6,7 @@
 #    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/11/30 17:48:13 by ialvarez         ###   ########.fr        #
+#    Updated: 2022/11/30 18:38:53 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ SRCS = main.c \
 	   ./exec/exec.c \
 	   ./builtins/pwd.c \
 	   ./builtins/echo.c \
-	   env.c \
+	   ./builtins/env.c \
+	   ./builtins/exit.c \
+	   keep_env.c
 
 OBJECTS = $(SRCS:.c=.o)
 LIBFT_DIR = libft/

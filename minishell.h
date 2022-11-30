@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/30 17:48:18 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/11/30 18:39:31 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,13 @@ char	*join_swap(char	*str, char	*str2, int flag);
 
 /* -- built-ins -- */
 int		pwdcurrent();
-int echos(char **argv, int fd);
+int		echos(char **argv, int fd);
+void	my_exit();
+int		env(char **envu, int fd);
 
 
 /* -- leaks -- */
 void	leaks(void);
-
-/* -- built-ins -- */
-int		env(char **envu, int fd);
-int		echos(char **argv, int fd);
 
 #endif
 
