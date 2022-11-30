@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/29 19:38:50 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:44:32 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int echos(char **argv, int fd)
 	i = 1;
 	while (argv[i] != NULL)
 	{
+		if (flag != 1)
+			i++;
 		ft_putstr_fd(argv[i], fd);
 		if (argv[i + 1] != NULL)
 			ft_putstr_fd(" ", fd);
