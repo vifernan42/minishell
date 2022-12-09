@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/30 18:03:37 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/09 17:43:36 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	data.env = keep_env(envp);
-	// print_matrix(data.env);
+//	print_matrix(data.env);
 	while (1)
 	{
 		data.wait = 0;

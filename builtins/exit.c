@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_err.c                                       :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/27 21:10:29 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/30 18:35:19 by ialvarez         ###   ########.fr       */
+/*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
+/*   Updated: 2022/11/30 18:50:43 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	syntax_char(char *ch, int fd)
+void		my_exit()
 {
-	char	*s;
-
-	s = ft_strdup("-minishell: syntax error near unexpected token ");
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
-	write(fd, "`", 1);
-	if (ch != NULL)
-		write(fd, ch, ft_strlen(ch));
-	write(fd, "\'\n", 2);
-	free(s);
-	free(ch);
-	return (1);
+	//free_matrix();
+	write(1, "exit\n", 5);
+	clear_history();
+	exit(0);
 }

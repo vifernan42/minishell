@@ -6,7 +6,7 @@
 #    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/11/30 18:02:57 by vifernan         ###   ########.fr        #
+#    Updated: 2022/12/09 17:44:55 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRCS = main.c \
 	   ./builtins/pwd.c \
 	   ./builtins/echo.c \
 	   ./builtins/env.c \
-	   ./keep_env.c
+	   ./builtins/exit.c \
+	   keep_env.c
 
 OBJECTS = $(SRCS:.c=.o)
 LIBFT_DIR = libft/
