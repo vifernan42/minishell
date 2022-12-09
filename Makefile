@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
+#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/11/30 17:48:13 by ialvarez         ###   ########.fr        #
+#    Updated: 2022/11/30 18:02:57 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRCS = main.c \
 	   ./exec/exec.c \
 	   ./builtins/pwd.c \
 	   ./builtins/echo.c \
-	   env.c \
+	   ./builtins/env.c \
+	   ./keep_env.c
 
 OBJECTS = $(SRCS:.c=.o)
 LIBFT_DIR = libft/
