@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/13 16:48:40 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:12:14 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int		echos(char **argv, int fd);
 void	my_exit();
 int		env(char **envu, int fd);
 int		my_chdir(t_data *data, const char *path);
+void	my_unset(t_data *data, char *key);
 
 
 /* -- leaks -- */
