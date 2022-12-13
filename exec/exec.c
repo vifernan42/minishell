@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/09 17:44:23 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:32:15 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ void	exec_builtins(t_pipe *list, t_data *data)
 		my_exit();
 	else if (!ft_strcmp("env", list->argv[0]))
 		env(data->env, list->out_fd);
+	else if (!ft_strcmp("cd", list->argv[0]))
+	{
+		
+	}
 	else
 		printf("NOT FOUND: 	%s\n", list->argv[0]);
 }

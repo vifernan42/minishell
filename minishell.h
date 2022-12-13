@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/09 17:43:17 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:52:14 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include	<readline/readline.h>
 # include	<readline/history.h>
 # include	<fcntl.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <libgen.h>
 # include	"libft/libft.h"
 # include	"printf/ft_printf.h"
 
