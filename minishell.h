@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/12 17:52:14 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:32:58 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		pwdcurrent();
 int		echos(char **argv, int fd);
 void	my_exit();
 int		env(char **envu, int fd);
+int		my_chdir(t_data *data, const char *path);
 
 
 /* -- leaks -- */
