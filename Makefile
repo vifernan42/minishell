@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/12/09 17:44:55 by vifernan         ###   ########.fr        #
+#    Updated: 2022/12/13 16:49:51 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS = main.c \
 	   ./builtins/echo.c \
 	   ./builtins/env.c \
 	   ./builtins/exit.c \
+	   ./builtins/cd.c \
 	   keep_env.c
 
 OBJECTS = $(SRCS:.c=.o)

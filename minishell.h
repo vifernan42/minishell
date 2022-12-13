@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/09 17:43:17 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:48:40 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int		pwdcurrent();
 int		echos(char **argv, int fd);
 void	my_exit();
 int		env(char **envu, int fd);
+int		my_chdir(t_data *data, const char *path);
 
 
 /* -- leaks -- */
