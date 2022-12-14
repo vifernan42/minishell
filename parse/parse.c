@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/09/07 16:33:53 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:14:22 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	pipe_parse(t_data *data)
 		}
 		if (i == count)
 		{
+			data->err = 2;
 			syntax_char(ft_charjoin('|'), STDERR_FILENO);
 			free_matrix(aux);
 			free_matrix(data->spt_pipes);
@@ -149,6 +150,9 @@ int	even_quotes(char *s, int count, char x, t_data *data)
 			return (syntax_char(ft_charjoin(x), STDERR_FILENO));
 	}
 	if (--i && s[i] == '|')
+	{
+		data->err = 2;
 		return (syntax_char(ft_charjoin('|'), STDERR_FILENO));
+	}
 	return (check_line(s, data));
 }

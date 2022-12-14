@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 18:06:56 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/17 18:19:24 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:59:07 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ int		ft_isdigit(int c);
 int		ft_isprint(int c);
 
 size_t	ft_strlen(const char *s);
+int ft_charindex(char *str, char c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 int		ft_strcmp(const char *s1, const char *s2);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strchr2(const char *s, int c);
 char	*ft_str2chr(const char *s, int c);

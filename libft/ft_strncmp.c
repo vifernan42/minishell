@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 18:27:00 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/30 17:52:55 by vifernan         ###   ########.fr       */
+/*   Created: 2021/04/08 19:59:12 by ialvarez          #+#    #+#             */
+/*   Updated: 2022/11/29 19:15:25 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	pwdcurrent(t_pipe *list)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*pwd;
-
-	pwd = NULL;
-	pwd = getcwd(pwd, 0);
-	if (!pwd)
+	if (n == 0)
+		return (0);
+	n--;
+	while (n > 0 && *s1 == *s2 && *s1 && *s2)
 	{
-		write(1, "entra\n", 6);
-		return (-1);
+		s1++;
+		s2++;
+		n--;
 	}
-	write(list->out_fd, pwd, ft_strlen(pwd));
-	write(list->out_fd, "\n", 1);
-	free(pwd);
-	return (1);
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

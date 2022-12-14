@@ -6,7 +6,7 @@
 #    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/10/06 19:16:09 by vifernan         ###   ########.fr        #
+#    Updated: 2022/12/14 19:43:48 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,15 @@ SRCS = main.c \
 	   ./tokenizator/tokenizator_utils.c \
 	   ./tokenizator/rm_used.c \
 	   ./exec/exec.c \
-	   env.c \
+	   ./builtins/pwd.c \
+	   ./builtins/echo.c \
+	   ./builtins/env.c \
+	   ./builtins/exit.c \
+	   ./builtins/cd.c \
+	   ./builtins/unset.c \
+	   ./builtins/bultins_utils.c \
+	   ./builtins/export.c \
+	   keep_env.c
 
 OBJECTS = $(SRCS:.c=.o)
 LIBFT_DIR = libft/
@@ -33,7 +41,7 @@ PRINTF_NAME = $(PRINTF_NAME)libftprintf.a
 INCLUDES = -I. -I$(LIBFT_DIR) -I$(PRINTF_DIR)
 FSANITIZE = -g3 -fsanitize=address
 READLINE = -L ~/.brew/opt/readline/lib -lreadline
-CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include -g3 $(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include -g $(INCLUDES)
 
 all: $(NAME)
 
@@ -55,7 +63,7 @@ debug: fclean all
 	@make -s -C $(PRINTF_DIR)
 	@$(CC) $(READLINE) $(CFLAGS) $(FSANITIZE) $(OBJECTS) ./printf/libftprintf.a \
 								./libft/libft.a -o $(NAME)
-	@./minishell				
+#	@./minishell				
 
 clean:
 	@echo "$(Yellow)[CLEAN]$(NO_COLOR)"

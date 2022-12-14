@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/10/07 00:33:42 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:35:11 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include	<readline/readline.h>
 # include	<readline/history.h>
 # include	<fcntl.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <libgen.h>
 # include	"libft/libft.h"
 # include	"printf/ft_printf.h"
 
@@ -31,8 +34,6 @@ typedef struct s_pipe
 	char			**argv; //ls -la lewn lwleel
 	int				in_fd; //fd entrada
 	int				out_fd; //fd de salidaa
-	char			*out_name; //fichero de salida?
-	char			*in_name; //fichero de entrada?
 	char			*err;
 	struct s_pipe	*next;
 }				t_pipe;
@@ -77,6 +78,19 @@ char	*rm_used(char **cmd_sp, int i, int f, int size);
 char	*ret_value(char *ret);
 char	*find_middle(char *str, int type);
 char	*join_swap(char	*str, char	*str2, int flag);
+
+/* -- built-ins -- */
+int		pwdcurrent();
+int		my_echo(t_data *data, char **argv, int fd);
+void	my_exit();
+int		env(char **envu, int fd);
+int		my_chdir(t_data *data, const char *path);
+void	my_unset(t_data *data, char **argv);
+char	*search_variable(char **env, char *key);
+void	env_update(t_data *data, char *new_line, char *key);
+void	update_env_var(t_data *data, char *dir, char *key);
+void	my_export(t_data *data, char **argv);
+
 
 /* -- leaks -- */
 void	leaks(void);

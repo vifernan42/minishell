@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:01:20 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/07/11 18:46:41 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:05:24 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ char	**ft_split(char const *s, char c)
 	}
 	dst = (char **)malloc((i + 1) * sizeof(char *));
 	if (!dst)
+	{
 		return (NULL);
+	}
 	ft_cachopo(dst, init, c);
 	return (dst);
 }

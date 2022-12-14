@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/19 16:36:56 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:43:55 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 	}
 	else if (pid == 0)
 	{
-		// printf("IN-> %d | %d\n", pid, list->in_fd);
-		// printf("OUT-> %d | %d\n", pid, list->out_fd);
 		if (list->in_fd)
 		{
 			dup2(list->in_fd, STDIN_FILENO);
@@ -65,6 +63,26 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 	}
 }
 
+void	exec_builtins(t_pipe *list, t_data *data)
+{
+	if (!ft_strcmp("pwd", list->argv[0]))
+		pwdcurrent(list);
+	else if (!ft_strcmp("echo", list->argv[0]))
+		my_echo(data, list->argv, list->out_fd);
+	else if (!ft_strcmp("exit", list->argv[0]))
+		my_exit();
+	else if (!ft_strcmp("env", list->argv[0]))
+		env(data->env, list->out_fd);
+	else if (!ft_strcmp("cd", list->argv[0]))
+		my_chdir(data, list->argv[1]);
+	else if (!ft_strcmp("unset", list->argv[0]))
+		my_unset(data, list->argv);
+	else if (!ft_strcmp("export", list->argv[0]))
+		my_export(data, list->argv);
+	else
+		printf("NOT FOUND: 	%s\n", list->argv[0]);
+}
+
 void	exec_pipes(t_pipe *list, t_data *data)
 {
 	t_pipe	*next;
@@ -77,7 +95,10 @@ void	exec_pipes(t_pipe *list, t_data *data)
 	}
 	if (!list->next && !list->out_fd)
 	  	list->out_fd = STDOUT_FILENO;
-	execution(list, data, pipe_fd);
+	if (!list->exec_path)
+		exec_builtins(list, data);
+	else
+		execution(list, data, pipe_fd);
 	next = list->next;
 	if (next)
 		exec_pipes(next, data);

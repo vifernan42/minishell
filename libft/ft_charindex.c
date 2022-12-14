@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_charindex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 18:27:00 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/30 17:52:55 by vifernan         ###   ########.fr       */
+/*   Created: 2022/12/14 16:55:35 by vifernan          #+#    #+#             */
+/*   Updated: 2022/12/14 16:58:29 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	pwdcurrent(t_pipe *list)
+int ft_charindex(char *str, char c)
 {
-	char	*pwd;
+    int i;
 
-	pwd = NULL;
-	pwd = getcwd(pwd, 0);
-	if (!pwd)
-	{
-		write(1, "entra\n", 6);
-		return (-1);
-	}
-	write(list->out_fd, pwd, ft_strlen(pwd));
-	write(list->out_fd, "\n", 1);
-	free(pwd);
-	return (1);
+    i = -1;
+    if (!str || c == '\0')
+        return (-1);
+    while (str[++i] != '\0')
+    {
+        if (str[i] == c)
+            return (i);
+    }
+    return (-1);
 }
