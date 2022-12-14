@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/13 18:23:03 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:34:40 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,6 @@ void	nodedelete(t_pipe *pipe, t_pipe **next)
 		free(pipe->exec_path);
 	if (pipe->argv)
 		free_matrix(pipe->argv);
-	if (pipe->in_fd)
-		close(pipe->in_fd);
-	if (pipe->out_fd)
-		close(pipe->out_fd);
-	if (pipe->out_name)
-		free(pipe->out_name);
-	if (pipe->in_name)
-		free(pipe->in_name);
-	if (pipe->err)
-		free(pipe->err);
 	*next = pipe->next;
 	free(pipe);
 }
@@ -116,17 +106,17 @@ int	main(int argc, char **argv, char **envp)
 			if (even_quotes(cmd_line, 0, 0, &data) == 0)
 			{	
 				pipe = tokenizator(&data, -1);
-				//print_list(pipe);
+				//system("leaks minishell");
 				if (data.err != -1) /* la -ls (example) */
 					exec_pipes(pipe, &data);
-				//lstdelete(pipe);
+				lstdelete(pipe);
 			}
-			free_matrix(data.spt_pipes);
+			if (data.err != 2)
+				free_matrix(data.spt_pipes);
 		}
 		add_history(cmd_line);
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-	//	system("leaks minishell");
 	}
 }

@@ -6,7 +6,7 @@
 #    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/12/13 20:17:47 by vifernan         ###   ########.fr        #
+#    Updated: 2022/12/14 16:42:41 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ SRCS = main.c \
 	   ./builtins/exit.c \
 	   ./builtins/cd.c \
 	   ./builtins/unset.c \
+	   ./builtins/bultins_utils.c \
+	   ./builtins/export.c \
 	   keep_env.c
 
 OBJECTS = $(SRCS:.c=.o)

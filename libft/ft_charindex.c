@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_err.c                                       :+:      :+:    :+:   */
+/*   ft_charindex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/27 21:10:29 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/14 19:12:41 by vifernan         ###   ########.fr       */
+/*   Created: 2022/12/14 16:55:35 by vifernan          #+#    #+#             */
+/*   Updated: 2022/12/14 16:58:29 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	syntax_char(char *ch, int fd)
+int ft_charindex(char *str, char c)
 {
-	char	*s;
+    int i;
 
-	s = ft_strdup("-minishell: syntax error near unexpected token ");
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
-	write(fd, "`", 1);
-	if (ch != NULL)
-		write(fd, ch, ft_strlen(ch));
-	write(fd, "\'\n", 2);
-	free(s);
-	free(ch);
-	return (1);
+    i = -1;
+    if (!str || c == '\0')
+        return (-1);
+    while (str[++i] != '\0')
+    {
+        if (str[i] == c)
+            return (i);
+    }
+    return (-1);
 }
