@@ -6,7 +6,11 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/12/14 19:43:46 by vifernan         ###   ########.fr       */
+=======
+/*   Updated: 2022/12/15 20:46:53 by vifernan         ###   ########.fr       */
+>>>>>>> vifernan
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +34,7 @@ void	nodedelete(t_pipe *pipe, t_pipe **next)
 		free(pipe->exec_path);
 	if (pipe->argv)
 		free_matrix(pipe->argv);
+	
 	*next = pipe->next;
 	free(pipe);
 }
@@ -106,7 +111,6 @@ int	main(int argc, char **argv, char **envp)
 			if (even_quotes(cmd_line, 0, 0, &data) == 0)
 			{	
 				pipe = tokenizator(&data, -1);
-				//system("leaks minishell");
 				if (data.err != -1) /* la -ls (example) */
 					exec_pipes(pipe, &data);
 				lstdelete(pipe);
@@ -118,5 +122,6 @@ int	main(int argc, char **argv, char **envp)
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
+		//system("leaks minishell");
 	}
 }
