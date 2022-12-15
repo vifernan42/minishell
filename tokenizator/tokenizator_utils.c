@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/17 18:20:00 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/15 20:49:14 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,22 @@ char	**cmd_arg_quottes(char	*pipe)
 	char	**aux_cmd;
 	char	*aux;
 	int		x;
-	int		j;
+	int		flag;
 
 	aux = NULL;
-	j = 0;
+	flag = 0;
 	if (!pipe)
 		return (NULL);
 	aux_cmd = spqu_split(skip_spaces(pipe), ' ');
 	x = -1;
 	while (aux_cmd[++x] != NULL)
 	{
-		if (aux_cmd[x][0] != '$'
-			&& find_rm_size(aux_cmd[x], 0, 0, -1) == (int)ft_strlen(aux_cmd[x]))
+		if (!ft_strcmp("echo", aux_cmd[x]))
+			flag++;
+		if (aux_cmd[x][0] == '<' || aux_cmd[x][0] == '>')
+			flag = 0;
+		if (flag == 0 && 
+		find_rm_size(aux_cmd[x], 0, 0, -1) == (int)ft_strlen(aux_cmd[x]))
 			aux = skip_quotes(skip_spaces(aux_cmd[x]), -1);
 		else
 			aux = skip_spaces(aux_cmd[x]);
@@ -93,33 +97,19 @@ char	**cmd_arg_quottes(char	*pipe)
 	}
 	return (aux_cmd);
 }
-/*
-int aux_find(char **cmd_sp, int i, int flag int type)
-{
-	if (cmd_sp[i] == NULL)
-	{
-		if (flag > 0)
-			free_matrix(cmd_sp);
-		return (-1);
-	}
-	if (type == 0)
-	{
-		type = find_rm_size(cmd_sp[i], 0, 0, type);
-		if (type == (int)ft_strlen(cmd_sp[i]) || (cmd_sp[i][type] != '<'
-			|| cmd_sp[i][type + 1] != '<'))
-			return (-1);
-	}
-}*/
 
 int	find_heredir(char **cmd_sp, int i, int type)
 {
 	int		flag;
-
+	
 	if (!cmd_sp)
 		return (-1);
 	flag = 0;
-	if (i == 0 && i--)
+	if (i == 0)
+	{
 		flag = 1;
+		i--;
+	}
 	while (cmd_sp[++i] != NULL)
 		if ((type == 0 && ft_strnstr(cmd_sp[i], "<<", 2))
 			|| (type != 0 && (ft_strnstr(cmd_sp[i], "<", 1)
