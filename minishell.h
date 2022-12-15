@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/14 18:35:11 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/15 20:05:57 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include	<unistd.h>
 # include	<stdlib.h>
 # include	<stdio.h>
+# include	<signal.h>
 # include	<readline/readline.h>
 # include	<readline/history.h>
 # include	<fcntl.h>
@@ -83,6 +84,7 @@ char	*join_swap(char	*str, char	*str2, int flag);
 int		pwdcurrent();
 int		my_echo(t_data *data, char **argv, int fd);
 void	my_exit();
+void	handle_signal(int sl);
 int		env(char **envu, int fd);
 int		my_chdir(t_data *data, const char *path);
 void	my_unset(t_data *data, char **argv);

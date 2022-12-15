@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/12/14 16:42:41 by vifernan         ###   ########.fr        #
+#    Updated: 2022/12/15 21:29:47 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS = main.c \
 	   ./builtins/export.c \
 	   keep_env.c
 
+
 OBJECTS = $(SRCS:.c=.o)
 LIBFT_DIR = libft/
 PRINTF_DIR = printf/
@@ -40,10 +41,10 @@ LIB_NAME = $(LIBFT_DIR)libft.a
 PRINTF_NAME = $(PRINTF_NAME)libftprintf.a
 INCLUDES = -I. -I$(LIBFT_DIR) -I$(PRINTF_DIR)
 FSANITIZE = -g3 -fsanitize=address
-READLINE = -L ~/.brew/opt/readline/lib -lreadline
-CFLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include -g $(INCLUDES)
+READLINE = -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
+CFLAGS = -Wall -Werror -Wextra -I /Users/$(USER)/.brew/opt/readline/include -g $(INCLUDES)
 
-all: $(NAME)
+all: $(NAME) 
 
 BCyan = \033[1;36m
 GREEN = \033[0;32m

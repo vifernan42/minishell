@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/14 19:34:40 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/15 20:04:58 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	main(int argc, char **argv, char **envp)
 	
 	(void)argc;
 	(void)argv;
+	signal(SIGINT, handle_signal);
+	signal(SIGQUIT, handle_signal);
 	data.env = keep_env(envp);
 //	print_matrix(data.env);
 	while (1)
