@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bultins_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:23:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/14 22:25:01 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/12/16 19:23:53 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	update_env_var(t_data *data, char *dir, char *key)
 		{
 			free(data->env[i]);
 			data->env[i] = dir;
+			ENV = data->env;
+			printf("ENTRA\n");
+			print_matrix(ENV);
 			break ;
 		}
 	}
