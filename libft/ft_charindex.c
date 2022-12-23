@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_charindex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:55:35 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/14 16:58:29 by vifernan         ###   ########.fr       */
+/*   Created: 2022/12/23 06:29:41 by ialvarez          #+#    #+#             */
+/*   Updated: 2022/12/23 06:29:52 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "libft.h"
 
-int ft_charindex(char *str, char c)
+int     ft_charindex(char *str, char c)
 {
     int i;
 

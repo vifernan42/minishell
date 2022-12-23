@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizator_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/15 20:49:14 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/16 22:55:37 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ char	**cmd_arg_quottes(char	*pipe)
 			flag++;
 		if (aux_cmd[x][0] == '<' || aux_cmd[x][0] == '>')
 			flag = 0;
-		if (flag == 0 && 
-		find_rm_size(aux_cmd[x], 0, 0, -1) == (int)ft_strlen(aux_cmd[x]))
+		if (flag == 0 && find_rm_size(aux_cmd[x], 0, 0, -1)
+			== (int)ft_strlen(aux_cmd[x]))
 			aux = skip_quotes(skip_spaces(aux_cmd[x]), -1);
 		else
 			aux = skip_spaces(aux_cmd[x]);
@@ -101,7 +101,7 @@ char	**cmd_arg_quottes(char	*pipe)
 int	find_heredir(char **cmd_sp, int i, int type)
 {
 	int		flag;
-	
+
 	if (!cmd_sp)
 		return (-1);
 	flag = 0;

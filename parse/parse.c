@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/15 17:53:41 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/20 21:20:16 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ int	more_redir(t_data *data, int i, int j, char **aux)
 		while (aux[++j] != NULL)
 		{
 			found = find_rm_size(aux[j], 0, 0, -1);
-			/* encontrar posibilidades de fallo "<> ><" etc... " \" " ; " */
 			if (ft_strnstr(aux[j], "<<<", ft_strlen(aux[j]))
-					|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j])))
+				|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j])))
 			{
 				if (ft_strnstr(aux[j], "<", ft_strlen(aux[j])))
 					syntax_char(ft_charjoin('<'), STDERR_FILENO);
@@ -36,7 +35,7 @@ int	more_redir(t_data *data, int i, int j, char **aux)
 				return (1);
 			}
 			if (ft_strnstr(aux[j], "<>", ft_strlen(aux[j]))
-					|| ft_strnstr(aux[j], "><", ft_strlen(aux[j])))
+				|| ft_strnstr(aux[j], "><", ft_strlen(aux[j])))
 			{
 				if (ft_strnstr(aux[j], "<", ft_strlen(aux[j])))
 					syntax_char(ft_charjoin('>'), STDERR_FILENO);
@@ -79,7 +78,7 @@ int	pipe_parse(t_data *data)
 		}
 		free_matrix(aux);
 	}
-	return(more_redir(data, -1, -1, NULL));
+	return (more_redir(data, -1, -1, NULL));
 }
 
 static int	aux_line(char *line, int i)
@@ -94,9 +93,10 @@ static int	aux_line(char *line, int i)
 		syntax_char(ft_charjoin('\\'), STDERR_FILENO);
 	if (line[i] == '\0')
 		syntax_char(ft_charjoin('\0'), STDERR_FILENO);
-	if (line[i] == '<' || line[i] == '>' || line[i] == ';' || line[i] == '\\' || line[i] == '\0')
-			return (1);
-	return(0);
+	if (line[i] == '<' || line[i] == '>' || line[i] == ';'
+		|| line[i] == '\\' || line[i] == '\0')
+		return (1);
+	return (0);
 }
 
 static int	check_line(char *line, t_data *data)
@@ -106,7 +106,7 @@ static int	check_line(char *line, t_data *data)
 	i = -1;
 	while (line[++i] != '\0')
 	{
-		if(line[i] == '<' && (line[i + 1] == ' ' || line[i + 1] == '\0'))
+		if (line[i] == '<' && (line[i + 1] == ' ' || line[i + 1] == '\0'))
 		{
 			i++;
 			while (line[i] == ' ')
@@ -114,10 +114,10 @@ static int	check_line(char *line, t_data *data)
 			if (aux_line(line, i) == 1)
 				return (1);
 		}
-		else if(line[i] == '>' && (line[i + 1] == ' ' || line[i + 1] == '\0'))
+		else if (line[i] == '>' && (line[i + 1] == ' ' || line[i + 1] == '\0'))
 		{
 			i++;
-			while(line[i] == ' ' && line)
+			while (line[i] == ' ' && line)
 				i++;
 			if (aux_line(line, i) == 1)
 				return (1);

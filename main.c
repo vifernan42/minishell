@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/15 23:59:09 by ialvarez         ###   ########.fr       */
+/*   Updated: 2022/12/16 07:45:58 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,11 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, handle_signal);
+	if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
+    {
+        printf("Error setting SIGQUIT handler\n");
+        exit(1);
+    }
 	data.env = keep_env(envp);
 //	print_matrix(data.env);
 	while (1)
