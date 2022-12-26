@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rm_used.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:40:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/15 17:05:06 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/20 20:27:18 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*find_middle(char *str, int type)
 	end = find_rm_size((char *)str + init, 0, 0, 5);
 	ret = ft_strjoin(aux, (char *)str + end + init);
 	free(aux);
-	return(ret);
+	return (ret);
 }
 
 char	*rm_used(char **cmd_sp, int i, int type, int size)

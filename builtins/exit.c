@@ -6,13 +6,17 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/16 15:34:20 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/26 18:35:39 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+void sigquit_handler()
+{
+    printf("Exit\n");
+    exit(0);
+}
 
 void	handle_signal(int sl)
 {
@@ -25,8 +29,7 @@ void	handle_signal(int sl)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (sl == 3)
-		write(1, "exit", 4);
+	
 }
 
 void		my_exit()

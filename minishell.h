@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/16 19:05:55 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/26 18:35:47 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define RD_END	0
 # define WR_END	1
 char **ENV;
+
+int		g_err;
 
 typedef struct s_pipe
 {
@@ -86,6 +88,7 @@ int		pwdcurrent();
 int		my_echo(t_data *data, char **argv, int fd);
 void	my_exit();
 void	handle_signal(int sl);
+void	sigquit_handler(int sign);
 int		env(char **envu, int fd);
 int		my_chdir(t_data *data, const char *path);
 void	my_unset(t_data *data, char **argv);

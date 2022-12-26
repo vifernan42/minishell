@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/29 19:42:45 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/20 20:33:12 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ char	*key_value(char **cmd_sp, int i)
 	char	*key;
 
 	if ((int)ft_strlen(cmd_sp[i]) > 2)
-		key = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, 0, 0) + 2, -1, 0);
+		key = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, 0, 0)
+				+ 2, -1, 0);
 	else
 		key = find_key(cmd_sp[i + 1], -1, 0);
 	return (key);

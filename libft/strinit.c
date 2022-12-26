@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strinit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 16:48:05 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/05 16:48:20 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/23 06:28:38 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_strinit(char *str, char x)
 {
 	int		i;
 	char	*aux;
-	
+
 	if (!str)
 		return (NULL);
 	i = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   st_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:01:20 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/08/03 19:22:31 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/20 21:22:08 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	check_quotes(char const *s, char c, int i)
 	return (i + 1);
 }
 
-static	int aux_split(char const *s, int i, char c)
+static	int	aux_split(char const *s, int i, char c)
 {
-	char x;
+	char	x;
 
 	x = 0;
 	if (s[i] == '\"' || s[i] == '\'')
@@ -40,7 +40,7 @@ static	int aux_split(char const *s, int i, char c)
 		i = check_quotes(s, x, i);
 	}
 	while (s[i] != c && s[i] != '\'' \
-		&& s[i] != '\"'  && s[i] != '\0')
+		&& s[i] != '\"' && s[i] != '\0')
 		i++;
 	return (i);
 }
