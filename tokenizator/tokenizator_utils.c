@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizator_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/16 22:55:37 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/09 18:15:04 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,23 @@ char	*find_key(char *str, int i, int j)
 	return (ret_key(str, -1, j, '\0'));
 }
 
+/*char	*var_sustitute(char *str, char c)
+{
+	int 	index;
+	char	*aux;
+	char	*var_env;
+
+	index = ft_charindex(str, '$');
+	aux = NULL; 
+	if (index >= 0 && c == '\"')
+	{
+		aux = ft_substr(str, 0, index);
+		var_env = search_variable(env, var_name);
+	}
+	else
+		return (str);
+}*/
+
 char	**cmd_arg_quottes(char	*pipe)
 {
 	char	**aux_cmd;
@@ -85,6 +102,8 @@ char	**cmd_arg_quottes(char	*pipe)
 	{
 		if (!ft_strcmp("echo", aux_cmd[x]))
 			flag++;
+		/*if (aux_cmd[x][0] == '\'' || aux_cmd[x][0] == '\"')
+			aux = var_sustitute(aux_cmd[x], aux_cmd[x][0]);*/
 		if (aux_cmd[x][0] == '<' || aux_cmd[x][0] == '>')
 			flag = 0;
 		if (flag == 0 && find_rm_size(aux_cmd[x], 0, 0, -1)

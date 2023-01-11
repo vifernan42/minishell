@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/16 07:45:58 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:18:32 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,22 +89,31 @@ int	main(int argc, char **argv, char **envp)
 	
 	(void)argc;
 	(void)argv;
-	signal(SIGINT, handle_signal);
+	//ft_signal();
+	/*signal(SIGINT, handle_signal);
 	if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
     {
         printf("Error setting SIGQUIT handler\n");
         exit(1);
-    }
+    }*/
 	data.env = keep_env(envp);
 //	print_matrix(data.env);
 	while (1)
 	{
+		select_signal(0);
+		err_no = 0;
 		data.wait = 0;
 		data.all_path = get_promt(getenv("PATH"));
 		//printf("AQUI\n");
 		data.promt = get_promt(getenv("USER"));
 		cmd_line = readline(data.promt);
 		i = 0;
+		if (cmd_line == NULL)
+		{
+			printf("exit\n");
+			//printf("%sexit\n", data.promt);
+			break ;
+		}
 		while (cmd_line[i] == ' ')
 			i++;
 		if (cmd_line[i] != '\0')
@@ -125,5 +134,6 @@ int	main(int argc, char **argv, char **envp)
 		free(data.promt);
 		free(data.all_path);
 		//system("leaks minishell");
+		//return (0);
 	}
 }

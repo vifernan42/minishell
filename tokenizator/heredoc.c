@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/11 18:56:20 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:57:42 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ void	rdline_heredoc(char *key, int fd_w)
 	if (!key)
 		return ;
 	wr_on = NULL;
+	select_signal(1);
 	while (1)
 	{
 		signal(SIGINT, handle_signal);
 		wr_on = readline("> ");
-		if (ft_strcmp(key, wr_on) == 0)
+		if (err_no == 1 || ft_strcmp(key, wr_on) == 0 || wr_on == NULL)
 			break ;
 		write(fd_w, wr_on, ft_strlen(wr_on));
 		write(fd_w, "\n", 1);
@@ -44,6 +45,14 @@ static int	do_heredoc(char *key)
 	
 	if (key)
 		free(key);
+	if (err_no == 1)
+	{
+		close(pip[WR_END]);
+		close(pip[RD_END]);
+		if (pipe(pip) < 0)
+			return (0);
+		close(pip[WR_END]);
+	}
 	return (pip[RD_END]);
 }
 

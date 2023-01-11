@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/21 18:50:03 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:50:50 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <libgen.h>
+# include <sys/ioctl.h>
 # include	"libft/libft.h"
 # include	"printf/ft_printf.h"
 
 # define RD_END	0
 # define WR_END	1
-
-int		g_err;
+int err_no;
 
 typedef struct s_pipe
 {
@@ -49,6 +49,7 @@ typedef struct s_data {
 	char	**spt_pipes;
 	int		wait;
 	int		err;
+	int		signal;
 }		t_data;
 
 
@@ -88,6 +89,7 @@ int		my_echo(t_data *data, char **argv, int fd);
 void	my_exit();
 void	handle_signal(int sl);
 void	sigquit_handler(int sign);
+void	select_signal(int select);
 int		env(char **envu, int fd);
 int		my_chdir(t_data *data, const char *path);
 void	my_unset(t_data *data, char **argv);

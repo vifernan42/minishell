@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bultins_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:23:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/14 22:25:01 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:05:19 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	update_env_var(t_data *data, char *dir, char *key)
 {
 	int	i;
+	
 
 	i = -1;
 	while(data->env[++i] != NULL)
@@ -65,7 +66,6 @@ char	*search_variable(char **env, char *key)
 	{
 		if (!ft_strcmp(key, env[i]))
 		{
-            //printf("    -%s\n", env[i] + ft_strlen(key));
 			return(env[i] + ft_strlen(key));
 			break ;
 		}
