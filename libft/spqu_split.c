@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:34:06 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/11 19:57:46 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:59:43 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,4 @@ char	**spqu_split(char const *s, char c)
 		return (NULL);
 	}
 	return (ft_inend(dst, s, c));
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> vifernan
