@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/15 23:59:04 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/10 19:55:05 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,13 @@ void	do_echo(char **env, char *str, int fd)
 			else
 				open = 1;
 			c = str[i];
+		}
+		else if(str[i] == '$' && str[i + 1] == '?')
+		{
+			write(fd, "1", 1);
+			i++;
+			//str = "51";
+			//printf("1");
 		}
 		else if (str[i] == '$' && c == '\"' && open == 1)
 			i += print_variable(env, str, i, fd);
