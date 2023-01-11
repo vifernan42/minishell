@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/26 18:35:39 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:54:41 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 void sigquit_handler()
 {
-    printf("Exit\n");
+    printf("exit\n");
     exit(0);
 }
 
 void	handle_signal(int sl)
 {
-
-	printf("%d\n", sl);
 	if (sl == 2)
 	{
 		write(1, "\n", 1);
@@ -32,9 +30,34 @@ void	handle_signal(int sl)
 	
 }
 
+void	handle_signal_here(int sl)
+{
+	(void) sl;
+	err_no = 1;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	rl_on_new_line();
+}
+
 void		my_exit()
 {
-	write(1, "exit\n", 5);
+	write(1, "exit", 4);
 	rl_clear_history();
 	exit(0);
+}
+
+void	select_signal(int select){
+	if (select == 0)
+	{
+		signal(SIGINT, handle_signal);
+		if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
+		{
+			printf("Error setting SIGQUIT handler\n");
+			exit(1);
+		}
+	}
+	else
+	{
+		signal(SIGINT, handle_signal_here);
+		signal(SIGQUIT, SIG_IGN);
+	}
 }

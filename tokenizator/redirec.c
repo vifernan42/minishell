@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/20 20:31:14 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:50:14 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 			close(ret->in_fd);
 		ret->in_fd = fd;
 	}
-	else if (ft_strnstr((char *)id + found, ">", 1)
-		|| ft_strnstr((char *)id + found, ">>", 2))
+	else if (err_no != 1 && (ft_strnstr((char *)id + found, ">", 1)
+		|| ft_strnstr((char *)id + found, ">>", 2)))
 	{
 		if (ft_strnstr((char *)id + found, ">>", 2))
 		{

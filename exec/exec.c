@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/14 18:27:56 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:29:32 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 
 void	exec_builtins(t_pipe *list, t_data *data)
 {
+	if (!list->argv)
+		return ;
 	if (!ft_strcmp("pwd", list->argv[0]))
 		pwdcurrent(list);
 	else if (!ft_strcmp("echo", list->argv[0]))
