@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/20 21:20:16 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:25:14 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	more_redir(t_data *data, int i, int j, char **aux)
 	found = 0;
 	while (data->spt_pipes[++i] != NULL)
 	{
-		aux = cmd_arg_quottes(data->spt_pipes[i]);
+		aux = cmd_arg_quottes(data->spt_pipes[i], data);
 		j = -1;
 		while (aux[++j] != NULL)
 		{
-			found = find_rm_size(aux[j], 0, 0, -1);
+			found = find_rm_size(aux[j], 0, -1);
 			if (ft_strnstr(aux[j], "<<<", ft_strlen(aux[j]))
 				|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j])))
 			{

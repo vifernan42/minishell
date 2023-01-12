@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/10 18:04:58 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:54:08 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,23 @@ int	print_variable(char **env, char *str, int i, int fd)
 	char	*var_env;
 	
 	char_index = ft_charindex(str + i, ' ') - 1;
-	if (ft_charindex(str + i, '\'') - 1 < char_index)
-		char_index = ft_charindex(str + i, '\'') - 1;
-	if (char_index > 0)
+	/*if (ft_charindex(str + i, '\'') - 1 < char_index)
+		char_index = ft_charindex(str + i, '\'') - 1;*/
+	if (char_index > 0 )
 		var_name = ft_substr(str + i, 1, char_index);
 	else
 	{
 		char_index = ft_charindex(str + i, '\"');
-		var_name = ft_substr(str + i, 1, char_index - 1);
+		if (char_index < 0)
+		{
+			char_index = ft_charindex(str + i + 1, '$');
+			if (char_index < 0)
+				char_index = (int)ft_strlen(str + i);
+			var_name = ft_substr(str + i, 1, char_index);
+			
+		}
+		else
+			var_name = ft_substr(str + i, 1, char_index - 1);
 	}
 	var_env = var_name;
 	free(var_name);
@@ -62,7 +71,7 @@ void	do_echo(char **env, char *str, int fd)
 				open = 1;
 			c = str[i];
 		}
-		else if (str[i] == '$' && c == '\"' && open == 1)
+		else if (str[i] == '$' && ((c == '\"' && open == 1) || (c == 0 && open == 0)))
 			i += print_variable(env, str, i, fd);
 		else
 			write(fd, &str[i], 1);

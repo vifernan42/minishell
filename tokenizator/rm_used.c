@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rm_used.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:40:56 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/20 20:27:18 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:15:37 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*find_middle(char *str, int type)
 	char	*aux;
 	char	*ret;
 
-	init = find_rm_size(str, 0, 0, type);
+	init = find_rm_size(str, 0, type);
 	end = 0;
 	while (str[init + end] == '>' || str[init + end] == '<')
 		end++;
@@ -66,7 +66,7 @@ char	*find_middle(char *str, int type)
 	free(aux);
 	aux = ft_strjoin(ret, " ");
 	free (ret);
-	end = find_rm_size((char *)str + init, 0, 0, 5);
+	end = find_rm_size((char *)str + init, 0, 5);
 	ret = ft_strjoin(aux, (char *)str + end + init);
 	free(aux);
 	return (ret);

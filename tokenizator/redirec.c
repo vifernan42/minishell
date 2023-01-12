@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/11 18:50:14 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:27:51 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 	int	fd;
 	int	found;
 
-	found = find_rm_size(id, 0, 0, -1);
+	found = find_rm_size(id, 0, -1);
 	if (ft_strnstr((char *)id + found, "<", 1))
 	{
 		fd = open(fname, O_RDONLY, 0666);
@@ -61,21 +61,23 @@ char	*find_fname(char **cmd_sp, int i)
 	else
 	{
 		fname = find_key((char *) cmd_sp[i]
-				+ find_rm_size(cmd_sp[i], 0, 0, -1) + 1, -1, 0);
+				+ find_rm_size(cmd_sp[i], 0, -1) + 1, -1, 0);
 		if (fname[0] == '\0')
 			fname = find_key((char *) cmd_sp[i]
-					+ find_rm_size(cmd_sp[i], 0, 0, -1) + 2, -1, 0);
+					+ find_rm_size(cmd_sp[i], 0, -1) + 2, -1, 0);
 	}
 	return (fname);
 }
 
-void	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
+void	take_redirec(char **aux_cmd, char **cmd_sp, t_pipe *ret, t_data *data)
 {
 	char	*swap;
 	int		size;
+	int		i;
 
 	swap = NULL;
 	size = 1;
+	i = -1;
 	i = find_heredir(cmd_sp, -1, -1);
 	if (i != -1)
 	{
@@ -86,11 +88,11 @@ void	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret)
 		*aux_cmd = ft_strdup(swap);
 		free(swap);
 	}
-	if (find_heredir(cmd_arg_quottes(*aux_cmd), 0, 1) == -1)
+	if (find_heredir(cmd_arg_quottes(*aux_cmd, data), 0, 1) == -1)
 	{
 		free_matrix(cmd_sp);
 		return ;
 	}
 	free_matrix(cmd_sp);
-	take_redirec(aux_cmd, -1, cmd_arg_quottes(*aux_cmd), ret);
+	take_redirec(aux_cmd, cmd_arg_quottes(*aux_cmd, data), ret, data);
 }
