@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:04:52 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/20 20:26:42 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:12:41 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	take_args(char **cmd_sp, t_pipe *ret, char *all_path)
 	ret->exec_path = find_path(cmd_sp[0], all_path, -1);
 	ret->argv = cmd_sp;
 	if (!ft_strcmp("cd", ret->argv[0]) || !ft_strcmp("echo", ret->argv[0])
-		|| !ft_strcmp("pwd", ret->argv[0]))
+		|| !ft_strcmp("pwd", ret->argv[0]) || !ft_strcmp("env", ret->argv[0]))
 	{
 		free(ret->exec_path);
 		ret->exec_path = NULL;
