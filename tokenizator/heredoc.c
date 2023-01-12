@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/11 19:57:42 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:52:34 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,20 @@ char	*key_value(char **cmd_sp, int i)
 	char	*key;
 
 	if ((int)ft_strlen(cmd_sp[i]) > 2)
-		key = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, 0, 0)
+		key = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, 0)
 				+ 2, -1, 0);
 	else
 		key = find_key(cmd_sp[i + 1], -1, 0);
 	return (key);
 }
 
-int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
+int	take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data)
 {
 	int		fd;
+	int		i;
 
 	fd = 0;
+	i = 1;
 	i = find_heredir(cmd_sp, -1, 0);
 	if (i != -1)
 	{
@@ -87,11 +89,11 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 		free_matrix(cmd_sp);
 		return (0);
 	}
-	if (find_heredir(cmd_arg_quottes(*aux_cmd), 0, 0) == -1)
+	if (find_heredir(cmd_arg_quottes(*aux_cmd, data), 0, 0) == -1)
 	{
 		free_matrix(cmd_sp);
 		return (fd);
 	}
 	free_matrix(cmd_sp);
-	return (take_heredoc(aux_cmd, -1, cmd_arg_quottes(*aux_cmd), NULL));
+	return (take_heredoc(aux_cmd, cmd_arg_quottes(*aux_cmd, data), NULL, data));
 }

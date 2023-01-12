@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/11 19:51:48 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:28:48 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ t_pipe	*create_node(char *cmd_stg, char *all_path, t_data *data)
 	ret->out_fd = 1;
 	ret->in_fd = 0;
 	aux_cmd = ft_strdup(cmd_stg);
-	ret->in_fd = take_heredoc(&aux_cmd, -1, cmd_arg_quottes(cmd_stg), NULL);
+	ret->in_fd = take_heredoc(&aux_cmd, cmd_arg_quottes(cmd_stg, data), NULL, data);
 	if (aux_cmd)
-		take_redirec(&aux_cmd, -1, cmd_arg_quottes(aux_cmd), ret);
+		take_redirec(&aux_cmd, cmd_arg_quottes(aux_cmd, data), ret, data);
 	if (aux_cmd)
-		take_args(cmd_arg_quottes(aux_cmd), ret, all_path);
+		take_args(cmd_arg_quottes(aux_cmd, data), ret, all_path);
 	free(aux_cmd);
 	if (ret->in_fd == -1)
 	{

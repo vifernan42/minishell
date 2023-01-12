@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/11 17:50:50 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:28:22 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_data {
 int		pipe_parse(t_data *data);
 int		even_quotes(char *s, int count, char x, t_data *data);
 int		syntax_char(char *ch, int fd);
-char	**cmd_arg_quottes(char	*pipe);
+char	**cmd_arg_quottes(char	*pipe, t_data *data);
 
 /* -- fill struct --*/
 char	*get_promt(char *user);
@@ -66,13 +66,13 @@ char	**keep_env(char **env);
 /* -- tokenizator -- */
 t_pipe	*tokenizator(t_data *data, int i);
 t_pipe	*create_node(char *cmd_stg, char *all_path, t_data *data);
-int		take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux);
-void 	take_redirec(char **aux_cmd, int i, char **cmd_sp, t_pipe *ret);
+int		take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data);
+void 	take_redirec(char **aux_cmd, char **cmd_sp, t_pipe *ret, t_data *data);
 void	take_args(char **cmd_sp, t_pipe *ret, char *all_path);
 int		find_heredir(char **cmd_sp, int i, int type);
 char	*find_key(char *str, int i, int j);
 char	*ret_key(char *str, int i, int j, char c);
-int		find_rm_size(char *str, int i, int lock, int type);
+int		find_rm_size(char *str, int lock, int type);
 
 /* -- exec -- */
 void	exec_pipes(t_pipe *list, t_data *data);
