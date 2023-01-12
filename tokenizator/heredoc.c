@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/29 19:42:45 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:28:41 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	rdline_heredoc(char *key, int fd_w)
 	if (!key)
 		return ;
 	wr_on = NULL;
+	select_signal(1);
 	while (1)
 	{
 		wr_on = readline("> ");
-		if (ft_strcmp(key, wr_on) == 0)
+		if (err_no == 1 || ft_strcmp(key, wr_on) == 0 || wr_on == NULL)
 			break ;
 		write(fd_w, wr_on, ft_strlen(wr_on));
 		write(fd_w, "\n", 1);
@@ -42,6 +43,14 @@ static int	do_heredoc(char *key)
 	close(pip[WR_END]);
 	if (key)
 		free(key);
+	if (err_no == 1)
+	{
+		close(pip[WR_END]);
+		close(pip[RD_END]);
+		if (pipe(pip) < 0)
+			return (0);
+		close(pip[WR_END]);
+	}
 	return (pip[RD_END]);
 }
 
@@ -50,17 +59,20 @@ char	*key_value(char **cmd_sp, int i)
 	char	*key;
 
 	if ((int)ft_strlen(cmd_sp[i]) > 2)
-		key = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, 0, 0) + 2, -1, 0);
+		key = find_key((char *) cmd_sp[i] + find_rm_size(cmd_sp[i], 0, 0)
+				+ 2, -1, 0);
 	else
 		key = find_key(cmd_sp[i + 1], -1, 0);
 	return (key);
 }
 
-int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
+int	take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data)
 {
 	int		fd;
+	int		i;
 
 	fd = 0;
+	i = 1;
 	i = find_heredir(cmd_sp, -1, 0);
 	if (i != -1)
 	{
@@ -75,11 +87,11 @@ int	take_heredoc(char **aux_cmd, int i, char **cmd_sp, char *aux)
 		free_matrix(cmd_sp);
 		return (0);
 	}
-	if (find_heredir(cmd_arg_quottes(*aux_cmd), 0, 0) == -1)
+	if (find_heredir(cmd_arg_quottes(*aux_cmd, data), 0, 0) == -1)
 	{
 		free_matrix(cmd_sp);
 		return (fd);
 	}
 	free_matrix(cmd_sp);
-	return (take_heredoc(aux_cmd, -1, cmd_arg_quottes(*aux_cmd), NULL));
+	return (take_heredoc(aux_cmd, cmd_arg_quottes(*aux_cmd, data), NULL, data));
 }

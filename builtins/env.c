@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:26:56 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/23 16:56:01 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:55:45 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		env(char **envu, int fd)
 	i = -1;
 	while (envu[++i] != NULL)
 	{
-		if (ft_strchr(envu[i], '='))
+		if (ft_strchr(envu[i], '=') && envu[i][0] != '?')
 			ft_putendl_fd(envu[i], fd);
 	}
 	return (0);

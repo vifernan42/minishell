@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:34:06 by vifernan          #+#    #+#             */
-/*   Updated: 2022/08/03 19:06:01 by vifernan         ###   ########.fr       */
+/*   Updated: 2022/12/26 18:36:31 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	check_quo(char const *s, char c, int i)
 	return (i + 1);
 }
 
-static	int skip_quo(char const *s, int i, char c)
+static	int	skip_quo(char const *s, int i, char c)
 {
-	char x;
+	char	x;
 
 	x = 0;
 	if (s[i] == '\"' || s[i] == '\'')
@@ -40,7 +40,7 @@ static	int skip_quo(char const *s, int i, char c)
 		i = check_quo(s, x, i);
 	}
 	while (s[i] != c && s[i] != '\'' \
-		&& s[i] != '\"'  && s[i] != '\0')
+		&& s[i] != '\"' && s[i] != '\0')
 		i++;
 	return (i);
 }

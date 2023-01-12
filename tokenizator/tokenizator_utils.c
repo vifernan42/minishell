@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2022/12/15 20:49:14 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:30:25 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,31 @@ char	*find_key(char *str, int i, int j)
 	return (ret_key(str, -1, j, '\0'));
 }
 
-char	**cmd_arg_quottes(char	*pipe)
+/*char	*var_sustitute(char *str, char c)
+{
+	int 	index;
+	char	*aux;
+	char	*var_env;
+
+	index = ft_charindex(str, '$');
+	aux = NULL; 
+	if (index >= 0 && c == '\"')
+	{
+		aux = ft_substr(str, 0, index);
+		var_env = search_variable(env, var_name);
+	}
+	else
+		return (str);
+}*/
+
+char	**cmd_arg_quottes(char	*pipe, t_data *data)
 {
 	char	**aux_cmd;
 	char	*aux;
 	int		x;
 	int		flag;
 
+	data->err = 0;
 	aux = NULL;
 	flag = 0;
 	if (!pipe)
@@ -83,12 +101,14 @@ char	**cmd_arg_quottes(char	*pipe)
 	x = -1;
 	while (aux_cmd[++x] != NULL)
 	{
+		/*if (aux_cmd[x][0] == '\'' || aux_cmd[x][0] == '\"')
+			aux = var_sustitute(aux_cmd[x], aux_cmd[x][0]);*/
 		if (!ft_strcmp("echo", aux_cmd[x]))
 			flag++;
-		if (aux_cmd[x][0] == '<' || aux_cmd[x][0] == '>')
+		else if (aux_cmd[x][0] == '<' || aux_cmd[x][0] == '>')
 			flag = 0;
-		if (flag == 0 && 
-		find_rm_size(aux_cmd[x], 0, 0, -1) == (int)ft_strlen(aux_cmd[x]))
+		if (flag == 0 && find_rm_size(aux_cmd[x], 0, -1)
+			== (int)ft_strlen(aux_cmd[x]))
 			aux = skip_quotes(skip_spaces(aux_cmd[x]), -1);
 		else
 			aux = skip_spaces(aux_cmd[x]);
@@ -101,7 +121,7 @@ char	**cmd_arg_quottes(char	*pipe)
 int	find_heredir(char **cmd_sp, int i, int type)
 {
 	int		flag;
-	
+
 	if (!cmd_sp)
 		return (-1);
 	flag = 0;
@@ -115,7 +135,7 @@ int	find_heredir(char **cmd_sp, int i, int type)
 			|| (type != 0 && (ft_strnstr(cmd_sp[i], "<", 1)
 					|| ft_strnstr(cmd_sp[i], ">>", 2)
 					|| ft_strnstr(cmd_sp[i], ">", 1)))
-			|| find_rm_size(cmd_sp[i], 0, 0, type) != (int)ft_strlen(cmd_sp[i]))
+			|| find_rm_size(cmd_sp[i], 0, type) != (int)ft_strlen(cmd_sp[i]))
 			break ;
 	if (cmd_sp[i] == NULL)
 	{
@@ -125,7 +145,7 @@ int	find_heredir(char **cmd_sp, int i, int type)
 	}
 	if (type == 0)
 	{
-		type = find_rm_size(cmd_sp[i], 0, 0, type);
+		type = find_rm_size(cmd_sp[i], 0, type);
 		if (type == (int)ft_strlen(cmd_sp[i]) || (cmd_sp[i][type] != '<'
 			|| cmd_sp[i][type + 1] != '<'))
 			return (-1);
@@ -135,10 +155,12 @@ int	find_heredir(char **cmd_sp, int i, int type)
 	return (i);
 }
 
-int	find_rm_size(char *str, int i, int lock, int type)
+int	find_rm_size(char *str, int lock, int type)
 {
 	char	c;
+	int		i;
 
+	i = 0;
 	c = '\0';
 	if (!str)
 		return (0);
