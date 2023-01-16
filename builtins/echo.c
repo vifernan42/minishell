@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/12 19:49:35 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:33:37 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	print_variable(char **env, char *str, int i, int fd)
 	char_index = ft_charindex(str + i, ' ') - 1;
 	/*if (ft_charindex(str + i, '\'') - 1 < char_index)
 		char_index = ft_charindex(str + i, '\'') - 1;*/
-	if (char_index > 0 )
+	if (char_index > 0)
 		var_name = ft_substr(str + i, 1, char_index);
 	else
 	{
