@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/12 19:30:25 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/14 17:08:30 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,25 +90,16 @@ char	**cmd_arg_quottes(char	*pipe, t_data *data)
 	char	**aux_cmd;
 	char	*aux;
 	int		x;
-	int		flag;
 
 	data->err = 0;
 	aux = NULL;
-	flag = 0;
 	if (!pipe)
 		return (NULL);
 	aux_cmd = spqu_split(skip_spaces(pipe), ' ');
 	x = -1;
 	while (aux_cmd[++x] != NULL)
 	{
-		/*if (aux_cmd[x][0] == '\'' || aux_cmd[x][0] == '\"')
-			aux = var_sustitute(aux_cmd[x], aux_cmd[x][0]);*/
-		if (!ft_strcmp("echo", aux_cmd[x]))
-			flag++;
-		else if (aux_cmd[x][0] == '<' || aux_cmd[x][0] == '>')
-			flag = 0;
-		if (flag == 0 && find_rm_size(aux_cmd[x], 0, -1)
-			== (int)ft_strlen(aux_cmd[x]))
+		if (find_rm_size(aux_cmd[x], 0, -1) == (int)ft_strlen(aux_cmd[x]))
 			aux = skip_quotes(skip_spaces(aux_cmd[x]), -1);
 		else
 			aux = skip_spaces(aux_cmd[x]);

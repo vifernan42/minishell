@@ -6,11 +6,80 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/12 19:25:14 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:51:06 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	change_value(char *str, int i, t_data *data, int index)
+{
+	char	*var_name;
+	int		char_index;
+	char	*var_env;
+	int		leng;
+	
+	leng = 0;
+	data->err = 0;
+	char_index = ft_strinkey(str + i, "$,. ><-@?¿¡/\\%#·\"\'");
+	leng = (int)ft_strlen(str);
+	printf("leng--%d\n", leng);
+	printf("-%s$\n", ft_substr(str + i, 0, char_index));
+	
+	var_name = ft_substr(str + i, 0, char_index);
+	var_env = ft_strjoin(var_name, "=");
+	free(var_name);
+	var_name = search_variable(data->env, var_env);
+	free(var_env);
+	printf("-	%s\n", var_name);
+	index = 0;
+	if (var_name)
+	{
+		var_env = ft_strdup(str);
+		//free(str);
+		//printf("&	%s\n", ft_substr(str, 0, i - 1));
+		str = ft_strjoin(ft_substr(var_env, 0, i - 1), var_name);
+		printf("·	%s\n", str);
+		printf("+	%s\n", var_env);
+		var_env = ft_strjoin(str, ft_substr(var_env, (i + char_index), leng - (i + char_index)));
+		str = var_env;
+		//data->spt_pipes[index] = var_env;
+//		free(str);
+		free(var_env);
+		
+		
+		//var_env = ft_substr(var_env, i + (int)ft_strlen(var_name) + (int)ft_strlen(str), ((int)ft_strlen(var_env) - (i + (int)ft_strlen(var_name)) + (int)ft_strlen(str)));
+	}
+	printf("+	%s\n", var_env);
+		/* cambiar por var_env */
+	//else
+		/* cambiar por "" */
+	//free(var_name);
+	//str = new_str;
+	return (i + (int)ft_strlen(var_name));
+}
+
+void	take_variable(t_data *data, char *str, int index)
+{
+	int	i;
+	int	open;
+	
+	i = -1;
+	data->err = 0;
+	open = 0;
+	while (str[++i] != '\0')
+	{
+		if (str[i] == '\'')
+		{
+			if (open)
+				open = 0;
+			else
+				open = 1;
+		}
+		if (str[i] == '$' && !open)
+			i = change_value(str, i + 1, data, index);
+	}
+}
 
 int	more_redir(t_data *data, int i, int j, char **aux)
 {
@@ -19,7 +88,10 @@ int	more_redir(t_data *data, int i, int j, char **aux)
 	found = 0;
 	while (data->spt_pipes[++i] != NULL)
 	{
+		take_variable(data, data->spt_pipes[i], i);
+		printf("*	%s\n", data->spt_pipes[i]);
 		aux = cmd_arg_quottes(data->spt_pipes[i], data);
+		
 		j = -1;
 		while (aux[++j] != NULL)
 		{
