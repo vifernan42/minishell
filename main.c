@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/12 19:43:41 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:29:54 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	main(int argc, char **argv, char **envp)
 					exec_pipes(pipe, &data);
 				lstdelete(pipe);
 			}
-			if (data.err != 2)
+			//if (data.err != 2)
 				free_matrix(data.spt_pipes);
 		}
 		add_history(cmd_line);
