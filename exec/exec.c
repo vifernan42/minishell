@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/17 20:29:49 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:40:21 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	exec_builtins(t_pipe *list, t_data *data)
 	if (!list->argv)
 		return ;
 	if (!ft_strcmp("pwd", list->argv[0]))
-		pwdcurrent(list);
+		pwdcurrent(list); /**/
 	else if (!ft_strcmp("echo", list->argv[0]))
 		my_echo(data, list->argv, list->out_fd);
 	else if (!ft_strcmp("exit", list->argv[0]))

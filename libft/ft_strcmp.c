@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 19:59:12 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/11 17:00:32 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:28:03 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 		if (s1[i] != s2[i])
 			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 	}
-	return (0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]); /*esto retornaba 0, lo he cambiado porque para el heredoc.c linea 28 si no nos lo hace mal*/
 }
+/* mirar funcion, esta mal hecha*/

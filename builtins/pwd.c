@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:27:00 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/30 17:52:55 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:40:15 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	pwdcurrent(t_pipe *list)
 	pwd = getcwd(pwd, 0);
 	if (!pwd)
 	{
-		write(1, "entra\n", 6);
+		write(1, "entra\n", 6); 	/*oldpwd*/
 		return (-1);
 	}
 	write(list->out_fd, pwd, ft_strlen(pwd));

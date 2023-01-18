@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/17 19:49:41 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:16:34 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	char	*aux;
 	int		leng;
 	
-	printf("-	%s\n", str + i);
+	//printf("-	%s\n", str + i);
 	leng = 0;
 	data->err = 0;
+	aux = NULL;  /*nuevo, hace que si pones un solo comando como ls, no haya leaks*/
 	char_index = ft_strinkey(str + i, "$,. ><-@?¿¡/\\%#·\"\'");
 	leng = (int)ft_strlen(str);
 	var_name = ft_substr(str + i, 0, char_index);
@@ -33,7 +34,8 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	if (!var_name)
 	{
 		free(var_name);
-		var_name = "";
+	//	var_name = "";
+		printf("aa%p\n", &var_name);
 	}
 	var_env = ft_strdup(str);
 	free(str);
@@ -48,6 +50,7 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	}
 	else
 		*expand_ln = ft_strdup(str);
+	free(str);							/*nuevo free, nos libera "ls -ialvarez"*/
 	free(var_env);
 	return (i + char_index);
 }
@@ -64,7 +67,7 @@ char	*take_variable(t_data *data, char *str)
 	expand_ln = NULL;
 	while (str[++i] != '\0')
 	{
-		printf("_str[%d]->%c\n", i, str[i]);
+		//printf("_str[%d]->%c\n", i, str[i]);
 		if (str[i] == '\'')
 		{
 			if (open)
@@ -74,30 +77,33 @@ char	*take_variable(t_data *data, char *str)
 		}
 		if (str[i] == '$' && !open)
 		{
-			printf("-str[%d]->%c\n", i, str[i]);
+		//	printf("-str[%d]->%c\n", i, str[i]);
+			
 			i = change_value(ft_strdup(str), i + 1, data, &expand_ln);
-			printf("%s\n=str[%d]->%c\n", str, i, str[i]);
+		//	printf("%s\n=str[%d]->%c\n", str, i, str[i]);
 		}
 	}
 	if (!expand_ln)
-		free(str);
+		free(expand_ln);	/*nuevo free*/
 	return (expand_ln);
 }
 
 int	more_redir(t_data *data, int i, int j, char **aux)
 {
-	int	found;
+	int		found;
 	char	*expand_ln;
 
 	found = 0;
+	expand_ln = NULL;		/*nuevo null*/
 	while (data->spt_pipes[++i] != NULL)
 	{
-		expand_ln = take_variable(data, ft_strdup(data->spt_pipes[i]));
+		expand_ln = take_variable(data, data->spt_pipes[i]);
 		if (expand_ln)
 		{
 			free(data->spt_pipes[i]);
-			data->spt_pipes[i] = expand_ln;	
-		}
+			data->spt_pipes[i] = ft_strdup(expand_ln);
+		}	
+		free(expand_ln);			/*nuevo free*/
 		aux = cmd_arg_quottes(data->spt_pipes[i], data);
 		j = -1;
 		while (aux[++j] != NULL)
