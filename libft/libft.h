@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 18:06:56 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/14 16:59:07 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:54:26 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ char	*ft_strrchr(const char *s, int c);
 char	*ft_strchr2(const char *s, int c);
 char	*ft_str2chr(const char *s, int c);
 char	*ft_strinit(char *str, char x);
+int 	ft_strinkey(const char *str, const char *key);
 char	*ft_charjoin(char c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strdup(const char *s1);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
