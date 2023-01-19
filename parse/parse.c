@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/17 19:49:41 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:31:53 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	char	*aux;
 	int		leng;
 	
-	printf("-	%s\n", str + i);
 	leng = 0;
 	data->err = 0;
 	char_index = ft_strinkey(str + i, "$,. ><-@?¿¡/\\%#·\"\'");
@@ -49,7 +48,7 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	else
 		*expand_ln = ft_strdup(str);
 	free(var_env);
-	return (i + char_index);
+	return (0);
 }
 
 char	*take_variable(t_data *data, char *str)
@@ -64,7 +63,6 @@ char	*take_variable(t_data *data, char *str)
 	expand_ln = NULL;
 	while (str[++i] != '\0')
 	{
-		printf("_str[%d]->%c\n", i, str[i]);
 		if (str[i] == '\'')
 		{
 			if (open)
@@ -73,11 +71,9 @@ char	*take_variable(t_data *data, char *str)
 				open = 1;
 		}
 		if (str[i] == '$' && !open)
-		{
-			printf("-str[%d]->%c\n", i, str[i]);
 			i = change_value(ft_strdup(str), i + 1, data, &expand_ln);
-			printf("%s\n=str[%d]->%c\n", str, i, str[i]);
-		}
+		if (expand_ln)
+			str = ft_strdup(expand_ln);
 	}
 	if (!expand_ln)
 		free(str);

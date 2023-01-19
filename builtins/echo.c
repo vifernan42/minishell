@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/14 18:21:48 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:38:09 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ void	do_echo(char **env, char *str, int fd)
 	i = -1;
 	c = 0;
 	open = 0;
+	(void)env;
 	while (str[++i] != '\0')
 	{
-		if (str[i] == '\'' || str[i] == '\"')
+		/*if (str[i] == '\'' || str[i] == '\"')
 		{
 			if (open == 1)
 			{
@@ -73,7 +74,7 @@ void	do_echo(char **env, char *str, int fd)
 		}
 		else if (str[i] == '$' && ((c == '\"' && open == 1) || (c == 0 && open == 0)))
 			i += print_variable(env, str, i, fd);
-		else
+		else*/
 			write(fd, &str[i], 1);
 	}
 }
