@@ -3,24 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:27:00 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/11/30 17:52:55 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/20 19:09:56 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pwdcurrent(t_pipe *list)
+int	pwdcurrent(t_pipe *list, t_data *data)
 {
 	char	*pwd;
+	int		i;
 
+	i = -1;
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (!pwd)
 	{
-		write(1, "entra\n", 6);
+		if (!data->oldpwd)
+			write(list->out_fd, "", 0);
+		else
+			while (data->oldpwd[++i] != '\0')    /*echar un vistazo*/
+			{
+				if (data->oldpwd[i] == '=')
+					while (data->oldpwd[++i] != '\0')
+						write(list->out_fd, &data->oldpwd[i], 1);
+			}
+		write(list->out_fd, "\n", 1);
 		return (-1);
 	}
 	write(list->out_fd, pwd, ft_strlen(pwd));

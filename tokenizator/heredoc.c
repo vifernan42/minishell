@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/19 19:07:10 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/19 19:25:03 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	rdline_heredoc(char *key, int fd_w)
 	select_signal(1);
 	while (1)
 	{
+		signal(SIGINT, handle_signal);
 		wr_on = readline("> ");
 		if (err_no == 1 || (!ft_strcmp(key, wr_on) &&
 		 (int)ft_strlen(key) == (int)ft_strlen(wr_on)) || wr_on == NULL)
@@ -42,6 +43,7 @@ static int	do_heredoc(char *key)
 		return (0);
 	rdline_heredoc(key, pip[WR_END]);
 	close(pip[WR_END]);
+	
 	if (key)
 		free(key);
 	if (err_no == 1)

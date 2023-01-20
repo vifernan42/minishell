@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/19 18:38:09 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/20 19:34:13 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,20 @@ int my_echo(t_data *data, char **argv, int fd)
 {
 	int flag;
 	int i;
+	int u;
 
-	flag = 0;
+	flag = 1;
 	i = 1;
-	if (ft_strcmp(argv[1], "-n"))
-		flag = 1;
-	i = 1;
-	if (flag != 1)
-		i++;
+	u = 0;
+	while(argv[++u] != '\0')
+	{
+		if (!ft_strcmp("-n",argv[1]))  /*necesaria esta linea "echo hola -nn -n as lasn" para que este caso no lo haca sin salto de linea*/
+			if (!ft_strcmp("-n",argv[u]))
+			{
+				flag = 0;
+				i++;
+			}
+	}
 	while (argv[i] != NULL)
 	{
 		do_echo(data->env, argv[i], fd);

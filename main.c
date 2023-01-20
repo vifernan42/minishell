@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/19 19:24:04 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/20 19:45:53 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	main(int argc, char **argv, char **envp)
 		free(data.promt);
 		free(data.all_path);
 		//env_update(&data, ft_strjoin("?=", ft_itoa(err_no)), "?");
-		system("leaks minishell");
+		//system("leaks -q minishell");
 		//return (0);
 	}
 }

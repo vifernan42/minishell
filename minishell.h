@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/12 19:28:22 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:18:49 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_data {
 	int		wait;
 	int		err;
 	int		signal;
+	char	*oldpwd;
 }		t_data;
 
 
@@ -84,8 +85,9 @@ char	*find_middle(char *str, int type);
 char	*join_swap(char	*str, char	*str2, int flag);
 
 /* -- built-ins -- */
-int		pwdcurrent();
+int		pwdcurrent(t_pipe *list, t_data *data);
 int		my_echo(t_data *data, char **argv, int fd);
+int		print_variable(char **env, char *str, int i, int fd);
 void	my_exit();
 void	handle_signal(int sl);
 void	sigquit_handler(int sign);
