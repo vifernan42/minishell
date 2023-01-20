@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/19 19:24:50 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:16:37 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	free(var_name);
 	var_name = search_variable(data->env, var_env);
 	free(var_env);
-	if (!var_name)
-		free(var_name);
 	var_env = ft_strdup(str);
 	free(str);
 	aux = ft_substr(var_env, 0, i - 1);
 	str = ft_strjoin(aux, var_name);
 	free(aux);
-	free(*expand_ln);
+	free(var_env);
+	//free(*expand_ln);
 	if (char_index > 0)
 	{
 		aux = ft_substr(var_env, (i + char_index), leng - (i + char_index));
