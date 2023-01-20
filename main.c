@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/20 16:18:03 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/20 17:33:28 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	main(int argc, char **argv, char **envp)
 		free(data.promt);
 		free(data.all_path);
 		//env_update(&data, ft_strjoin("?=", ft_itoa(err_no)), "?");
-		system("leaks -q minishell");
+		//system("leaks -q minishell");
 		//return (0);
 	}
 }

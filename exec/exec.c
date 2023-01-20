@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/19 19:24:32 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/20 19:43:42 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,19 @@ void	exec_builtins(t_pipe *list, t_data *data)
 {
 	if (!list->argv)
 		return ;
-	if (!ft_strcmp("pwd", list->argv[0]))
-		pwdcurrent(list); /**/
-	else if (!ft_strcmp("echo", list->argv[0]))
+	if (!ft_strcmp(list->argv[0], "pwd"))
+		pwdcurrent(list, data);
+	else if (!ft_strcmp(list->argv[0], "echo"))
 		my_echo(data, list->argv, list->out_fd);
-	else if (!ft_strcmp("exit", list->argv[0]))
+	else if (!ft_strcmp(list->argv[0], "exit"))
 		my_exit();
-	else if (!ft_strcmp("env", list->argv[0]))
+	else if (!ft_strcmp(list->argv[0], "env"))
 		env(data->env, list->out_fd);
-	else if (!ft_strcmp("cd", list->argv[0]))
+	else if (!ft_strcmp(list->argv[0], "cd"))
 		my_chdir(data, list->argv[1]);
-	else if (!ft_strcmp("unset", list->argv[0]))
+	else if (!ft_strcmp(list->argv[0], "unset"))
 		my_unset(data, list->argv);
-	else if (!ft_strcmp("export", list->argv[0]))
+	else if (!ft_strcmp(list->argv[0], "export"))
 		my_export(data, list->argv);
 	else
 		printf("NOT FOUND: 	%s\n", list->argv[0]);

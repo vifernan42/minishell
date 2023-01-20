@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/20 16:16:37 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/20 17:26:00 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	
 	leng = 0;
 	data->err = 0;
-	aux = NULL;  /*nuevo, hace que si pones un solo comando como ls, no haya leaks*/
+	aux = NULL;
 	char_index = ft_strinkey(str + i, "$,. ><-@?¿¡/\\%#·\"\'");
 	leng = (int)ft_strlen(str);
 	var_name = ft_substr(str + i, 0, char_index);
@@ -35,8 +35,7 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	aux = ft_substr(var_env, 0, i - 1);
 	str = ft_strjoin(aux, var_name);
 	free(aux);
-	free(var_env);
-	//free(*expand_ln);
+	free(*expand_ln);
 	if (char_index > 0)
 	{
 		aux = ft_substr(var_env, (i + char_index), leng - (i + char_index));
@@ -80,8 +79,8 @@ char	*take_variable(t_data *data, char *str)
 		}
 	}
 	if (!expand_ln)
-		free(expand_ln);	/*nuevo free*/
-	return (expand_ln);
+		free(expand_ln);
+	return (str);   /*estaba retornando expand_ln en vez de str*/
 }
 
 int	more_redir(t_data *data, int i, int j, char **aux)
@@ -96,8 +95,7 @@ int	more_redir(t_data *data, int i, int j, char **aux)
 		expand_ln = take_variable(data, data->spt_pipes[i]);
 		if (expand_ln)
 		{
-			free(data->spt_pipes[i]);
-			data->spt_pipes[i] = expand_ln;
+			data->spt_pipes[i] = ft_strdup(expand_ln);
 			free(expand_ln);
 		}
 		aux = cmd_arg_quottes(data->spt_pipes[i], data);
