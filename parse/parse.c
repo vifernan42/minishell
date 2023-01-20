@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/19 19:16:34 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:26:38 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	
 	leng = 0;
 	data->err = 0;
+	aux = NULL;  /*nuevo, hace que si pones un solo comando como ls, no haya leaks*/
 	char_index = ft_strinkey(str + i, "$,. ><-@?¿¡/\\%#·\"\'");
 	leng = (int)ft_strlen(str);
 	var_name = ft_substr(str + i, 0, char_index);
@@ -29,8 +30,8 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	free(var_name);
 	var_name = search_variable(data->env, var_env);
 	free(var_env);
-	if (!var_name)
-		free(var_name);
+	/*if (!var_name)
+		free(var_name);*/
 	var_env = ft_strdup(str);
 	free(str);
 	aux = ft_substr(var_env, 0, i - 1);
@@ -80,19 +81,20 @@ char	*take_variable(t_data *data, char *str)
 		}
 	}
 	if (!expand_ln)
-		free(str);
+		free(expand_ln);	/*nuevo free*/
 	return (expand_ln);
 }
 
 int	more_redir(t_data *data, int i, int j, char **aux)
 {
-	int	found;
+	int		found;
 	char	*expand_ln;
 
 	found = 0;
+	expand_ln = NULL;		/*nuevo null*/
 	while (data->spt_pipes[++i] != NULL)
 	{
-		expand_ln = take_variable(data, ft_strdup(data->spt_pipes[i]));
+		expand_ln = take_variable(data, data->spt_pipes[i]);
 		if (expand_ln)
 		{
 			free(data->spt_pipes[i]);
