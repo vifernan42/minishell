@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/20 19:43:42 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:20:42 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,25 @@ void	exec_builtins(t_pipe *list, t_data *data)
 {
 	if (!list->argv)
 		return ;
-	if (!ft_strcmp(list->argv[0], "pwd"))
+	if (!ft_strcmp_built(list->argv[0], "pwd"))
 		pwdcurrent(list, data);
-	else if (!ft_strcmp(list->argv[0], "echo"))
+	else if (!ft_strcmp_built(list->argv[0], "echo"))
 		my_echo(data, list->argv, list->out_fd);
-	else if (!ft_strcmp(list->argv[0], "exit"))
+	else if (!ft_strcmp_built(list->argv[0], "exit"))
 		my_exit();
-	else if (!ft_strcmp(list->argv[0], "env"))
+	else if (!ft_strcmp_built(list->argv[0], "env"))
 		env(data->env, list->out_fd);
-	else if (!ft_strcmp(list->argv[0], "cd"))
+	else if (!ft_strcmp_built(list->argv[0], "cd"))
 		my_chdir(data, list->argv[1]);
-	else if (!ft_strcmp(list->argv[0], "unset"))
+	else if (!ft_strcmp_built(list->argv[0], "unset"))
 		my_unset(data, list->argv);
-	else if (!ft_strcmp(list->argv[0], "export"))
+	else if (!ft_strcmp_built(list->argv[0], "export"))
 		my_export(data, list->argv);
 	else
+	{
+		data->status = 2;	/* echo $? aqui seria error 2*/
 		printf("NOT FOUND: 	%s\n", list->argv[0]);
+	}
 }
 
 void	exec_pipes(t_pipe *list, t_data *data)
@@ -93,7 +96,7 @@ void	exec_pipes(t_pipe *list, t_data *data)
 	}
 	if (!list->next && !list->out_fd)
 	  	list->out_fd = STDOUT_FILENO;
-	if (!list->exec_path)
+	if (!list->exec_path)			/*SHLVL=1; aqui hay que mirar lo de la ejecucion de la minishell*/
 		exec_builtins(list, data);
 	else
 		execution(list, data, pipe_fd);

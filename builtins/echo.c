@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/20 19:34:13 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:38:20 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	print_variable(char **env, char *str, int i, int fd)
 	char	*var_env;
 	
 	char_index = ft_charindex(str + i, ' ') - 1;
-	/*if (ft_charindex(str + i, '\'') - 1 < char_index)
-		char_index = ft_charindex(str + i, '\'') - 1;*/
+	//if (ft_charindex(str + i, '\'') - 1 < char_index)
+	//	char_index = ft_charindex(str + i, '\'') - 1;
 	if (char_index > 0)
 		var_name = ft_substr(str + i, 1, char_index);
 	else
@@ -32,7 +32,6 @@ int	print_variable(char **env, char *str, int i, int fd)
 			if (char_index < 0)
 				char_index = (int)ft_strlen(str + i);
 			var_name = ft_substr(str + i, 1, char_index);
-			
 		}
 		else
 			var_name = ft_substr(str + i, 1, char_index - 1);
@@ -59,7 +58,7 @@ void	do_echo(char **env, char *str, int fd)
 	(void)env;
 	while (str[++i] != '\0')
 	{
-		/*if (str[i] == '\'' || str[i] == '\"')
+		if (str[i] == '\'' || str[i] == '\"') /*comprobar porque si se comenta todo este while sigue funcionando*/
 		{
 			if (open == 1)
 			{
@@ -74,7 +73,7 @@ void	do_echo(char **env, char *str, int fd)
 		}
 		else if (str[i] == '$' && ((c == '\"' && open == 1) || (c == 0 && open == 0)))
 			i += print_variable(env, str, i, fd);
-		else*/
+		else 
 			write(fd, &str[i], 1);
 	}
 }
@@ -88,6 +87,7 @@ int my_echo(t_data *data, char **argv, int fd)
 	flag = 1;
 	i = 1;
 	u = 0;
+
 	while(argv[++u] != '\0')
 	{
 		if (!ft_strcmp("-n",argv[1]))  /*necesaria esta linea "echo hola -nn -n as lasn" para que este caso no lo haca sin salto de linea*/

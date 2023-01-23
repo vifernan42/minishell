@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/20 17:33:28 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:44:17 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	main(int argc, char **argv, char **envp)
 		select_signal(0);
 		err_no = 0;
 		data.wait = 0;
+		data.status = 0; /**/
 		data.all_path = get_promt(getenv("PATH"));
 		//printf("AQUI\n");
 		data.promt = get_promt(getenv("USER"));
@@ -129,12 +130,12 @@ int	main(int argc, char **argv, char **envp)
 			//if (data.err != 2)
 				free_matrix(data.spt_pipes);
 		}
+		//printf("ccmd---%d\n", data.status);
 		add_history(cmd_line);
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
 		//env_update(&data, ft_strjoin("?=", ft_itoa(err_no)), "?");
 		//system("leaks -q minishell");
-		//return (0);
 	}
 }
