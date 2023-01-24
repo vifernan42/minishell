@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/20 17:26:00 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/24 19:38:30 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ char	*take_variable(t_data *data, char *str)
 		}
 		if (str[i] == '$' && !open)
 		{
+			i = change_value(ft_strdup(str), i + 1, data, &expand_ln);
 			if (expand_ln)
 			{
 				free(str);
 				str = ft_strdup(expand_ln);
 			}
-			i = change_value(ft_strdup(str), i + 1, data, &expand_ln);
 		}
 	}
 	if (!expand_ln)

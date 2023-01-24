@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/23 19:20:42 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/24 20:02:44 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,20 @@ void	exec_builtins(t_pipe *list, t_data *data)
 	if (!ft_strcmp_built(list->argv[0], "pwd"))
 		pwdcurrent(list, data);
 	else if (!ft_strcmp_built(list->argv[0], "echo"))
-		my_echo(data, list->argv, list->out_fd);
+		my_echo(list->argv, list->out_fd);
 	else if (!ft_strcmp_built(list->argv[0], "exit"))
 		my_exit();
 	else if (!ft_strcmp_built(list->argv[0], "env"))
 		env(data->env, list->out_fd);
 	else if (!ft_strcmp_built(list->argv[0], "cd"))
+	{
+		//if (list->argv[1] == "..")
+		//ex: list->argv[1] = /Users/ialvarez/Documents/minishell -> /Users/ialvarez/Documents
+		//check: /Users/ialvarez/Documents
+		//Example cd ..
+		//print: cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
 		my_chdir(data, list->argv[1]);
+	}
 	else if (!ft_strcmp_built(list->argv[0], "unset"))
 		my_unset(data, list->argv);
 	else if (!ft_strcmp_built(list->argv[0], "export"))

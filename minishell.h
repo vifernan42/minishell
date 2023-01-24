@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/23 16:56:08 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/24 20:02:12 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*join_swap(char	*str, char	*str2, int flag);
 
 /* -- built-ins -- */
 int		pwdcurrent(t_pipe *list, t_data *data);
-int		my_echo(t_data *data, char **argv, int fd);
+int		my_echo(char **argv, int fd);
 int		print_variable(char **env, char *str, int i, int fd);
 void	my_exit();
 void	handle_signal(int sl);
