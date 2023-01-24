@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:44:49 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/20 19:14:54 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/24 20:59:09 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	my_chdir(t_data *data, const char *path)
 	}
 	if (!chdir(path))
 	{
-		data->oldpwd = ft_strjoin("OLDPWD=", dir);
+		data->oldpwd = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
 		if (path[0] != '.' && ft_strlen(path) == 1)
 			env_update(data, data->oldpwd, "OLDPWD=");
 		dir = ft_strjoin("PWD=", getcwd(NULL, 0));

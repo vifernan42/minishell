@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/24 20:02:44 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/24 20:36:29 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 	}
 }
 
-void	exec_builtins(t_pipe *list, t_data *data)
+void	 exec_builtins(t_pipe *list, t_data *data)
 {
 	if (!list->argv)
 		return ;

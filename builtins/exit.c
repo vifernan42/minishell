@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/24 19:51:48 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/24 20:42:23 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_signal(int sl)
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		//write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		//rl_replace_line("", 0);
 		//rl_redisplay();
 		
 		/*ioctl(STDIN_FILENO, TIOCSTI, "\n");

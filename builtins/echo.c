@@ -6,14 +6,11 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/24 20:02:01 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/24 20:37:40 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-
 
 void	do_echo(char *str, int fd)
 {
@@ -36,8 +33,8 @@ int my_echo(char **argv, int fd)
 
 	while(argv[++u] != '\0')
 	{
-		if (!ft_strcmp("-n",argv[1]))
-			if (!ft_strcmp("-n",argv[u]))
+		if (!ft_strcmp_built("-n",argv[1]))
+			if (!ft_strcmp_built("-n",argv[u]))
 			{
 				flag = 0;
 				i++;
