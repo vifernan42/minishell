@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/24 20:37:40 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/25 18:19:28 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	do_echo(char *str, int fd)
 
 	i = -1;
 	while (str[++i] != '\0')
+	{
+		
 		write(fd, &str[i], 1);
+	}
 }
 
 int my_echo(char **argv, int fd)

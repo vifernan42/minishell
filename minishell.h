@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/24 20:02:12 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:32:37 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_data {
 	int		err;
 	int		signal;
 	char	*oldpwd;
-	int		status;
 }		t_data;
 
 

@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/24 20:24:55 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/25 18:21:13 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,15 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	aux = NULL;
 	char_index = ft_strinkey(str + i, "$,. ><-@?¿¡/\\%#·\"\'");
 	leng = (int)ft_strlen(str);
+	if (char_index == 0 && str[i] == '?')
+		char_index = 1;
 	var_name = ft_substr(str + i, 0, char_index);
 	var_env = ft_strjoin(var_name, "=");
 	free(var_name);
 	var_name = search_variable(data->env, var_env);
+	
+	if (!var_name)
+		var_name = "";
 	free(var_env);
 	var_env = ft_strdup(str);
 	free(str);
@@ -46,6 +51,7 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 		*expand_ln = ft_strdup(str);
 	free(str);
 	free(var_env);
+	
 	return (0);
 }
 
