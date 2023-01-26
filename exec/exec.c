@@ -6,18 +6,22 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/25 20:25:41 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:40:25 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 {
 	int pid;
 
 	pid = fork();
+	if (!ft_strcmp_built(list->argv[0], "./minishell"))
+	{
+		data->level++;
+		update_env_var(data, ft_strjoin("SHLVL=", ft_itoa(data->level)), "SHLVL=");
+	}
 	if (pid < 0)
 	{
 		close(pipe_fd[WR_END]);
@@ -63,36 +67,6 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 	}
 }
 
-void	change_two_dots(char **str, char *path)
-{
-	int	i;
-	int	index;
-	char	*aux;
-
-	i = -1;
-	if (path && (int)ft_strlen(path) > 0)
-	{
-		while (path[++i] != '\0')
-		{
-			if (path[i] == '/')
-				index = i;
-		}
-		aux = (char *)malloc(sizeof(char) * index + 1);
-		i = -1;
-		while (path[++i] != '\0')
-		{
-			if (i < index)
-				aux[i] = path[i];
-		}
-		aux[index] = '\0';
-		free(*str);
-		*str = ft_strdup(aux);
-		free(aux);
-	}
-	/*else*/
-		
-}
-
 void	 exec_builtins(t_pipe *list, t_data *data)
 {
 	if (!list->argv)
@@ -102,27 +76,11 @@ void	 exec_builtins(t_pipe *list, t_data *data)
 	else if (!ft_strcmp_built(list->argv[0], "echo"))
 		my_echo(list->argv, list->out_fd);
 	else if (!ft_strcmp_built(list->argv[0], "exit"))
-		my_exit();
+		my_exit(data);
 	else if (!ft_strcmp_built(list->argv[0], "env"))
 		env(data->env, list->out_fd);
 	else if (!ft_strcmp_built(list->argv[0], "cd"))
-	{
-		if (!ft_strcmp_built(list->argv[1], ".."))
-			change_two_dots(&list->argv[1], search_variable(data->env, "PWD="));
-		if (access(list->argv[1], F_OK) == -1)
-		{
-			ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
-			update_env_var(data, ft_strdup(list->argv[1]), "PWD=");
-			printf("list_argv1:%s$\n", list->argv[1]);
-		}
-		//printf("**	%s\n", list->argv[1]);
-		//if (list->argv[1] == "..")
-		//ex: list->argv[1] = /Users/ialvarez/Documents/minishell -> /Users/ialvarez/Documents
-		//check: /Users/ialvarez/Documents
-		//Example cd ..
-		//print: cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
 		my_chdir(data, list->argv[1]);
-	}
 	else if (!ft_strcmp_built(list->argv[0], "unset"))
 		my_unset(data, list->argv);
 	else if (!ft_strcmp_built(list->argv[0], "export"))

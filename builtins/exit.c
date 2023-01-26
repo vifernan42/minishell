@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/24 20:42:23 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:06:09 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,15 @@ void	handle_signal_here(int sl)
 	rl_on_new_line();
 }
 
-void		my_exit()
+void		my_exit(t_data *data)
 {
-	write(1, "exit", 4);
+	if (ft_atoi(search_variable(data->env, "SHLVL=")) > 1)
+	{
+		write(1, "exit\n", 5);
+		data->level--;
+	}
+	else
+		write(1, "exit", 4);
 	rl_clear_history();
 	exit(0);
 }

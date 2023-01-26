@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/25 18:22:10 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:32:24 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	main(int argc, char **argv, char **envp)
         exit(1);
     }*/
 	data.env = keep_env(envp);
+	data.level = ft_atoi(search_variable(data.env, "SHLVL=")); /*mirar esto env -i ./minishell*/
 	env_update(&data, ft_strjoin("?=", ft_itoa(err_no)), "?=");
 //	print_matrix(data.env);
 	while (1)
@@ -105,14 +106,12 @@ int	main(int argc, char **argv, char **envp)
 		err_no = 0;
 		data.wait = 0;
 		data.all_path = get_promt(getenv("PATH"));
-		//printf("AQUI\n");
 		data.promt = get_promt(getenv("USER"));
 		cmd_line = readline(data.promt);
 		i = 0;
 		if (cmd_line == NULL)
 		{
 			printf("exit\n");
-			//printf("%sexit\n", data.promt);
 			break ;
 		}
 		while (cmd_line[i] == ' ')
