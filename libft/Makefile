@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 18:00:35 by ialvarez          #+#    #+#              #
-#    Updated: 2023/01/16 19:40:38 by vifernan         ###   ########.fr        #
+#    Updated: 2023/01/23 18:09:48 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS	= ft_isalnum.c ft_isprint.c ft_memcpy.c ft_strlcat.c ft_atoi.c \
 		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 		ft_itoa_base.c ft_itoa_base_x.c st_split.c ft_charjoin.c spqu_split.c \
 		skip_spaces.c skip_quotes.c free_matrix.c copy_matrix.c ft_strchr2.c strinit.c \
-		ft_str2chr.c print_matrix.c ft_charindex.c ft_strinkey.c
+		ft_str2chr.c print_matrix.c ft_charindex.c ft_strinkey.c ft_strcmp_built.c
 
 SRCSBN	= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \

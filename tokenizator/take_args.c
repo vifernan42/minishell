@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   take_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:04:52 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/12 19:55:19 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:34:29 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@ char	*aux_path_val(char *cmd, char *aux_cmd, char **path_sp, int i)
 	{
 		if (access(cmd, F_OK) == 0)
 			aux_path = ft_strdup(cmd);
+	}
+	else if ((cmd[0] == '.' && cmd[1] == '/') || (cmd[0] == '.' && cmd[1] == '.' && cmd[2] == '/'))
+	{
+		aux_path = ft_strjoin(getcwd(NULL, 0), cmd + 1);
+		if (access(aux_path, F_OK) != 0)
+		{
+			free(aux_path);
+			aux_path = NULL;
+		}
 	}
 	else
 	{

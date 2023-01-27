@@ -6,7 +6,7 @@
 #    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2022/12/15 21:29:47 by ialvarez         ###   ########.fr        #
+#    Updated: 2023/01/18 18:40:03 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ PRINTF_NAME = $(PRINTF_NAME)libftprintf.a
 INCLUDES = -I. -I$(LIBFT_DIR) -I$(PRINTF_DIR)
 FSANITIZE = -g3 -fsanitize=address
 READLINE = -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
-CFLAGS = -Wall -Werror -Wextra -I /Users/$(USER)/.brew/opt/readline/include -g $(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -I /Users/$(USER)/.brew/opt/readline/include -g3 $(INCLUDES)
 
 all: $(NAME) 
 

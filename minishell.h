@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/12 19:28:22 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:33:32 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct s_data {
 	int		wait;
 	int		err;
 	int		signal;
+	char	*oldpwd;
+	int		level;
 }		t_data;
 
 
@@ -84,14 +86,15 @@ char	*find_middle(char *str, int type);
 char	*join_swap(char	*str, char	*str2, int flag);
 
 /* -- built-ins -- */
-int		pwdcurrent();
-int		my_echo(t_data *data, char **argv, int fd);
-void	my_exit();
+int		pwdcurrent(t_pipe *list, t_data *data);
+int		my_echo(char **argv, int fd);
+int		print_variable(char **env, char *str, int i, int fd);
+void	my_exit(t_data *data);
 void	handle_signal(int sl);
 void	sigquit_handler(int sign);
 void	select_signal(int select);
 int		env(char **envu, int fd);
-int		my_chdir(t_data *data, const char *path);
+int		my_chdir(t_data *data, char *path);
 void	my_unset(t_data *data, char **argv);
 char	*search_variable(char **env, char *key);
 void	env_update(t_data *data, char *new_line, char *key);
@@ -103,5 +106,3 @@ void	my_export(t_data *data, char **argv);
 void	leaks(void);
 
 #endif
-
-
