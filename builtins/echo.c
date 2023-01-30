@@ -3,103 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/20 19:34:13 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/27 19:10:51 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	print_variable(char **env, char *str, int i, int fd)
-{
-	char	*var_name;
-	int		char_index;
-	char	*var_env;
-	
-	char_index = ft_charindex(str + i, ' ') - 1;
-	/*if (ft_charindex(str + i, '\'') - 1 < char_index)
-		char_index = ft_charindex(str + i, '\'') - 1;*/
-	if (char_index > 0)
-		var_name = ft_substr(str + i, 1, char_index);
-	else
-	{
-		char_index = ft_charindex(str + i, '\"');
-		if (char_index < 0)
-		{
-			char_index = ft_charindex(str + i + 1, '$');
-			if (char_index < 0)
-				char_index = (int)ft_strlen(str + i);
-			var_name = ft_substr(str + i, 1, char_index);
-			
-		}
-		else
-			var_name = ft_substr(str + i, 1, char_index - 1);
-	}
-	var_env = var_name;
-	free(var_name);
-	var_name = ft_strjoin(var_env, "=");
-	var_env = search_variable(env, var_name);
-	if (var_env)
-		ft_putstr_fd(var_env, fd);
-	free(var_name);
-	return (char_index);
-}
-
-void	do_echo(char **env, char *str, int fd)
+void	do_echo(char *str, int fd)
 {
 	int		i;
-	char	c;
-	int		open;
 
 	i = -1;
-	c = 0;
-	open = 0;
-	(void)env;
 	while (str[++i] != '\0')
-	{
-		/*if (str[i] == '\'' || str[i] == '\"')
-		{
-			if (open == 1)
-			{
-				if (c != str[i])
-					write(fd, &str[i], 1);
-				c = 0;
-				open = 0;
-			}
-			else
-				open = 1;
-			c = str[i];
-		}
-		else if (str[i] == '$' && ((c == '\"' && open == 1) || (c == 0 && open == 0)))
-			i += print_variable(env, str, i, fd);
-		else*/
-			write(fd, &str[i], 1);
-	}
+		write(fd, &str[i], 1);
 }
 
-int my_echo(t_data *data, char **argv, int fd)
+int	check_flag(char **argv)
+{
+	int	i;
+	int	u;
+
+	i = 0;
+	while (argv[++i] != NULL)
+	{
+		if (argv[i][0] == '-' && argv[i][1] == 'n')
+		{
+			u = 0;
+			while(argv[i][++u] != '\0')
+			{
+				if (argv[i][u] != 'n')
+					return(i);
+			}
+		}
+		else
+			return (i);
+	}
+	return (1);
+}
+
+int my_echo(char **argv, int fd)
 {
 	int flag;
 	int i;
-	int u;
 
-	flag = 1;
-	i = 1;
-	u = 0;
-	while(argv[++u] != '\0')
-	{
-		if (!ft_strcmp("-n",argv[1]))  /*necesaria esta linea "echo hola -nn -n as lasn" para que este caso no lo haca sin salto de linea*/
-			if (!ft_strcmp("-n",argv[u]))
-			{
-				flag = 0;
-				i++;
-			}
-	}
+	flag = check_flag(argv);
+	i = flag;
 	while (argv[i] != NULL)
 	{
-		do_echo(data->env, argv[i], fd);
+		do_echo(argv[i], fd);
 		if (argv[i + 1] != NULL)
 			ft_putstr_fd(" ", fd);
 		i++;

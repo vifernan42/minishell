@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp_built.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/07 18:55:55 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/30 18:02:25 by vifernan         ###   ########.fr       */
+/*   Created: 2023/01/23 18:08:10 by ialvarez          #+#    #+#             */
+/*   Updated: 2023/01/23 18:09:09 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_strcmp_built(const char *s1, const char *s2)
 {
 	int	i;
 
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0')
+	if (!s1 || !s2)
+		return (-1);
+	i = -1;
+	while (s1[++i])
 	{
-		 i++;
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 	}
-	return (i);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

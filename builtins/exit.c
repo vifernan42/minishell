@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/11 19:57:43 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:06:09 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,15 @@ void	handle_signal(int sl)
 {
 	if (sl == 2)
 	{
-		write(1, "\n", 1);
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		//write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		//rl_replace_line("", 0);
+		//rl_redisplay();
+		
+		/*ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_on_new_line();*/
+		
 	}
 	
 }
@@ -38,9 +43,15 @@ void	handle_signal_here(int sl)
 	rl_on_new_line();
 }
 
-void		my_exit()
+void		my_exit(t_data *data)
 {
-	write(1, "exit", 4);
+	if (ft_atoi(search_variable(data->env, "SHLVL=")) > 1)
+	{
+		write(1, "exit\n", 5);
+		data->level--;
+	}
+	else
+		write(1, "exit", 4);
 	rl_clear_history();
 	exit(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/20 19:45:53 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:23:38 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	t_pipe	*pipe;
 	char	*cmd_line;
 	int		i;
+	char	*join;
 	
 	(void)argc;
 	(void)argv;
@@ -98,7 +99,12 @@ int	main(int argc, char **argv, char **envp)
         printf("Error setting SIGQUIT handler\n");
         exit(1);
     }*/
+	join = NULL;
 	data.env = keep_env(envp);
+	data.level = ft_atoi(search_variable(data.env, "SHLVL=")); /*mirar esto env -i ./minishell*/
+	join = ft_itoa(err_no);
+	env_update(&data, ft_strjoin("?=", join), "?=");
+	free(join);
 //	print_matrix(data.env);
 	while (1)
 	{
@@ -106,14 +112,12 @@ int	main(int argc, char **argv, char **envp)
 		err_no = 0;
 		data.wait = 0;
 		data.all_path = get_promt(getenv("PATH"));
-		//printf("AQUI\n");
 		data.promt = get_promt(getenv("USER"));
 		cmd_line = readline(data.promt);
 		i = 0;
 		if (cmd_line == NULL)
 		{
 			printf("exit\n");
-			//printf("%sexit\n", data.promt);
 			break ;
 		}
 		while (cmd_line[i] == ' ')
@@ -131,12 +135,15 @@ int	main(int argc, char **argv, char **envp)
 			//if (data.err != 2)
 				free_matrix(data.spt_pipes);
 		}
+		//printf("ccmd---%d\n", data.status);
 		add_history(cmd_line);
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		//env_update(&data, ft_strjoin("?=", ft_itoa(err_no)), "?");
+		//printf("err_no: $%d$\n", err_no);
+		join = ft_itoa(err_no);
+		env_update(&data, ft_strjoin("?=", join), "?=");
+		free(join);
 		//system("leaks -q minishell");
-		//return (0);
 	}
 }

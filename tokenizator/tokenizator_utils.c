@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizator_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/18 19:11:46 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:14:07 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,6 @@ char	*find_key(char *str, int i, int j)
 	}
 	return (ret_key(str, -1, j, '\0'));
 }
-
-/*char	*var_sustitute(char *str, char c)
-{
-	int 	index;
-	char	*aux;
-	char	*var_env;
-
-	index = ft_charindex(str, '$');
-	aux = NULL; 
-	if (index >= 0 && c == '\"')
-	{
-		aux = ft_substr(str, 0, index);
-		var_env = search_variable(env, var_name);
-	}
-	else
-		return (str);
-}*/
 
 char	**cmd_arg_quottes(char	*pipe, t_data *data)
 {
