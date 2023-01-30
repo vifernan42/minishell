@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
+#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2023/01/18 18:40:03 by ialvarez         ###   ########.fr        #
+#    Updated: 2023/01/27 19:43:32 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ FSANITIZE = -g3 -fsanitize=address
 READLINE = -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
 CFLAGS = -Wall -Werror -Wextra -I /Users/$(USER)/.brew/opt/readline/include -g3 $(INCLUDES)
 
-all: $(NAME) 
+all: $(NAME)
 
 BCyan = \033[1;36m
 GREEN = \033[0;32m
@@ -52,18 +52,21 @@ Yellow = \033[0;33m
 Red = \033[0;31m
 NO_COLOR = \033[0m
 
+libft:
+	@make -s -C $(LIBFT_DIR)
+printf:
+	@make -s -C $(PRINTF_DIR)
+
 $(NAME): $(OBJECTS)
 	@echo "$(BCyan)[COMPILED]$(NO_COLOR)"
-	@make -s -C $(LIBFT_DIR) 
+	@make -s -C $(LIBFT_DIR)
 	@make -s -C $(PRINTF_DIR)
-	@$(CC) $(READLINE) $(CFLAGS) $(OBJECTS) ./printf/libftprintf.a \
-											./libft/libft.a -o $(NAME)
+	@$(CC) $(READLINE) $(CFLAGS) $(OBJECTS) ./printf/libftprintf.a ./libft/libft.a -o $(NAME)
 
 debug: fclean all
 	@make -s -C $(LIBFT_DIR)
 	@make -s -C $(PRINTF_DIR)
-	@$(CC) $(READLINE) $(CFLAGS) $(FSANITIZE) $(OBJECTS) ./printf/libftprintf.a \
-								./libft/libft.a -o $(NAME)
+	@$(CC) $(READLINE) $(CFLAGS) $(FSANITIZE) $(OBJECTS) ./printf/libftprintf.a ./libft/libft.a -o $(NAME)
 #	@./minishell				
 
 clean:
@@ -87,6 +90,7 @@ re: fclean all
 .PHONY:
 			clean
 			fclean
+			debug
+			test
 			all
 			re
-			bonus

@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/30 19:40:20 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/30 19:48:51 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,24 @@ int	main(int argc, char **argv, char **envp)
 	t_pipe	*pipe;
 	char	*cmd_line;
 	int		i;
+	char	*join;
 	
 	(void)argc;
 	(void)argv;
+	//ft_signal();
+	/*signal(SIGINT, handle_signal);
+	if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
+    {
+        printf("Error setting SIGQUIT handler\n");
+        exit(1);
+    }*/
+	join = NULL;
 	data.env = keep_env(envp);
 	data.level = ft_atoi(search_variable(data.env, "SHLVL=")); /*mirar esto env -i ./minishell*/
-	env_update(&data, ft_strjoin("?=", ft_itoa(err_no)), "?=");
+	join = ft_itoa(err_no);
+	env_update(&data, ft_strjoin("?=", join), "?=");
+	free(join);
+//	print_matrix(data.env);
 	while (1)
 	{
 		select_signal(0);
@@ -125,7 +137,10 @@ int	main(int argc, char **argv, char **envp)
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		env_update(&data, ft_strjoin("?=", ft_itoa(err_no)), "?=");		
+		//printf("err_no: $%d$\n", err_no);
+		join = ft_itoa(err_no);
+		env_update(&data, ft_strjoin("?=", join), "?=");
+		free(join);
 		system("leaks -q minishell");
 	}
 }
