@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:25:06 by vifernan          #+#    #+#             */
-/*   Updated: 2022/11/30 18:37:27 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:57:30 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*skip_result(char *str, char c, int count, int k)
 
 	if (!str)
 		return(NULL);
-	s = malloc(sizeof(char) * ft_strlen(str) - count + 1);
+	s = malloc(sizeof(char) * (int)ft_strlen(str) - count + 1);
 	i = -1;
 	j = 0;
 	while (str[++i] != '\0')
