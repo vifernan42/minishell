@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/30 19:48:51 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/30 19:58:22 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,12 @@ int	main(int argc, char **argv, char **envp)
 	
 	(void)argc;
 	(void)argv;
-	//ft_signal();
-	/*signal(SIGINT, handle_signal);
-	if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
-    {
-        printf("Error setting SIGQUIT handler\n");
-        exit(1);
-    }*/
 	join = NULL;
 	data.env = keep_env(envp);
 	data.level = ft_atoi(search_variable(data.env, "SHLVL=")); /*mirar esto env -i ./minishell*/
 	join = ft_itoa(err_no);
 	env_update(&data, ft_strjoin("?=", join), "?=");
 	free(join);
-//	print_matrix(data.env);
 	while (1)
 	{
 		select_signal(0);
@@ -123,11 +115,10 @@ int	main(int argc, char **argv, char **envp)
 		if (cmd_line[i] != '\0')
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
-			printf("%p | %s\n", data.spt_pipes, *data.spt_pipes);
 			if (even_quotes(cmd_line, 0, 0, &data) == 0)
 			{	
 				pipe = tokenizator(&data, -1);
-				if (data.err != -1) /* la -ls (example) */
+				if (data.err != -1)
 					exec_pipes(pipe, &data);
 				lstdelete(pipe);
 			}
@@ -137,7 +128,6 @@ int	main(int argc, char **argv, char **envp)
 		free(cmd_line);
 		free(data.promt);
 		free(data.all_path);
-		//printf("err_no: $%d$\n", err_no);
 		join = ft_itoa(err_no);
 		env_update(&data, ft_strjoin("?=", join), "?=");
 		free(join);

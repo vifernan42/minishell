@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/26 20:40:25 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:03:31 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 	{
 		if (list->in_fd)
 		{
+			
 			dup2(list->in_fd, STDIN_FILENO);
 			close(list->in_fd);
 		}

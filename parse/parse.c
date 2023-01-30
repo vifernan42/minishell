@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/30 19:48:33 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/30 19:58:15 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ char	*take_variable(t_data *data, char *str)
 			if (expand_ln)
 			{
 				free(str);
-				str = expand_ln;
+				str = ft_strdup(expand_ln);
 			}
 		}
 	}
-	if (!expand_ln)
+	if (expand_ln)
 		free(expand_ln);
-	return (str);   /*estaba retornando expand_ln en vez de str*/
+	return (str);
 }
 
 int	more_redir(t_data *data, int i, int j, char **aux)
@@ -95,7 +95,7 @@ int	more_redir(t_data *data, int i, int j, char **aux)
 	char	*expand_ln;
 
 	found = 0;
-	expand_ln = NULL;		/*nuevo null*/
+	expand_ln = NULL;
 	while (data->spt_pipes[++i] != NULL)
 	{
 		expand_ln = take_variable(data, ft_strdup(data->spt_pipes[i]));
