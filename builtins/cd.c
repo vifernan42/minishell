@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:44:49 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/26 20:36:24 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:56:14 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*change_two_dots(char *path)
 {
-	int	i;
-	int	index;
+	int		i;
+	int		index;
 	char	*aux;
 
 	i = -1;
@@ -36,7 +36,6 @@ char	*change_two_dots(char *path)
 		aux[index] = '\0';
 		return (aux);
 	}
-	/*else*/
 	return (NULL);
 }
 
@@ -49,7 +48,7 @@ int	my_chdir(t_data *data, char *path)
 		path = search_variable(data->env, "HOME=");
 	if (!path)
 	{
-		ft_printf("minishell: cd: HOME not set\n"); /*guardar el home*/
+		ft_printf("minishell: cd: HOME not set\n");
 		return (1);
 	}
 	if (!ft_strcmp_built(path, ".."))
@@ -66,7 +65,6 @@ int	my_chdir(t_data *data, char *path)
 		}
 		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
 		env_update(data, ft_strjoin("PWD=", path), "PWD=");
-		printf("-	%s\n", search_variable(data->env, "PWD="));
 	}
 	else
 	{
@@ -77,7 +75,6 @@ int	my_chdir(t_data *data, char *path)
 				env_update(data, data->oldpwd, "OLDPWD=");
 			dir = ft_strjoin("PWD=", getcwd(NULL, 0));
 			update_env_var(data, dir, "PWD=");
-			printf("+	%s\n", search_variable(data->env, "PWD="));
 			return (0);
 		}
 		if (!ft_strcmp_built(path, ".."))

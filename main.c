@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/30 20:23:38 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/30 21:20:27 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	nodedelete(t_pipe *pipe, t_pipe **next)
 		free(pipe->exec_path);
 	if (pipe->argv)
 		free_matrix(pipe->argv);
-	
 	*next = pipe->next;
 	free(pipe);
 }
@@ -38,18 +37,18 @@ void	nodedelete(t_pipe *pipe, t_pipe **next)
 void	lstdelete(t_pipe *pipe)
 {
 	t_pipe	*next;
-	
+
 	if (!pipe)
 		return ;
 	next = NULL;
-	while(pipe)
+	while (pipe)
 	{
 		nodedelete(pipe, &next);
 		pipe = next;
 	}
 }
-
-void	print_node(t_pipe *pipe, t_pipe **next)
+/*
+void	print_node(t_pipe *pipe, t_pipe **next)			eeeh esto no tiene sentido, lo borramos o que
 {
 	(void)next;
 	if (pipe->exec_path)
@@ -61,18 +60,18 @@ void	print_node(t_pipe *pipe, t_pipe **next)
 		printf("in_fd:	%d\n", pipe->in_fd);
 	if (pipe->out_fd)
 		printf("out_fd:	%d\n", pipe->out_fd);
-}
+}*/
 
 void	print_list(t_pipe *pipe)
 {
 	t_pipe	*next;
 	int		num;
-	
+
 	if (!pipe)
 		return ;
 	next = NULL;
 	num = 1;
-	while(pipe)
+	while (pipe)
 	{
 		printf("--NODE %d--\n", num++);
 		print_node(pipe, &next);
@@ -87,12 +86,12 @@ int	main(int argc, char **argv, char **envp)
 	char	*cmd_line;
 	int		i;
 	char	*join;
-	
+
 	(void)argc;
 	(void)argv;
 	join = NULL;
 	data.env = keep_env(envp);
-	data.level = ft_atoi(search_variable(data.env, "SHLVL=")); /*mirar esto env -i ./minishell*/
+	data.level = ft_atoi(search_variable(data.env, "SHLVL="));
 	join = ft_itoa(err_no);
 	env_update(&data, ft_strjoin("?=", join), "?=");
 	free(join);
@@ -122,7 +121,7 @@ int	main(int argc, char **argv, char **envp)
 					exec_pipes(pipe, &data);
 				lstdelete(pipe);
 			}
-				free_matrix(data.spt_pipes);
+			free_matrix(data.spt_pipes);
 		}
 		add_history(cmd_line);
 		free(cmd_line);
