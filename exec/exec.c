@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/26 20:40:25 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:08:07 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 	}
 	else
 	{
-		if (list->in_fd > 2)
+		if (list->in_fd >= 2)
 			close(list->in_fd);
-		if (list->out_fd > 2)
+		if (list->out_fd >= 2)
 			close(list->out_fd);
 		close(pipe_fd[WR_END]);
 		if (list->next && !list->next->in_fd)

@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/30 19:24:58 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:23:38 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,6 @@ int	main(int argc, char **argv, char **envp)
 		join = ft_itoa(err_no);
 		env_update(&data, ft_strjoin("?=", join), "?=");
 		free(join);
-		system("leaks -q minishell");
+		//system("leaks -q minishell");
 	}
 }

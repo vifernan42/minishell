@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/19 19:25:03 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:12:05 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data)
 		free_matrix(cmd_sp);
 		return (fd);
 	}
+	close(fd);
 	free_matrix(cmd_sp);
 	return (take_heredoc(aux_cmd, cmd_arg_quottes(*aux_cmd, data), NULL, data));
 }
