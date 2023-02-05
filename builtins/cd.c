@@ -44,6 +44,12 @@ int	my_chdir(t_data *data, char *path)
 {
 	char	*dir;
 
+	if (path[0] == '~')
+	{
+		dir = ft_strjoin(search_variable(data->env, "HOME="), path + 1); /*leaks?*/
+		path = dir;
+		free(dir);
+	}
 	dir = search_variable(data->env, "PWD=");
 	if (!path)
 		path = search_variable(data->env, "HOME=");
@@ -66,7 +72,6 @@ int	my_chdir(t_data *data, char *path)
 		}
 		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
 		env_update(data, ft_strjoin("PWD=", path), "PWD=");
-		printf("-	%s\n", search_variable(data->env, "PWD="));
 	}
 	else
 	{
@@ -77,7 +82,6 @@ int	my_chdir(t_data *data, char *path)
 				env_update(data, data->oldpwd, "OLDPWD=");
 			dir = ft_strjoin("PWD=", getcwd(NULL, 0));
 			update_env_var(data, dir, "PWD=");
-			printf("+	%s\n", search_variable(data->env, "PWD="));
 			return (0);
 		}
 		if (!ft_strcmp_built(path, ".."))
