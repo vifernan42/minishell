@@ -3,70 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizator_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/30 18:14:07 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/08 20:31:59 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ret_key(char *str, int i, int j, char c)
-{
-	int		lock;
-	char	*ret;
-
-	lock = 0;
-	ret = malloc(sizeof(char) * j + 1);
-	j = 0;
-	while (str[++i] != '\0')
-	{
-		if ((str[i] == '<' || str[i] == '>') && lock == 0)
-			break ;
-		if ((str[i] == '\'' || str[i] == '\"') && (c == 0 && lock == 0)
-			&& ++lock)
-		{
-			if (str[i] == '\'')
-				c = '\'';
-			else
-				c = '\"';
-		}
-		else if ((c == '\'' || c == '\"') && str[i] == c && lock == 1 && lock--)
-			c = 0;
-		else if ((str[i] != '\'' && str[i] != '\"') || lock == 1)
-			ret[j++] = str[i];
-	}
-	ret[j] = '\0';
-	return (ret);
-}
-
-char	*find_key(char *str, int i, int j)
-{
-	char	c;
-	int		lock;
-
-	c = '\0';
-	lock = 0;
-	while (str[++i] != '\0')
-	{
-		if ((str[i] == '<' || str[i] == '>') && lock == 0)
-			break ;
-		if ((str[i] == '\'' || str[i] == '\"') && (c == 0 && lock == 0)
-			&& ++lock)
-		{
-			if (str[i] == '\'')
-				c = '\'';
-			else
-				c = '\"';
-		}
-		else if ((c == '\'' || c == '\"') && str[i] == c && lock == 1 && lock--)
-			c = 0;
-		else if ((str[i] != '\'' && str[i] != '\"') || lock == 1)
-			j++;
-	}
-	return (ret_key(str, -1, j, '\0'));
-}
 
 char	**cmd_arg_quottes(char	*pipe, t_data *data)
 {
@@ -92,6 +36,29 @@ char	**cmd_arg_quottes(char	*pipe, t_data *data)
 	return (aux_cmd);
 }
 
+static int	aux_find_her(int type, char **cmd_sp, int i)
+{
+	if ((type == 0 && ft_strnstr(cmd_sp[i], "<<", 2))
+		|| (type != 0 && (ft_strnstr(cmd_sp[i], "<", 1)
+				|| ft_strnstr(cmd_sp[i], ">>", 2)
+				|| ft_strnstr(cmd_sp[i], ">", 1)))
+		|| find_rm_size(cmd_sp[i], 0, type) != (int)ft_strlen(cmd_sp[i]))
+		return (0);
+	if (type == (int)ft_strlen(cmd_sp[i]) || (cmd_sp[i][type] != '<'
+		|| cmd_sp[i][type + 1] != '<'))
+		return (1);
+	return (4);
+}
+
+static void	check_flag(int *i, int *flag)
+{
+	if (*i == 0)
+	{
+		*flag = 1;
+		(*i)--;
+	}
+}
+
 int	find_heredir(char **cmd_sp, int i, int type)
 {
 	int		flag;
@@ -99,17 +66,9 @@ int	find_heredir(char **cmd_sp, int i, int type)
 	if (!cmd_sp)
 		return (-1);
 	flag = 0;
-	if (i == 0)
-	{
-		flag = 1;
-		i--;
-	}
+	check_flag(&i, &flag);
 	while (cmd_sp[++i] != NULL)
-		if ((type == 0 && ft_strnstr(cmd_sp[i], "<<", 2))
-			|| (type != 0 && (ft_strnstr(cmd_sp[i], "<", 1)
-					|| ft_strnstr(cmd_sp[i], ">>", 2)
-					|| ft_strnstr(cmd_sp[i], ">", 1)))
-			|| find_rm_size(cmd_sp[i], 0, type) != (int)ft_strlen(cmd_sp[i]))
+		if (aux_find_her(type, cmd_sp, i) == 0)
 			break ;
 	if (cmd_sp[i] == NULL)
 	{
@@ -120,8 +79,7 @@ int	find_heredir(char **cmd_sp, int i, int type)
 	if (type == 0)
 	{
 		type = find_rm_size(cmd_sp[i], 0, type);
-		if (type == (int)ft_strlen(cmd_sp[i]) || (cmd_sp[i][type] != '<'
-			|| cmd_sp[i][type + 1] != '<'))
+		if (aux_find_her(type, cmd_sp, i) == 1)
 			return (-1);
 	}
 	if (flag > 0)
@@ -134,11 +92,11 @@ int	find_rm_size(char *str, int lock, int type)
 	char	c;
 	int		i;
 
-	i = 0;
+	i = -1;
 	c = '\0';
 	if (!str)
 		return (0);
-	while (str[i] != '\0')
+	while (str[++i] != '\0')
 	{
 		if (lock % 2 == 0 && (((type == 0 || type == 5)
 					&& str[i] == '<' && str[i + 1] == '<')
@@ -154,7 +112,6 @@ int	find_rm_size(char *str, int lock, int type)
 		}
 		else if ((c == '\'' || c == '\"') && str[i] == c && lock++)
 			c = '\0';
-		i++;
 	}
 	return (i);
 }

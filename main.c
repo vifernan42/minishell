@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/30 21:20:27 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/07 19:37:00 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	print_node(t_pipe *pipe, t_pipe **next)			eeeh esto no tiene sentido, lo bo
 	if (pipe->out_fd)
 		printf("out_fd:	%d\n", pipe->out_fd);
 }*/
-
+/*
 void	print_list(t_pipe *pipe)
 {
 	t_pipe	*next;
@@ -77,7 +77,7 @@ void	print_list(t_pipe *pipe)
 		print_node(pipe, &next);
 		pipe = pipe->next;
 	}
-}
+}*/
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -130,6 +130,6 @@ int	main(int argc, char **argv, char **envp)
 		join = ft_itoa(err_no);
 		env_update(&data, ft_strjoin("?=", join), "?=");
 		free(join);
-		//system("leaks -q minishell");
+		system("leaks -q minishell");
 	}
 }

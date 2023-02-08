@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   redirec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/12 19:27:51 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/07 19:59:45 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	aux_redir(int fd, char **fname, t_pipe *ret)
+{
+	fd = open(*fname, O_RDONLY, 0666);
+	if (ret->in_fd)
+		close(ret->in_fd);
+	ret->in_fd = fd;
+}
 
 void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 {
@@ -18,15 +26,11 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 	int	found;
 
 	found = find_rm_size(id, 0, -1);
+	fd = 0;
 	if (ft_strnstr((char *)id + found, "<", 1))
-	{
-		fd = open(fname, O_RDONLY, 0666);
-		if (ret->in_fd)
-			close(ret->in_fd);
-		ret->in_fd = fd;
-	}
+		aux_redir(fd, &fname, ret);
 	else if (err_no != 1 && (ft_strnstr((char *)id + found, ">", 1)
-		|| ft_strnstr((char *)id + found, ">>", 2)))
+			|| ft_strnstr((char *)id + found, ">>", 2)))
 	{
 		if (ft_strnstr((char *)id + found, ">>", 2))
 		{

@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/30 20:49:23 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/08 20:10:17 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,14 @@ char	*key_value(char **cmd_sp, int i)
 	return (key);
 }
 
-int	take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data)
+static	int	aux_take(char **aux_cmd, char **cmd_sp, int *fd, char *aux)
 {
-	int		fd;
 	int		i;
 
-	fd = 0;
-	i = 1;
 	i = find_heredir(cmd_sp, -1, 0);
 	if (i != -1)
 	{
-		fd = do_heredoc(skip_quotes(key_value(cmd_sp, i), -1));
+		*fd = do_heredoc(skip_quotes(key_value(cmd_sp, i), -1));
 		aux = rm_used(cmd_sp, i, 0, 2);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
@@ -90,6 +87,19 @@ int	take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data)
 		free_matrix(cmd_sp);
 		return (0);
 	}
+	return (1);
+}
+
+int	take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data)
+{
+	int		fd;
+	int		i;
+
+	fd = 0;
+	i = 1;
+	i = aux_take(aux_cmd, cmd_sp, &fd, aux);
+	if (i == 0)
+		return (0);
 	if (find_heredir(cmd_arg_quottes(*aux_cmd, data), 0, 0) == -1)
 	{
 		free_matrix(cmd_sp);
