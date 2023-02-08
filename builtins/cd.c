@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:44:49 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/30 20:56:14 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/08 20:47:16 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,15 @@ char	*change_two_dots(char *path)
 int	my_chdir(t_data *data, char *path)
 {
 	char	*dir;
+	char	*aux;
 
+	aux = NULL;
+	if (path && path[0] == '~')
+	{
+		dir = ft_strjoin(search_variable(data->env, "HOME="), path + 1);
+		path = dir;
+		free(dir);
+	}
 	dir = search_variable(data->env, "PWD=");
 	if (!path)
 		path = search_variable(data->env, "HOME=");
@@ -59,7 +67,9 @@ int	my_chdir(t_data *data, char *path)
 			data->oldpwd = ft_strjoin("OLDPWD=", dir);
 			if (path[0] != '.' && ft_strlen(path) == 1)
 				env_update(data, data->oldpwd, "OLDPWD=");
-			dir = ft_strjoin("PWD=", getcwd(NULL, 0));
+			aux = getcwd(NULL, 0);
+			dir = ft_strjoin("PWD=", aux);
+			free(aux);
 			update_env_var(data, dir, "PWD=");
 			return (0);
 		}
@@ -73,8 +83,10 @@ int	my_chdir(t_data *data, char *path)
 			data->oldpwd = ft_strjoin("OLDPWD=", dir);
 			if (path[0] != '.' && ft_strlen(path) == 1)
 				env_update(data, data->oldpwd, "OLDPWD=");
-			dir = ft_strjoin("PWD=", getcwd(NULL, 0));
+			aux = getcwd(NULL, 0);
+			dir = ft_strjoin("PWD=", aux);
 			update_env_var(data, dir, "PWD=");
+			free(aux);
 			return (0);
 		}
 		if (!ft_strcmp_built(path, ".."))

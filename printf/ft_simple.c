@@ -34,9 +34,9 @@ static void	ft_specifier_triple(const char *format, va_list a_list, t_flags *fl)
 	i = 0;
 	j = 2;
 	if (format[fl->o] == 'X')
-		fl->str = ft_itoa_base_x((unsigned int)va_arg(a_list, void *), 16);
+		fl->str = ft_itoa_base_x((unsigned long)va_arg(a_list, void *), 16);
 	else if (format[fl->o] == 'x')
-		fl->str = ft_itoa_base((unsigned int)va_arg(a_list, void *), 16);
+		fl->str = ft_itoa_base((unsigned long)va_arg(a_list, void *), 16);
 	else if (format[fl->o] == 'p')
 	{
 		fl->some = ft_itoa_base((unsigned long long)va_arg(a_list, void *), 16);

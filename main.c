@@ -6,16 +6,13 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/07 19:37:00 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/08 20:46:00 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+/* ************************************************************************** */
 
-void	leaks(void)
-{
-	system("leaks minishell");
-}
+#include "minishell.h"
 
 char	*get_promt(char *user)
 {
@@ -79,39 +76,61 @@ void	print_list(t_pipe *pipe)
 	}
 }*/
 
+char	*start_variables(int argc, char **argv, char **envp, t_data *data)
+{
+	char	*join;
+	
+	join = NULL;
+	if (argc != 0)
+	{
+		(void)argc;
+		(void)argv;
+		data->env = keep_env(envp);
+		data->level = ft_atoi(search_variable(data->env, "SHLVL=")); /*mirar esto env -i ./minishell*/
+		join = ft_itoa(err_no);
+		env_update(data, ft_strjoin("?=", join), "?=");
+		free(join);
+		return ("");
+	}
+	else
+	{
+		select_signal(0);
+		err_no = 0;
+		data->wait = 0;
+		data->all_path = get_promt(getenv("PATH"));
+		data->promt = get_promt(getenv("USER"));
+		return(readline(data->promt));
+	}	
+}
+
+void	free_variables(char	*cmd_line, t_data *data)
+{
+	char *join;
+	
+	add_history(cmd_line);
+	free(cmd_line);
+	free(data->promt);
+	free(data->all_path);
+	if (err_no == 256)
+		err_no = 1;
+	join = ft_itoa(err_no);
+	env_update(data, ft_strjoin("?=", join), "?=");
+	free(join);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	t_pipe	*pipe;
 	char	*cmd_line;
-	int		i;
-	char	*join;
 
-	(void)argc;
-	(void)argv;
-	join = NULL;
-	data.env = keep_env(envp);
-	data.level = ft_atoi(search_variable(data.env, "SHLVL="));
-	join = ft_itoa(err_no);
-	env_update(&data, ft_strjoin("?=", join), "?=");
-	free(join);
-	while (1)
+	cmd_line = start_variables(argc, argv, envp, &data);
+	while (cmd_line)
 	{
-		select_signal(0);
-		err_no = 0;
-		data.wait = 0;
-		data.all_path = get_promt(getenv("PATH"));
-		data.promt = get_promt(getenv("USER"));
-		cmd_line = readline(data.promt);
-		i = 0;
-		if (cmd_line == NULL)
-		{
-			printf("exit\n");
-			break ;
-		}
-		while (cmd_line[i] == ' ')
-			i++;
-		if (cmd_line[i] != '\0')
+		cmd_line = start_variables(0, argv, envp, &data);
+		if (!cmd_line)
+			ft_printf("exit\n");
+		if (cmd_line && cmd_line[0] != '\0')
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
 			if (even_quotes(cmd_line, 0, 0, &data) == 0)
@@ -123,13 +142,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			free_matrix(data.spt_pipes);
 		}
-		add_history(cmd_line);
-		free(cmd_line);
-		free(data.promt);
-		free(data.all_path);
-		join = ft_itoa(err_no);
-		env_update(&data, ft_strjoin("?=", join), "?=");
-		free(join);
+		free_variables(cmd_line, &data);
 		system("leaks -q minishell");
 	}
 }

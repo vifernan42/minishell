@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/30 20:08:07 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/07 19:51:41 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 			list->next->in_fd = pipe_fd[RD_END];
 		else
 			close(pipe_fd[RD_END]);
+		if (list->in_fd > 2)
+			close(list->in_fd);
+		if (list->out_fd > 2)
+			close(list->out_fd);
 		data->wait++;
 	}
 }
@@ -113,5 +117,5 @@ void	exec_pipes(t_pipe *list, t_data *data)
 	if (next)
 		exec_pipes(next, data);
 	while (data->wait-- > 0)
-		waitpid(-1, &err_no, 0);
+		waitpid(-1, &err_no, 0); /* REVISAR */
 }
