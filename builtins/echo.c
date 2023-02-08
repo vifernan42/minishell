@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/27 19:10:51 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/08 20:57:54 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	check_flag(char **argv)
 		if (argv[i][0] == '-' && argv[i][1] == 'n')
 		{
 			u = 0;
-			while(argv[i][++u] != '\0')
+			while (argv[i][++u] != '\0')
 			{
 				if (argv[i][u] != 'n')
-					return(i);
+					return (i);
 			}
 		}
 		else
@@ -44,10 +44,10 @@ int	check_flag(char **argv)
 	return (1);
 }
 
-int my_echo(char **argv, int fd)
+int	my_echo(char **argv, int fd)
 {
-	int flag;
-	int i;
+	int	flag;
+	int	i;
 
 	flag = check_flag(argv);
 	i = flag;

@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:44:49 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/08 20:47:16 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/08 20:55:06 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	my_chdir(t_data *data, char *path)
 	}
 	if (!ft_strcmp_built(path, ".."))
 	{
-		path =  change_two_dots(search_variable(data->env, "PWD="));
+		path = change_two_dots(search_variable(data->env, "PWD="));
 		if (!chdir(path))
 		{
 			data->oldpwd = ft_strjoin("OLDPWD=", dir);
@@ -73,7 +73,8 @@ int	my_chdir(t_data *data, char *path)
 			update_env_var(data, dir, "PWD=");
 			return (0);
 		}
-		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		ft_printf("cd: error retrieving current directory: getcwd: \
+			cannot access parent directories: No such file or directory\n");
 		env_update(data, ft_strjoin("PWD=", path), "PWD=");
 	}
 	else
@@ -91,7 +92,8 @@ int	my_chdir(t_data *data, char *path)
 		}
 		if (!ft_strcmp_built(path, ".."))
 		{
-			ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+			ft_printf("cd: error retrieving current directory: getcwd: \
+				cannot access parent directories: No such file or directory\n");
 			dir = change_two_dots(search_variable(data->env, "PWD="));
 			update_env_var(data, dir, "PWD=");
 		}

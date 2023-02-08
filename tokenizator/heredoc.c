@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/08 20:10:17 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/08 21:17:49 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	rdline_heredoc(char *key, int fd_w)
 	select_signal(1);
 	while (1)
 	{
-		signal(SIGINT, handle_signal);
+		signal(SIGINT, handle_signal_here);
 		wr_on = readline("> ");
 		if (err_no == 1 || (!ft_strcmp(key, wr_on)
 				&& (int)ft_strlen(key) == (int)ft_strlen(wr_on))

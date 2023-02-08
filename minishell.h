@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/26 20:33:32 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/08 21:18:17 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int		my_echo(char **argv, int fd);
 int		print_variable(char **env, char *str, int i, int fd);
 void	my_exit(t_data *data);
 void	handle_signal(int sl);
+void	handle_signal_here(int sl);
 void	sigquit_handler(int sign);
 void	select_signal(int select);
 int		env(char **envu, int fd);

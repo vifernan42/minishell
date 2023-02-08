@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/07 19:48:34 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/08 21:17:27 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void sigquit_handler()
+/*mirar como funciona ctrl+c en heredoc y en redirecciones*/
+
+void	sigquit_handler(int sign)
 {
-    printf("exit\n");
-    exit(0);
+	(void)sign;
+	printf ("exit\n");
+	exit (0);
 }
 
 void	handle_signal(int sl)
@@ -23,16 +26,8 @@ void	handle_signal(int sl)
 	if (sl == 2)
 	{
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		//write(1, "\n", 1);
 		rl_on_new_line();
-		//rl_replace_line("", 0);
-		//rl_redisplay();
-		
-		/*ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_on_new_line();*/
-		
-	}
-	
+	}	
 }
 
 void	handle_signal_here(int sl)
@@ -43,7 +38,7 @@ void	handle_signal_here(int sl)
 	rl_on_new_line();
 }
 
-void		my_exit(t_data *data)
+void	my_exit(t_data *data)
 {
 	if (ft_atoi(search_variable(data->env, "SHLVL=")) > 1)
 	{
@@ -56,7 +51,8 @@ void		my_exit(t_data *data)
 	exit(0);
 }
 
-void	select_signal(int select){
+void	select_signal(int select)
+{
 	if (select == 0)
 	{
 		signal(SIGINT, handle_signal);
