@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:44:49 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/26 20:36:24 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:47:27 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ char	*change_two_dots(char *path)
 int	my_chdir(t_data *data, char *path)
 {
 	char	*dir;
+	char	*aux;
 
-	if (path[0] == '~')
+	aux = NULL;
+	if (path && path[0] == '~')
 	{
-		dir = ft_strjoin(search_variable(data->env, "HOME="), path + 1); /*leaks?*/
+		dir = ft_strjoin(search_variable(data->env, "HOME="), path + 1);
 		path = dir;
 		free(dir);
 	}
@@ -66,7 +68,9 @@ int	my_chdir(t_data *data, char *path)
 			data->oldpwd = ft_strjoin("OLDPWD=", dir);
 			if (path[0] != '.' && ft_strlen(path) == 1)
 				env_update(data, data->oldpwd, "OLDPWD=");
-			dir = ft_strjoin("PWD=", getcwd(NULL, 0));
+			aux = getcwd(NULL, 0);
+			dir = ft_strjoin("PWD=", aux);
+			free(aux);
 			update_env_var(data, dir, "PWD=");
 			return (0);
 		}
@@ -80,8 +84,10 @@ int	my_chdir(t_data *data, char *path)
 			data->oldpwd = ft_strjoin("OLDPWD=", dir);
 			if (path[0] != '.' && ft_strlen(path) == 1)
 				env_update(data, data->oldpwd, "OLDPWD=");
-			dir = ft_strjoin("PWD=", getcwd(NULL, 0));
+			aux = getcwd(NULL, 0);
+			dir = ft_strjoin("PWD=", aux);
 			update_env_var(data, dir, "PWD=");
+			free(aux);
 			return (0);
 		}
 		if (!ft_strcmp_built(path, ".."))

@@ -6,18 +6,13 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/30 20:23:38 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:27:37 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	leaks(void)
-{
-	system("leaks minishell");
-}
 
 char	*get_promt(char *user)
 {
@@ -82,68 +77,73 @@ void	print_list(t_pipe *pipe)
 	}
 }
 
+char	*start_variables(int argc, char **argv, char **envp, t_data *data)
+{
+	char	*join;
+	
+	join = NULL;
+	if (argc != 0)
+	{
+		(void)argc;
+		(void)argv;
+		data->env = keep_env(envp);
+		data->level = ft_atoi(search_variable(data->env, "SHLVL=")); /*mirar esto env -i ./minishell*/
+		join = ft_itoa(err_no);
+		env_update(data, ft_strjoin("?=", join), "?=");
+		free(join);
+		return ("");
+	}
+	else
+	{
+		select_signal(0);
+		err_no = 0;
+		data->wait = 0;
+		data->all_path = get_promt(getenv("PATH"));
+		data->promt = get_promt(getenv("USER"));
+		return(readline(data->promt));
+	}	
+}
+
+void	free_variables(char	*cmd_line, t_data *data)
+{
+	char *join;
+	
+	add_history(cmd_line);
+	free(cmd_line);
+	free(data->promt);
+	free(data->all_path);
+	if (err_no == 256)
+		err_no = 1;
+	join = ft_itoa(err_no);
+	env_update(data, ft_strjoin("?=", join), "?=");
+	free(join);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	t_pipe	*pipe;
 	char	*cmd_line;
-	int		i;
-	char	*join;
-	
-	(void)argc;
-	(void)argv;
-	//ft_signal();
-	/*signal(SIGINT, handle_signal);
-	if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
-    {
-        printf("Error setting SIGQUIT handler\n");
-        exit(1);
-    }*/
-	join = NULL;
-	data.env = keep_env(envp);
-	data.level = ft_atoi(search_variable(data.env, "SHLVL=")); /*mirar esto env -i ./minishell*/
-	join = ft_itoa(err_no);
-	env_update(&data, ft_strjoin("?=", join), "?=");
-	free(join);
-//	print_matrix(data.env);
-	while (1)
+
+	cmd_line = start_variables(argc, argv, envp, &data);
+	while (cmd_line)
 	{
-		select_signal(0);
-		err_no = 0;
-		data.wait = 0;
-		data.all_path = get_promt(getenv("PATH"));
-		data.promt = get_promt(getenv("USER"));
-		cmd_line = readline(data.promt);
-		i = 0;
-		if (cmd_line == NULL)
-		{
-			printf("exit\n");
-			break ;
-		}
-		while (cmd_line[i] == ' ')
-			i++;
-		if (cmd_line[i] != '\0')
+		cmd_line = start_variables(0, argv, envp, &data);
+		if (!cmd_line)
+			ft_printf("exit\n");
+		if (cmd_line && cmd_line[0] != '\0')
 		{
 			data.spt_pipes = st_split(cmd_line, '|');
 			if (even_quotes(cmd_line, 0, 0, &data) == 0)
 			{	
 				pipe = tokenizator(&data, -1);
-				if (data.err != -1) /* la -ls (example) */
+				if (data.err != -1)
 					exec_pipes(pipe, &data);
 				lstdelete(pipe);
 			}
-			//if (data.err != 2)
-				free_matrix(data.spt_pipes);
+			free_matrix(data.spt_pipes);
 		}
-		//printf("ccmd---%d\n", data.status);
-		add_history(cmd_line);
-		free(cmd_line);
-		free(data.promt);
-		free(data.all_path);
-		//printf("err_no: $%d$\n", err_no);
-		join = ft_itoa(err_no);
-		env_update(&data, ft_strjoin("?=", join), "?=");
-		free(join);
-		//system("leaks -q minishell");
+		free_variables(cmd_line, &data);
+		system("leaks -q minishell");
 	}
 }
