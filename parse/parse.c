@@ -6,15 +6,15 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/08 20:35:55 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:57:57 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //char	*var_tochange()
-/*
-char	*value_to_expand(char *var_env, char *var_name, int start, int end)
+
+/*char	*value_to_expand(char *var_env, char *var_name, int start, int end)
 {
 	char	*str;
 	char	*aux;
@@ -60,8 +60,8 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	var_env = ft_strdup(str);
 	free(str);
 	free(*expand_ln);
-	*expand_ln = value_to_expand(var_env, var_name, i + char_index, leng - (i + char_index));
 	aux = ft_substr(var_env, 0, i - 1);
+	//*expand_ln = value_to_expand(var_env, var_name, i + char_index, leng - (i + char_index));
 	str = ft_strjoin(aux, var_name);
 	free(aux);
 	if (char_index > 0)

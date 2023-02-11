@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/30 20:12:05 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:18:27 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data)
 	i = find_heredir(cmd_sp, -1, 0);
 	if (i != -1)
 	{
-		fd = do_heredoc(skip_quotes(key_value(cmd_sp, i), -1));
+		fd = do_heredoc(skip_quotes(key_value(cmd_sp, i), 0));
 		aux = rm_used(cmd_sp, i, 0, 2);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);

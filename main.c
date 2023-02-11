@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/08 17:27:37 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/11 19:17:27 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	nodedelete(t_pipe *pipe, t_pipe **next)
 		free(pipe->exec_path);
 	if (pipe->argv)
 		free_matrix(pipe->argv);
-	
 	*next = pipe->next;
 	free(pipe);
 }
@@ -35,36 +34,37 @@ void	nodedelete(t_pipe *pipe, t_pipe **next)
 void	lstdelete(t_pipe *pipe)
 {
 	t_pipe	*next;
-	
+
 	if (!pipe)
 		return ;
 	next = NULL;
-	while(pipe)
+	while (pipe)
 	{
 		nodedelete(pipe, &next);
 		pipe = next;
 	}
 }
-
-void	print_node(t_pipe *pipe, t_pipe **next)
+/*void	print_node(t_pipe *pipe, t_pipe **next)
 {
 	(void)next;
 	if (pipe->exec_path)
 		printf("exec_path:	%s\n", pipe->exec_path);
 	if (pipe->argv)
+	{
 		for(int i = 0; pipe->argv[i] != NULL; i++)
 			printf("cmd_arg[%d]:	%s\n", i, pipe->argv[i]);
+	}
 	if (pipe->in_fd)
 		printf("in_fd:	%d\n", pipe->in_fd);
 	if (pipe->out_fd)
 		printf("out_fd:	%d\n", pipe->out_fd);
-}
+}*/
 
-void	print_list(t_pipe *pipe)
+/*void	print_list(t_pipe *pipe)
 {
 	t_pipe	*next;
 	int		num;
-	
+
 	if (!pipe)
 		return ;
 	next = NULL;
@@ -75,19 +75,19 @@ void	print_list(t_pipe *pipe)
 		print_node(pipe, &next);
 		pipe = pipe->next;
 	}
-}
+}*/
 
 char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 {
 	char	*join;
-	
+
 	join = NULL;
 	if (argc != 0)
 	{
 		(void)argc;
 		(void)argv;
 		data->env = keep_env(envp);
-		data->level = ft_atoi(search_variable(data->env, "SHLVL=")); /*mirar esto env -i ./minishell*/
+		data->level = ft_atoi(search_variable(data->env, "SHLVL="));
 		join = ft_itoa(err_no);
 		env_update(data, ft_strjoin("?=", join), "?=");
 		free(join);
@@ -100,14 +100,14 @@ char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 		data->wait = 0;
 		data->all_path = get_promt(getenv("PATH"));
 		data->promt = get_promt(getenv("USER"));
-		return(readline(data->promt));
+		return (readline(data->promt));
 	}	
 }
 
 void	free_variables(char	*cmd_line, t_data *data)
 {
-	char *join;
-	
+	char	*join;
+
 	add_history(cmd_line);
 	free(cmd_line);
 	free(data->promt);

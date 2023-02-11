@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:25:06 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/30 18:57:30 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:52:59 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,42 @@ char	*skip_result(char *str, char c, int count, int k)
 	j = 0;
 	while (str[++i] != '\0')
 	{
-		if (str[i] != c)
+		if ((str[i] == c && count <= 0) || str[i] != c)
 			s[j++] = str[i];
+		else if (str[i] == c)
+		{
+			count--;
+			k--;
+		}
 	}
 	s[j] = '\0';
 	return (skip_quotes(s, k));
+}
+
+int	count_quotes(char *str, char *c, int *i)
+{
+	int	count;
+
+	count = 0;
+	while (str[*i] != '\0')
+	{
+		if ((str[*i] == '\'' || str[*i] == '\"') && ((*c == 0)
+				|| (count > 0 && (count % 2 == 0))))
+		{
+			if (str[*i] == '\'')
+				*c = '\'';
+			else
+				*c = '\"';
+			count++;
+		}
+		else if ((*c == '\'' || *c == '\"') && str[*i] == *c)
+		{
+			count++;
+			break ;
+		}
+		*i += 1;
+	}
+	return (count);
 }
 
 char	*skip_quotes(char *str, int i)
@@ -39,26 +70,9 @@ char	*skip_quotes(char *str, int i)
 	char	c;
 	char	*aux;
 
-	count = 0;
 	c = 0;
 	aux = NULL;
-	while (str[++i] != '\0')
-	{
-		if ((str[i] == '\'' || str[i] == '\"') && ((c == 0)
-				|| (count > 0 && (count % 2 == 0))))
-		{
-			if (str[i] == '\'')
-				c = '\'';
-			else
-				c = '\"';
-			count++;
-		}
-		else if ((c == '\'' || c == '\"') && str[i] == c)
-		{
-			count++;
-			break ;
-		}
-	}
+	count = count_quotes(str, &c, &i);
 	if (count % 2 == 0 && count > 0)
 	{
 		aux = str;

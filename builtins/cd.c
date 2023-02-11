@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:44:49 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/08 17:47:27 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:25:25 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,56 +40,36 @@ char	*change_two_dots(char *path)
 	return (NULL);
 }
 
-int	my_chdir(t_data *data, char *path)
+int	cd_no_path(t_data *data, char *aux, char *path, char *dir)
 {
-	char	*dir;
-	char	*aux;
+	data->oldpwd = ft_strjoin("OLDPWD=", dir);
+	if (path[0] != '.' && ft_strlen(path) == 1)
+		env_update(data, data->oldpwd, "OLDPWD=");
+	free(data->oldpwd);
+	aux = getcwd(NULL, 0);
+	dir = ft_strjoin("PWD=", aux);
+	free(aux);
+	update_env_var(data, dir, "PWD=");
+	free(path);
+	//printf("-%s\n", path);
+	return (0);
+}
 
-	aux = NULL;
-	if (path && path[0] == '~')
-	{
-		dir = ft_strjoin(search_variable(data->env, "HOME="), path + 1);
-		path = dir;
-		free(dir);
-	}
-	dir = search_variable(data->env, "PWD=");
-	if (!path)
-		path = search_variable(data->env, "HOME=");
-	if (!path)
-	{
-		ft_printf("minishell: cd: HOME not set\n"); /*guardar el home*/
-		return (1);
-	}
+int	do_my_chdir(t_data *data, char *aux, char *path, char *dir)
+{
 	if (!ft_strcmp_built(path, ".."))
 	{
+		free(path);
 		path =  change_two_dots(search_variable(data->env, "PWD="));
 		if (!chdir(path))
-		{
-			data->oldpwd = ft_strjoin("OLDPWD=", dir);
-			if (path[0] != '.' && ft_strlen(path) == 1)
-				env_update(data, data->oldpwd, "OLDPWD=");
-			aux = getcwd(NULL, 0);
-			dir = ft_strjoin("PWD=", aux);
-			free(aux);
-			update_env_var(data, dir, "PWD=");
-			return (0);
-		}
+			return (cd_no_path(data, aux, path, dir));
 		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
 		env_update(data, ft_strjoin("PWD=", path), "PWD=");
 	}
 	else
 	{
 		if (!chdir(path))
-		{
-			data->oldpwd = ft_strjoin("OLDPWD=", dir);
-			if (path[0] != '.' && ft_strlen(path) == 1)
-				env_update(data, data->oldpwd, "OLDPWD=");
-			aux = getcwd(NULL, 0);
-			dir = ft_strjoin("PWD=", aux);
-			update_env_var(data, dir, "PWD=");
-			free(aux);
-			return (0);
-		}
+			return (cd_no_path(data, aux, path, dir));
 		if (!ft_strcmp_built(path, ".."))
 		{
 			ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
@@ -99,5 +79,30 @@ int	my_chdir(t_data *data, char *path)
 		else
 			ft_printf("minishell: cd: %s\n", path);
 	}
+	free(path);
 	return (1);
+}
+
+int	my_chdir(t_data *data, char *path)
+{
+	char	*dir;
+	char	*aux;
+
+	aux = NULL;
+	if (path && path[0] == '~')
+	{
+		dir = ft_strjoin(search_variable(data->env, "HOME="), path + 1);
+		free(path);
+		path = ft_strdup(dir);
+		free(dir);
+	}
+	dir = search_variable(data->env, "PWD=");
+	if (!path)
+		path = ft_strdup(search_variable(data->env, "HOME="));
+	if (!path)
+	{
+		ft_printf("minishell: cd: HOME not set\n"); /*guardar el home*/
+		return (1);
+	}
+	return (do_my_chdir(data, aux, path, dir));
 }
