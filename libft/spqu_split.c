@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spqu_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:34:06 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/11 19:59:43 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:13:39 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,9 @@ char	**ft_inend(char **dst, char const *init, char c)
 	int			i;
 	int			j;
 	int			z;
-	char		x;
 
 	i = 0;
 	z = 0;
-	x = 0;
 	while (i < (int)ft_strlen(init))
 	{
 		if (i == 0 || (init[i - 1] == c && init[i] != c))

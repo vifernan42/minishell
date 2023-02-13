@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:25:06 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/11 18:52:59 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:08:34 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*skip_result(char *str, char c, int count, int k)
 	int		i;
 
 	if (!str)
-		return(NULL);
+		return (NULL);
 	s = malloc(sizeof(char) * (int)ft_strlen(str) - count + 1);
 	i = -1;
 	j = 0;

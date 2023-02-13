@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 20:09:52 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/14 19:43:42 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:39:10 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**keep_env(char **env)
 	int		j;
 
 	i = 0;
-	while(env[i] != NULL)
+	while (env[i] != NULL)
 		i++;
 	envir = (char **)malloc((i + 1) * sizeof(char *));
 	i = -1;

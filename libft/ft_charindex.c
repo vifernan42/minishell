@@ -3,27 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_charindex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 06:29:41 by ialvarez          #+#    #+#             */
-/*   Updated: 2022/12/23 06:29:52 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:25:19 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
 
-int     ft_charindex(char *str, char c)
+int	ft_charindex(char *str, char c)
 {
-    int i;
+	int	i;
 
-    i = -1;
-    if (!str || c == '\0')
-        return (-1);
-    while (str[++i] != '\0')
-    {
-        if (str[i] == c)
-            return (i);
-    }
-    return (-1);
+	i = -1;
+	if (!str || c == '\0')
+		return (-1);
+	while (str[++i] != '\0')
+	{
+		if (str[i] == c)
+			return (i);
+	}
+	return (-1);
 }

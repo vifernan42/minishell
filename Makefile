@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2023/01/27 19:43:32 by vifernan         ###   ########.fr        #
+#    Updated: 2023/02/08 20:32:36 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS = main.c \
 	   ./tokenizator/take_args.c \
 	   ./tokenizator/tokenizator_utils.c \
 	   ./tokenizator/rm_used.c \
+	   ./tokenizator/aux_key.c \
 	   ./exec/exec.c \
 	   ./builtins/pwd.c \
 	   ./builtins/echo.c \

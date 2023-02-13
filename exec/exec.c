@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/11 19:09:37 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:37:28 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
 	close(pipe_fd[RD_END]);
 	if (execve(list->exec_path, list->argv, data->env) == -1)
 	{
-		err_no = 126;
+		g_err_no = 126;
 		ft_printf("minishell: %s: ", list->argv[0]);
 		perror("");
 	}
@@ -57,8 +57,8 @@ void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
 
 void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 {
-	int	pid;
-	char *level;
+	int		pid;
+	char	*level;
 
 	pid = fork();
 	level = NULL;
@@ -101,7 +101,7 @@ void	exec_builtins(t_pipe *list, t_data *data)
 		my_export(data, list->argv);
 	else
 	{
-		err_no = 127;
+		g_err_no = 127;
 		printf("minishell: %s: command not found\n", list->argv[0]);
 	}
 }
@@ -126,5 +126,5 @@ void	exec_pipes(t_pipe *list, t_data *data)
 	if (next)
 		exec_pipes(next, data);
 	while (data->wait-- > 0)
-		waitpid(-1, &err_no, 0);
+		waitpid(-1, &g_err_no, 0);
 }

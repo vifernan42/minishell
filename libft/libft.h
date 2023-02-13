@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 18:06:56 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/23 18:09:28 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:09:47 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		ft_isdigit(int c);
 int		ft_isprint(int c);
 
 size_t	ft_strlen(const char *s);
-int ft_charindex(char *str, char c);
+int		ft_charindex(char *str, char c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
@@ -47,7 +47,7 @@ char	*ft_strrchr(const char *s, int c);
 char	*ft_strchr2(const char *s, int c);
 char	*ft_str2chr(const char *s, int c);
 char	*ft_strinit(char *str, char x);
-int 	ft_strinkey(const char *str, const char *key);
+int		ft_strinkey(const char *str, const char *key);
 char	*ft_charjoin(char c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);

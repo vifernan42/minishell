@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/01/26 20:33:32 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:38:31 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,22 @@
 # include	<readline/readline.h>
 # include	<readline/history.h>
 # include	<fcntl.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <libgen.h>
-# include <sys/ioctl.h>
+# include	<sys/types.h>
+# include	<dirent.h>
+# include	<libgen.h>
+# include	<sys/ioctl.h>
 # include	"libft/libft.h"
 # include	"printf/ft_printf.h"
-
 # define RD_END	0
 # define WR_END	1
-int err_no;
 
+int	g_err_no;
 typedef struct s_pipe
 {
-	char			*exec_path; //path ejecucion
-	char			**argv; //ls -la lewn lwleel
-	int				in_fd; //fd entrada
-	int				out_fd; //fd de salidaa
+	char			*exec_path;
+	char			**argv;
+	int				in_fd;
+	int				out_fd;
 	char			*err;
 	struct s_pipe	*next;
 }				t_pipe;
@@ -54,7 +53,6 @@ typedef struct s_data {
 	int		level;
 }		t_data;
 
-
 /* -- parse -- */
 int		pipe_parse(t_data *data);
 int		even_quotes(char *s, int count, char x, t_data *data);
@@ -69,7 +67,7 @@ char	**keep_env(char **env);
 t_pipe	*tokenizator(t_data *data, int i);
 t_pipe	*create_node(char *cmd_stg, char *all_path, t_data *data);
 int		take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data);
-void 	take_redirec(char **aux_cmd, char **cmd_sp, t_pipe *ret, t_data *data);
+void	take_redirec(char **aux_cmd, char **cmd_sp, t_pipe *ret, t_data *data);
 void	take_args(char **cmd_sp, t_pipe *ret, char *all_path);
 int		find_heredir(char **cmd_sp, int i, int type);
 char	*find_key(char *str, int i, int j);
@@ -91,6 +89,7 @@ int		my_echo(char **argv, int fd);
 int		print_variable(char **env, char *str, int i, int fd);
 void	my_exit(t_data *data);
 void	handle_signal(int sl);
+void	handle_signal_here(int sl);
 void	sigquit_handler(int sign);
 void	select_signal(int select);
 int		env(char **envu, int fd);
@@ -100,7 +99,6 @@ char	*search_variable(char **env, char *key);
 void	env_update(t_data *data, char *new_line, char *key);
 void	update_env_var(t_data *data, char *dir, char *key);
 void	my_export(t_data *data, char **argv);
-
 
 /* -- leaks -- */
 void	leaks(void);

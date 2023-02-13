@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/11 19:17:27 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:37:28 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	lstdelete(t_pipe *pipe)
 		return ;
 	next = NULL;
 	num = 1;
-	while(pipe)
+	while (pipe)
 	{
 		printf("--NODE %d--\n", num++);
 		print_node(pipe, &next);
@@ -88,7 +88,7 @@ char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 		(void)argv;
 		data->env = keep_env(envp);
 		data->level = ft_atoi(search_variable(data->env, "SHLVL="));
-		join = ft_itoa(err_no);
+		join = ft_itoa(g_err_no);
 		env_update(data, ft_strjoin("?=", join), "?=");
 		free(join);
 		return ("");
@@ -96,7 +96,7 @@ char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 	else
 	{
 		select_signal(0);
-		err_no = 0;
+		g_err_no = 0;
 		data->wait = 0;
 		data->all_path = get_promt(getenv("PATH"));
 		data->promt = get_promt(getenv("USER"));
@@ -112,9 +112,9 @@ void	free_variables(char	*cmd_line, t_data *data)
 	free(cmd_line);
 	free(data->promt);
 	free(data->all_path);
-	if (err_no == 256)
-		err_no = 1;
-	join = ft_itoa(err_no);
+	if (g_err_no == 256)
+		g_err_no = 1;
+	join = ft_itoa(g_err_no);
 	env_update(data, ft_strjoin("?=", join), "?=");
 	free(join);
 }

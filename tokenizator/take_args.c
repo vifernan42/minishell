@@ -6,41 +6,38 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:04:52 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/11 19:31:31 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:33:02 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	aux_cmd_path(char **aux_path, char **cmd)
+{
+	if (access(*cmd, F_OK) == 0)
+		*aux_path = ft_strdup(*cmd);
+}
+
+void	free_aux(char **aux_path)
+{
+	free(*aux_path);
+	*aux_path = NULL;
+}
 
 char	*aux_path_val(char *cmd, char *aux_cmd, char **path_sp, int i)
 {
 	char	*aux_path;
 
 	aux_path = NULL;
-	/*if (cmd[0] == '/')
-	{
-		if (access(cmd, F_OK) == 0)
-			aux_path = ft_strdup(cmd);
-	}
-	else if ((cmd[0] == '.' && cmd[1] == '/') || (cmd[0] == '.' && cmd[1] == '.' && cmd[2] == '/'))
-	{
-		aux_path = ft_strjoin(getcwd(NULL, 0), cmd + 1);
-		if (access(aux_path, F_OK) != 0)
-		{
-			free(aux_path);
-			aux_path = NULL;
-		}
-	}
-	else*/
-	if ((cmd[0] != '/') && (cmd[0] != '.' && cmd[1] != '/') && (cmd[0] != '.' && cmd[1] != '.' && cmd[2] != '/'))
+	if ((cmd[0] != '/') && (cmd[0] != '.' && cmd[1] != '/')
+		&& (cmd[0] != '.' && cmd[1] != '.' && cmd[2] != '/'))
 	{
 		while (path_sp[++i] != NULL)
 		{
 			aux_path = ft_strjoin(path_sp[i], aux_cmd);
 			if (access(aux_path, F_OK) == 0)
 				break ;
-			free(aux_path);
-			aux_path = NULL;
+			free_aux(&aux_path);
 		}
 	}
 	else

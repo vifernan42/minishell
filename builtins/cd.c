@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:44:49 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/09 19:25:25 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:34:49 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*change_two_dots(char *path)
 {
-	int	i;
-	int	index;
+	int		i;
+	int		index;
 	char	*aux;
 
 	i = -1;
@@ -36,7 +36,6 @@ char	*change_two_dots(char *path)
 		aux[index] = '\0';
 		return (aux);
 	}
-	/*else*/
 	return (NULL);
 }
 
@@ -51,7 +50,6 @@ int	cd_no_path(t_data *data, char *aux, char *path, char *dir)
 	free(aux);
 	update_env_var(data, dir, "PWD=");
 	free(path);
-	//printf("-%s\n", path);
 	return (0);
 }
 
@@ -60,7 +58,7 @@ int	do_my_chdir(t_data *data, char *aux, char *path, char *dir)
 	if (!ft_strcmp_built(path, ".."))
 	{
 		free(path);
-		path =  change_two_dots(search_variable(data->env, "PWD="));
+		path = change_two_dots(search_variable(data->env, "PWD="));
 		if (!chdir(path))
 			return (cd_no_path(data, aux, path, dir));
 		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
@@ -72,7 +70,8 @@ int	do_my_chdir(t_data *data, char *aux, char *path, char *dir)
 			return (cd_no_path(data, aux, path, dir));
 		if (!ft_strcmp_built(path, ".."))
 		{
-			ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+			ft_printf("cd: error retrieving current directory: getcwd: \
+				cannot access parent directories: No such file or directory\n");
 			dir = change_two_dots(search_variable(data->env, "PWD="));
 			update_env_var(data, dir, "PWD=");
 		}
@@ -101,7 +100,7 @@ int	my_chdir(t_data *data, char *path)
 		path = ft_strdup(search_variable(data->env, "HOME="));
 	if (!path)
 	{
-		ft_printf("minishell: cd: HOME not set\n"); /*guardar el home*/
+		ft_printf("minishell: cd: HOME not set\n");
 		return (1);
 	}
 	return (do_my_chdir(data, aux, path, dir));
