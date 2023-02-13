@@ -6,74 +6,54 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:06:04 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/11 18:57:57 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:43:40 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//char	*var_tochange()
-
-/*char	*value_to_expand(char *var_env, char *var_name, int start, int end)
+char	*value_to_expand(t_data *data, char *str, int i, int *char_index)
 {
-	char	*str;
 	char	*aux;
-	char	*enxpand;
-	
-	aux = ft_substr(var_env, 0, i - 1);
-	str = ft_strjoin(aux, var_name);
-	free(aux);
-	if (char_index > 0)
-	{
-		aux = ft_substr(var_env, start, end);
-		*enxpand = ft_strjoin(str, aux);
-		free(aux);
-	}
-	else
-		*enxpand = ft_strdup(str);
-	free(str);
-	free(var_env);
-	return (0);
-}*/
-
-int	change_value(char *str, int i, t_data *data, char **expand_ln)
-{
 	char	*var_name;
-	int		char_index;
 	char	*var_env;
-	char	*aux;
-	int		leng;
-	
-	leng = 0;
-	aux = NULL;
-	char_index = ft_strinkey(str + i, "$,. ><-@?¿¡/\\%#·\"\'");
-	leng = (int)ft_strlen(str);
-	if (char_index == 0 && str[i] == '?')
-		char_index = 1;
-	var_name = ft_substr(str + i, 0, char_index);
+
+	*char_index = ft_strinkey(str + i, "$,. ><-@?¿¡/\\%#·\"\'");
+	if (*char_index == 0 && str[i] == '?')
+		*char_index = 1;
+	var_name = ft_substr(str + i, 0, *char_index);
 	var_env = ft_strjoin(var_name, "=");
 	free(var_name);
 	var_name = search_variable(data->env, var_env);
 	if (!var_name)
 		var_name = "";
 	free(var_env);
-	var_env = ft_strdup(str);
-	free(str);
-	free(*expand_ln);
-	aux = ft_substr(var_env, 0, i - 1);
-	//*expand_ln = value_to_expand(var_env, var_name, i + char_index, leng - (i + char_index));
-	str = ft_strjoin(aux, var_name);
+	aux = ft_substr(str, 0, i - 1);
+	var_env = ft_strjoin(aux, var_name);
 	free(aux);
+	return (var_env);
+}
+
+int	change_value(char *str, int i, t_data *data, char **expand_ln)
+{
+	int		char_index;
+	char	*value;
+	char	*aux;
+
+	value = value_to_expand(data, str, i, &char_index);
+	printf("%s\n", value);
+	free(*expand_ln);
 	if (char_index > 0)
 	{
-		aux = ft_substr(var_env, (i + char_index), leng - (i + char_index));
-		*expand_ln = ft_strjoin(str, aux);
+		aux = ft_substr(str, (i + char_index),
+				(int)ft_strlen(str) - (i + char_index));
+		*expand_ln = ft_strjoin(value, aux);
 		free(aux);
 	}
 	else
-		*expand_ln = ft_strdup(str);
+		*expand_ln = ft_strdup(value);
+	free(value);
 	free(str);
-	free(var_env);
 	return (0);
 }
 
@@ -90,7 +70,6 @@ int	check_before_change(char *str, int i, int *here, int *open)
 		else
 			*open = 1;
 	}
-	//printf("%d\n", *here);
 	if (!*open && !*here)
 		return (0);
 	else
@@ -99,11 +78,11 @@ int	check_before_change(char *str, int i, int *here, int *open)
 
 char	*take_variable(t_data *data, char *str)
 {
-	int	i;
-	int	open;
-	char *expand_ln;
-	int	here;
-	
+	int		i;
+	int		open;
+	char	*expand_ln;
+	int		here;
+
 	i = -1;
 	open = 0;
 	expand_ln = NULL;
