@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizator_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/08 20:31:59 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:50:50 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**cmd_arg_quottes(char	*pipe, t_data *data)
 	while (aux_cmd[++x] != NULL)
 	{
 		if (find_rm_size(aux_cmd[x], 0, -1) == (int)ft_strlen(aux_cmd[x]))
-			aux = skip_quotes(skip_spaces(aux_cmd[x]), -1);
+			aux = skip_quotes(skip_spaces(aux_cmd[x]), 0);
 		else
 			aux = skip_spaces(aux_cmd[x]);
 		free(aux_cmd[x]);

@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:25:06 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/09 19:47:13 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:01:44 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,43 @@ char	*skip_result(char *str, char c, int count, int k)
 	j = 0;
 	while (str[++i] != '\0')
 	{
-		if ((str[i] != c && count > 0) || (str[i] && count == 0))
-		{
+		if ((str[i] == c && count <= 0) || str[i] != c)
 			s[j++] = str[i];
-		}
 		else if (str[i] == c)
+		{
 			count--;
+			k--;
+		}
 	}
 	s[j] = '\0';
 	return (skip_quotes(s, k));
 }
 
-/*static void	aux_quotes(char *str, int *i, int *count, char *c)
+int	count_quotes(char *str, char *c, int *i)
 {
-		if (str[*i] == '\'')
-			*c = '\'';
-		else
-			*c = '\"';
-		(*count)++;
-}*/
+	int	count;
+
+	count = 0;
+	while (str[*i] != '\0')
+	{
+		if ((str[*i] == '\'' || str[*i] == '\"') && ((*c == 0)
+				|| (count > 0 && (count % 2 == 0))))
+		{
+			if (str[*i] == '\'')
+				*c = '\'';
+			else
+				*c = '\"';
+			count++;
+		}
+		else if ((*c == '\'' || *c == '\"') && str[*i] == *c)
+		{
+			count++;
+			break ;
+		}
+		*i += 1;
+	}
+	return (count);
+}
 
 char	*skip_quotes(char *str, int i)
 {
@@ -52,28 +70,9 @@ char	*skip_quotes(char *str, int i)
 	char	c;
 	char	*aux;
 
-	count = 0;
 	c = 0;
 	aux = NULL;
-	while (str[++i] != '\0')
-	{
-		if ((str[i] == '\'' || str[i] == '\"') && ((c == 0)
-				|| (count > 0 && (count % 2 == 0))))
-		{
-			//aux_quotes(str, &i, &count, &c);
-			if (str[i] == '\'') /*mirar esto*/ 
-				c = '\'';
-			else
-				c = '\"';
-			count++;
-		}
-		else if ((c == '\'' || c == '\"') && str[i] == c)
-		{
-			count++;
-			break ;
-		}
-	}
-	printf("str: $%s$\ncount: $%d$\n\n", str, count);
+	count = count_quotes(str, &c, &i);
 	if (count % 2 == 0 && count > 0)
 	{
 		aux = str;

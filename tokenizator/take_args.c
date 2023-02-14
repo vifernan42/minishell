@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   take_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:04:52 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/08 18:21:39 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:12:02 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,8 @@ char	*aux_path_val(char *cmd, char *aux_cmd, char **path_sp, int i)
 	char	*aux_path;
 
 	aux_path = NULL;
-	if (cmd[0] == '/')
-		aux_cmd_path(&aux_path, &cmd);
-	else if ((cmd[0] == '.' && cmd[1] == '/') || (cmd[0] == '.'
-			&& cmd[1] == '.' && cmd[2] == '/'))
-	{
-		aux_path = ft_strjoin(getcwd(NULL, 0), cmd + 1);
-		if (access(aux_path, F_OK) != 0)
-			free_aux(&aux_path);
-	}
-	else
+	if ((cmd[0] != '/') && (cmd[0] != '.' && cmd[1] != '/')
+		&& (cmd[0] != '.' && cmd[1] != '.' && cmd[2] != '/'))
 	{
 		while (path_sp[++i] != NULL)
 		{
@@ -48,6 +40,8 @@ char	*aux_path_val(char *cmd, char *aux_cmd, char **path_sp, int i)
 			free_aux(&aux_path);
 		}
 	}
+	else
+		aux_path = ft_strdup(cmd);
 	return (aux_path);
 }
 
@@ -57,7 +51,7 @@ char	*find_path(char *cmd, char *all_path, int i)
 	char	*aux_path;
 	char	**path_sp;
 
-	aux_cmd = ft_strjoin("/", skip_quotes(cmd, -1));
+	aux_cmd = ft_strjoin("/", skip_quotes(cmd, 0));
 	path_sp = ft_split(all_path, ':');
 	aux_path = aux_path_val(cmd, aux_cmd, path_sp, i);
 	free_matrix(path_sp);

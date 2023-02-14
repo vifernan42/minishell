@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 19:26:51 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/08 21:02:27 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:50:19 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	my_export(t_data *data, char **argv)
 		if (ft_charindex(argv[i], '=') != -1 && ft_strlen(argv[i]) == 1)
 			ft_printf("minishell: export: `=': not a valid identifier\n");
 		else if (ft_charindex(argv[i], '=') == -1)
-			printf("minishell: export: `%s': not a valid identifier\n", argv[i]);
+			ft_printf("minishell: export: `%s':\
+				not a valid identifier\n", argv[i]);
 		i++;
 	}
 	i = 1;

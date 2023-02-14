@@ -3,41 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/08 22:01:22 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:46:47 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	aux_execution(t_pipe *list, t_data *data, int *pipe_fd)
-{
-	if (list->in_fd)
-	{
-		dup2(list->in_fd, STDIN_FILENO);
-		close(list->in_fd);
-	}
-	if (list->out_fd != 1)
-	{
-		dup2(list->out_fd, STDOUT_FILENO);
-		close(list->out_fd);
-	}
-	else if (list->next && list->out_fd)
-		dup2(pipe_fd[WR_END], STDOUT_FILENO);
-	close(pipe_fd[WR_END]);
-	close(pipe_fd[RD_END]);
-	if (execve(list->exec_path, list->argv, data->env) == -1)
-	{
-		err_no = 126;
-		ft_printf("minishell: %s: ", list->argv[0]);
-		perror("");
-	}
-	exit (0);
-}
-
-static void	aux_execution_utils(t_pipe *list, t_data *data, int *pipe_fd)
+void	parent_process(t_pipe *list, t_data *data, int *pipe_fd)
 {
 	if (list->in_fd >= 2)
 		close(list->in_fd);
@@ -55,16 +30,44 @@ static void	aux_execution_utils(t_pipe *list, t_data *data, int *pipe_fd)
 	data->wait++;
 }
 
+void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
+{
+	if (list->in_fd)
+	{
+		dup2(list->in_fd, STDIN_FILENO);
+		close(list->in_fd);
+	}
+	if (list->out_fd != 1)
+	{
+		dup2(list->out_fd, STDOUT_FILENO);
+		close(list->out_fd);
+	}
+	else if (list->next && list->out_fd)
+		dup2(pipe_fd[WR_END], STDOUT_FILENO);
+	close(pipe_fd[WR_END]);
+	close(pipe_fd[RD_END]);
+	if (execve(list->exec_path, list->argv, data->env) == -1)
+	{
+		g_err_no = 126;
+		ft_printf("minishell: %s: ", list->argv[0]);
+		perror("");
+	}
+	exit (0);
+}
+
 void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 {
-	int	pid;
+	int		pid;
+	char	*level;
 
 	pid = fork();
+	level = NULL;
 	if (!ft_strcmp_built(list->argv[0], "./minishell"))
 	{
 		data->level++;
-		update_env_var(data, ft_strjoin("SHLVL=", \
-			ft_itoa(data->level)), "SHLVL=");
+		level = ft_itoa(data->level);
+		update_env_var(data, ft_strjoin("SHLVL=", level), "SHLVL=");
+		free(level);
 	}
 	if (pid < 0)
 	{
@@ -73,9 +76,9 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 		perror("minishell: PID error\n");
 	}
 	else if (pid == 0)
-		aux_execution(list, data, pipe_fd);
+		child_process(list, data, pipe_fd);
 	else
-		aux_execution_utils(list, data, pipe_fd);
+		parent_process(list, data, pipe_fd);
 }
 
 void	exec_builtins(t_pipe *list, t_data *data)
@@ -91,15 +94,15 @@ void	exec_builtins(t_pipe *list, t_data *data)
 	else if (!ft_strcmp_built(list->argv[0], "env"))
 		env(data->env, list->out_fd);
 	else if (!ft_strcmp_built(list->argv[0], "cd"))
-		my_chdir(data, list->argv[1]);
+		my_chdir(data, ft_strdup(list->argv[1]));
 	else if (!ft_strcmp_built(list->argv[0], "unset"))
 		my_unset(data, list->argv);
 	else if (!ft_strcmp_built(list->argv[0], "export"))
 		my_export(data, list->argv);
 	else
 	{
-		err_no = 127;
-		printf("minishell: %s: command not found\n", list->argv[0]);
+		g_err_no = 127;
+		ft_printf("minishell: %s: command not found\n", list->argv[0]);
 	}
 }
 
@@ -123,5 +126,5 @@ void	exec_pipes(t_pipe *list, t_data *data)
 	if (next)
 		exec_pipes(next, data);
 	while (data->wait-- > 0)
-		waitpid(-1, &err_no, 0);
+		waitpid(-1, &g_err_no, 0);
 }

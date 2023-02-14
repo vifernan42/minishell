@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/08 18:22:42 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:47:33 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ t_pipe	*create_node(char *cmd_stg, char *all_path, t_data *data)
 	free(aux_cmd);
 	if (ret->in_fd == -1)
 	{
-		printf("minishell: Bad file fd\n");
+		ft_printf("minishell: Bad file fd\n");
 		data->err = -1;
-		err_no = 1;
+		g_err_no = 1;
 	}
 	return (ret);
 }

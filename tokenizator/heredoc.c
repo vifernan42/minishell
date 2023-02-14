@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/08 21:17:49 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:37:28 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	rdline_heredoc(char *key, int fd_w)
 	{
 		signal(SIGINT, handle_signal_here);
 		wr_on = readline("> ");
-		if (err_no == 1 || (!ft_strcmp(key, wr_on)
+		if (g_err_no == 1 || (!ft_strcmp(key, wr_on)
 				&& (int)ft_strlen(key) == (int)ft_strlen(wr_on))
 			|| wr_on == NULL)
 			break ;
@@ -46,7 +46,7 @@ static int	do_heredoc(char *key)
 	close(pip[WR_END]);
 	if (key)
 		free(key);
-	if (err_no == 1)
+	if (g_err_no == 1)
 	{
 		close(pip[WR_END]);
 		close(pip[RD_END]);
@@ -76,7 +76,7 @@ static	int	aux_take(char **aux_cmd, char **cmd_sp, int *fd, char *aux)
 	i = find_heredir(cmd_sp, -1, 0);
 	if (i != -1)
 	{
-		*fd = do_heredoc(skip_quotes(key_value(cmd_sp, i), -1));
+		*fd = do_heredoc(skip_quotes(key_value(cmd_sp, i), 0));
 		aux = rm_used(cmd_sp, i, 0, 2);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);

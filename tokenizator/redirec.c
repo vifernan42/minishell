@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/07 19:59:45 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:37:28 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 	fd = 0;
 	if (ft_strnstr((char *)id + found, "<", 1))
 		aux_redir(fd, &fname, ret);
-	else if (err_no != 1 && (ft_strnstr((char *)id + found, ">", 1)
+	else if (g_err_no != 1 && (ft_strnstr((char *)id + found, ">", 1)
 			|| ft_strnstr((char *)id + found, ">>", 2)))
 	{
 		if (ft_strnstr((char *)id + found, ">>", 2))
@@ -85,7 +85,7 @@ void	take_redirec(char **aux_cmd, char **cmd_sp, t_pipe *ret, t_data *data)
 	i = find_heredir(cmd_sp, -1, -1);
 	if (i != -1)
 	{
-		do_redirec(cmd_sp[i], skip_quotes(find_fname(cmd_sp, i), -1),
+		do_redirec(cmd_sp[i], skip_quotes(find_fname(cmd_sp, i), 0),
 			ret, &size);
 		swap = rm_used(cmd_sp, i, -1, size);
 		free(*aux_cmd);
