@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:08:38 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/13 19:37:28 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:37:04 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	aux_redir(int fd, char **fname, t_pipe *ret)
+static void	aux_redir(int fd, char **fname, t_pipe *ret)
 {
 	fd = open(*fname, O_RDONLY, 0666);
 	if (ret->in_fd)
@@ -20,7 +20,7 @@ void	aux_redir(int fd, char **fname, t_pipe *ret)
 	ret->in_fd = fd;
 }
 
-void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
+static void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 {
 	int	fd;
 	int	found;
@@ -46,7 +46,7 @@ void	do_redirec(char	*id, char *fname, t_pipe *ret, int *size)
 	free(fname);
 }
 
-char	*find_fname(char **cmd_sp, int i)
+static char	*find_fname(char **cmd_sp, int i)
 {
 	char	*fname;
 

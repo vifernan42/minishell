@@ -6,13 +6,13 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:44:49 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/14 20:02:45 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:05:45 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*change_two_dots(char *path)
+static char	*change_two_dots(char *path)
 {
 	int		i;
 	int		index;
@@ -39,7 +39,7 @@ char	*change_two_dots(char *path)
 	return (NULL);
 }
 
-int	cd_no_path(t_data *data, char *aux, char *path, char *dir)
+static int	cd_no_path(t_data *data, char *aux, char *path, char *dir)
 {
 	data->oldpwd = ft_strjoin("OLDPWD=", dir);
 	if (path[0] != '.' && ft_strlen(path) == 1)
@@ -53,7 +53,7 @@ int	cd_no_path(t_data *data, char *aux, char *path, char *dir)
 	return (0);
 }
 
-int	do_my_chdir(t_data *data, char *aux, char *path, char *dir)
+static int	do_my_chdir(t_data *data, char *aux, char *path, char *dir)
 {
 	if (!ft_strcmp_built(path, ".."))
 	{

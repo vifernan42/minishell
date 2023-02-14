@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/14 18:46:47 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:02:36 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parent_process(t_pipe *list, t_data *data, int *pipe_fd)
+static void	parent_process(t_pipe *list, t_data *data, int *pipe_fd)
 {
 	if (list->in_fd >= 2)
 		close(list->in_fd);
@@ -30,7 +30,7 @@ void	parent_process(t_pipe *list, t_data *data, int *pipe_fd)
 	data->wait++;
 }
 
-void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
+static void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
 {
 	if (list->in_fd)
 	{
@@ -55,7 +55,7 @@ void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
 	exit (0);
 }
 
-void	execution(t_pipe *list, t_data *data, int *pipe_fd)
+static void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 {
 	int		pid;
 	char	*level;
@@ -81,7 +81,7 @@ void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 		parent_process(list, data, pipe_fd);
 }
 
-void	exec_builtins(t_pipe *list, t_data *data)
+static void	exec_builtins(t_pipe *list, t_data *data)
 {
 	if (!list->argv)
 		return ;

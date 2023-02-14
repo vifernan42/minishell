@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/14 18:51:40 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:17:32 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@
 	}
 }*/
 
-char	*get_promt(char *user)
+static char	*get_promt(char *user)
 {
 	if (!user)
 		return (ft_strjoin("ghost", "@minishell: $ "));
 	return (ft_strjoin(user, "@minishell: $ "));
 }
 
-char	**keep_env(char **env)
+static char	**keep_env(char **env)
 {
 	char	**envir;
 	int		i;
@@ -75,7 +75,7 @@ char	**keep_env(char **env)
 	return (envir);
 }
 
-char	*start_variables(int argc, char **argv, char **envp, t_data *data)
+static char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 {
 	char	*join;
 

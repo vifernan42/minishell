@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:50:45 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/14 17:52:20 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:34:39 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_err_redir(char **aux, int j)
+static int	check_err_redir(char **aux, int j)
 {
 	if (ft_strnstr(aux[j], "<<<", ft_strlen(aux[j]))
 		|| ft_strnstr(aux[j], ">>>", ft_strlen(aux[j])))

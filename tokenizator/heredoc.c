@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/13 19:37:28 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:35:55 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	rdline_heredoc(char *key, int fd_w)
+static void	rdline_heredoc(char *key, int fd_w)
 {
 	char	*wr_on;
 
@@ -57,7 +57,7 @@ static int	do_heredoc(char *key)
 	return (pip[RD_END]);
 }
 
-char	*key_value(char **cmd_sp, int i)
+static char	*key_value(char **cmd_sp, int i)
 {
 	char	*key;
 

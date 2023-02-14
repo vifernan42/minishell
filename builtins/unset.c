@@ -6,13 +6,13 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 20:03:33 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/08 21:21:39 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:12:44 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_unset(t_data *data, char *key)
+static void	do_unset(t_data *data, char *key)
 {
 	int		i;
 	int		j;

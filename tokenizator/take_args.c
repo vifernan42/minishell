@@ -3,28 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   take_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:04:52 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/14 18:12:02 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:20:08 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	aux_cmd_path(char **aux_path, char **cmd)
-{
-	if (access(*cmd, F_OK) == 0)
-		*aux_path = ft_strdup(*cmd);
-}
-
-void	free_aux(char **aux_path)
+static void	free_aux(char **aux_path)
 {
 	free(*aux_path);
 	*aux_path = NULL;
 }
 
-char	*aux_path_val(char *cmd, char *aux_cmd, char **path_sp, int i)
+static char	*aux_path_val(char *cmd, char *aux_cmd, char **path_sp, int i)
 {
 	char	*aux_path;
 
@@ -45,7 +39,7 @@ char	*aux_path_val(char *cmd, char *aux_cmd, char **path_sp, int i)
 	return (aux_path);
 }
 
-char	*find_path(char *cmd, char *all_path, int i)
+static char	*find_path(char *cmd, char *all_path, int i)
 {
 	char	*aux_cmd;
 	char	*aux_path;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 19:26:51 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/14 18:50:19 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:12:17 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_export(t_data *data, char *full_var)
+static void	do_export(t_data *data, char *full_var)
 {
 	char	*var_name;
 	char	*var_content;

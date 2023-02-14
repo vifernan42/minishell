@@ -6,13 +6,13 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/08 20:57:54 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:09:28 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_echo(char *str, int fd)
+static void	do_echo(char *str, int fd)
 {
 	int		i;
 
@@ -21,7 +21,7 @@ void	do_echo(char *str, int fd)
 		write(fd, &str[i], 1);
 }
 
-int	check_flag(char **argv)
+static int	echo_flag(char **argv)
 {
 	int	i;
 	int	u;
@@ -49,7 +49,7 @@ int	my_echo(char **argv, int fd)
 	int	flag;
 	int	i;
 
-	flag = check_flag(argv);
+	flag = echo_flag(argv);
 	i = flag;
 	while (argv[i] != NULL)
 	{

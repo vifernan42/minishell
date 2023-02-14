@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:43:08 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/14 17:52:36 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:33:31 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*value_to_expand(t_data *data, char *str, int i, int *char_index)
+static char	*value_to_expand(t_data *data, char *str, int i, int *char_index)
 {
 	char	*aux;
 	char	*var_name;
@@ -34,7 +34,7 @@ char	*value_to_expand(t_data *data, char *str, int i, int *char_index)
 	return (var_env);
 }
 
-int	change_value(char *str, int i, t_data *data, char **expand_ln)
+static int	change_value(char *str, int i, t_data *data, char **expand_ln)
 {
 	int		char_index;
 	char	*value;
@@ -56,7 +56,7 @@ int	change_value(char *str, int i, t_data *data, char **expand_ln)
 	return (0);
 }
 
-int	check_before_change(char *str, int i, int *here, int *open)
+static int	check_before_change(char *str, int i, int *here, int *open)
 {
 	if (i > 0 && str[i] == '<' && str[i - 1] == '<')
 		*here = 1;
