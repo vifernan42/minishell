@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_spaces.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:05:32 by vifernan          #+#    #+#             */
-/*   Updated: 2023/01/30 18:40:50 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:36:59 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ char	*skip_spaces(char *str)
 	i = 0;
 	while (str[i] == ' ')
 		i++;
-	aux =  ft_substr(str, i, (int)ft_strlen(str) - i);
+	aux = ft_substr(str, i, (int)ft_strlen(str) - i);
 	return (sk_front(aux));
 }

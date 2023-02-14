@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:49:58 by vifernan          #+#    #+#             */
-/*   Updated: 2022/07/26 20:06:42 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:24:13 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ char	**copy_matrix(char **matrix)
 	if (!matrix)
 		return (NULL);
 	i = 0;
-	while(matrix[i] != NULL)
+	while (matrix[i] != NULL)
 		i++;
 	dst = malloc(sizeof(char **) * i + 1);
 	i = 0;
-	while(matrix[i] != NULL)
+	while (matrix[i] != NULL)
 	{
 		dst[i] = ft_strdup(matrix[i]);
 		i++;
