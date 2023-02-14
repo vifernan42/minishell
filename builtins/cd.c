@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:44:49 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/13 19:34:49 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:12:27 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	cd_no_path(t_data *data, char *aux, char *path, char *dir)
 {
 	data->oldpwd = ft_strjoin("OLDPWD=", dir);
 	if (path[0] != '.' && ft_strlen(path) == 1)
-		env_update(data, data->oldpwd, "OLDPWD=");
+		env_update(data, ft_strdup(data->oldpwd), "OLDPWD=");
 	free(data->oldpwd);
 	aux = getcwd(NULL, 0);
 	dir = ft_strjoin("PWD=", aux);
@@ -61,7 +61,8 @@ int	do_my_chdir(t_data *data, char *aux, char *path, char *dir)
 		path = change_two_dots(search_variable(data->env, "PWD="));
 		if (!chdir(path))
 			return (cd_no_path(data, aux, path, dir));
-		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		ft_printf("cd: error retrieving current directory: getcwd: \
+				cannot access parent directories: No such file or directory\n");
 		env_update(data, ft_strjoin("PWD=", path), "PWD=");
 	}
 	else

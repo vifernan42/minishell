@@ -6,58 +6,26 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/13 19:37:28 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:51:40 by vifernan         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_promt(char *user)
-{
-	if (!user)
-		return (ft_strjoin("ghost", "@minishell: $ "));
-	return (ft_strjoin(user, "@minishell: $ "));
-}
-
-void	nodedelete(t_pipe *pipe, t_pipe **next)
-{
-	if (pipe->exec_path)
-		free(pipe->exec_path);
-	if (pipe->argv)
-		free_matrix(pipe->argv);
-	*next = pipe->next;
-	free(pipe);
-}
-
-void	lstdelete(t_pipe *pipe)
-{
-	t_pipe	*next;
-
-	if (!pipe)
-		return ;
-	next = NULL;
-	while (pipe)
-	{
-		nodedelete(pipe, &next);
-		pipe = next;
-	}
-}
 /*void	print_node(t_pipe *pipe, t_pipe **next)
 {
 	(void)next;
 	if (pipe->exec_path)
-		printf("exec_path:	%s\n", pipe->exec_path);
+		ft_printf("exec_path:	%s\n", pipe->exec_path);
 	if (pipe->argv)
 	{
 		for(int i = 0; pipe->argv[i] != NULL; i++)
-			printf("cmd_arg[%d]:	%s\n", i, pipe->argv[i]);
+			ft_printf("cmd_arg[%d]:	%s\n", i, pipe->argv[i]);
 	}
 	if (pipe->in_fd)
-		printf("in_fd:	%d\n", pipe->in_fd);
+		ft_printf("in_fd:	%d\n", pipe->in_fd);
 	if (pipe->out_fd)
-		printf("out_fd:	%d\n", pipe->out_fd);
+		ft_printf("out_fd:	%d\n", pipe->out_fd);
 }*/
 
 /*void	print_list(t_pipe *pipe)
@@ -71,11 +39,41 @@ void	lstdelete(t_pipe *pipe)
 	num = 1;
 	while (pipe)
 	{
-		printf("--NODE %d--\n", num++);
+		ft_printf("--NODE %d--\n", num++);
 		print_node(pipe, &next);
 		pipe = pipe->next;
 	}
 }*/
+
+char	*get_promt(char *user)
+{
+	if (!user)
+		return (ft_strjoin("ghost", "@minishell: $ "));
+	return (ft_strjoin(user, "@minishell: $ "));
+}
+
+char	**keep_env(char **env)
+{
+	char	**envir;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (env[i] != NULL)
+		i++;
+	envir = (char **)malloc((i + 1) * sizeof(char *));
+	i = -1;
+	while (env[++i] != NULL)
+	{
+		j = -1;
+		envir[i] = (char *)malloc((int)ft_strlen(env[i]) + 1 * sizeof(char));
+		while (env[i][++j] != '\0')
+			envir[i][j] = env[i][j];
+		envir[i][j] = '\0';
+	}
+	envir[i] = NULL;
+	return (envir);
+}
 
 char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 {
@@ -104,21 +102,6 @@ char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 	}	
 }
 
-void	free_variables(char	*cmd_line, t_data *data)
-{
-	char	*join;
-
-	add_history(cmd_line);
-	free(cmd_line);
-	free(data->promt);
-	free(data->all_path);
-	if (g_err_no == 256)
-		g_err_no = 1;
-	join = ft_itoa(g_err_no);
-	env_update(data, ft_strjoin("?=", join), "?=");
-	free(join);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -144,6 +127,5 @@ int	main(int argc, char **argv, char **envp)
 			free_matrix(data.spt_pipes);
 		}
 		free_variables(cmd_line, &data);
-		system("leaks -q minishell");
 	}
 }

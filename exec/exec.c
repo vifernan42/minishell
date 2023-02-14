@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/13 19:37:28 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:46:47 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	exec_builtins(t_pipe *list, t_data *data)
 	else
 	{
 		g_err_no = 127;
-		printf("minishell: %s: command not found\n", list->argv[0]);
+		ft_printf("minishell: %s: command not found\n", list->argv[0]);
 	}
 }
 

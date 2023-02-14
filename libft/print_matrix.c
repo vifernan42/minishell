@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 19:37:25 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/13 19:15:30 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:49:38 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_matrix(char **matrix)
 	{
 		j = -1;
 		while (matrix[i][++j] != '\0')
-			printf("%c", matrix[i][j]);
-		printf("\n");
+			write(1, &matrix[i][j], 1);
+		write(1, "\n", 1);
 	}
 }

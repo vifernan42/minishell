@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/13 19:37:28 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:46:27 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	sigquit_handler(int sign)
 {
 	(void)sign;
-	printf ("exit\n");
+	ft_printf("exit\n");
 	exit (0);
 }
 
@@ -58,7 +58,7 @@ void	select_signal(int select)
 		signal(SIGINT, handle_signal);
 		if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
 		{
-			printf("Error setting SIGQUIT handler\n");
+			ft_printf("Error setting SIGQUIT handler\n");
 			exit(1);
 		}
 	}
