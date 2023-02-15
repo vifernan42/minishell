@@ -3,47 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/14 21:17:32 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:31:44 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*void	print_node(t_pipe *pipe, t_pipe **next)
-{
-	(void)next;
-	if (pipe->exec_path)
-		ft_printf("exec_path:	%s\n", pipe->exec_path);
-	if (pipe->argv)
-	{
-		for(int i = 0; pipe->argv[i] != NULL; i++)
-			ft_printf("cmd_arg[%d]:	%s\n", i, pipe->argv[i]);
-	}
-	if (pipe->in_fd)
-		ft_printf("in_fd:	%d\n", pipe->in_fd);
-	if (pipe->out_fd)
-		ft_printf("out_fd:	%d\n", pipe->out_fd);
-}*/
-
-/*void	print_list(t_pipe *pipe)
-{
-	t_pipe	*next;
-	int		num;
-
-	if (!pipe)
-		return ;
-	next = NULL;
-	num = 1;
-	while (pipe)
-	{
-		ft_printf("--NODE %d--\n", num++);
-		print_node(pipe, &next);
-		pipe = pipe->next;
-	}
-}*/
 
 static char	*get_promt(char *user)
 {
@@ -102,30 +69,42 @@ static char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 	}	
 }
 
+static void	ready_to_start(t_data *data, char *cmd_line)
+{
+	t_pipe	*pipe;
+
+	data->spt_pipes = st_split(cmd_line, '|');
+	if (data->spt_pipes[0] && even_quotes(cmd_line, 0, 0, data) == 0)
+	{
+		pipe = tokenizator(data, -1);
+		if (data->err != -1 && pipe)
+			exec_pipes(pipe, data);
+		if (pipe)
+			lstdelete(pipe);
+	}
+	if (data->spt_pipes)
+		free_matrix(data->spt_pipes);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	t_pipe	*pipe;
 	char	*cmd_line;
+	int		i;
 
 	cmd_line = start_variables(argc, argv, envp, &data);
 	while (cmd_line)
 	{
+		i = 0;
 		cmd_line = start_variables(0, argv, envp, &data);
 		if (!cmd_line)
 			ft_printf("exit\n");
-		if (cmd_line && cmd_line[0] != '\0')
-		{
-			data.spt_pipes = st_split(cmd_line, '|');
-			if (even_quotes(cmd_line, 0, 0, &data) == 0)
-			{	
-				pipe = tokenizator(&data, -1);
-				if (data.err != -1)
-					exec_pipes(pipe, &data);
-				lstdelete(pipe);
-			}
-			free_matrix(data.spt_pipes);
-		}
+		else
+			while (cmd_line[i] == ' ')
+				i++;
+		if (cmd_line && cmd_line[i] != '\0' && (int)ft_strlen(cmd_line + i) > 0)
+			ready_to_start(&data, cmd_line);
 		free_variables(cmd_line, &data);
+		system("leaks -q minishell");
 	}
 }

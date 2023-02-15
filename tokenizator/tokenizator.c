@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:10:00 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/14 18:47:33 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:27:11 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,36 @@ t_pipe	*create_node(char *cmd_stg, char *all_path, t_data *data)
 	return (ret);
 }
 
+void	do_node(t_pipe **ret, t_pipe **new, t_data *data, int i)
+{
+	if (!*ret)
+	{
+		*ret = create_node(data->spt_pipes[i], data->all_path, data);
+		*new = *ret;
+	}
+	else
+	{
+		(*new)->next = create_node(data->spt_pipes[i], data->all_path, data);
+		*new = (*new)->next;
+	}
+}
+
 t_pipe	*tokenizator(t_data *data, int i)
 {
 	t_pipe	*ret;
 	t_pipe	*new;
+	int		j;
 
 	if (!data->spt_pipes)
 		return (NULL);
+	ret = NULL;
 	while (data->spt_pipes[++i] != NULL)
 	{
-		if (i == 0)
-		{
-			ret = create_node(data->spt_pipes[i], data->all_path, data);
-			new = ret;
-		}
-		else
-		{
-			new->next = create_node(data->spt_pipes[i], data->all_path, data);
-			new = new->next;
-		}
+		j = 0;
+		while (data->spt_pipes[i][j] == ' ')
+			j++;
+		if ((int)ft_strlen(data->spt_pipes[i] + j) > 0)
+			do_node(&ret, &new, data, i);
 	}
 	return (ret);
 }

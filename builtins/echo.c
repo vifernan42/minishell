@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 20:10:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/14 21:09:28 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:52:31 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,20 @@ static int	echo_flag(char **argv)
 
 int	my_echo(char **argv, int fd)
 {
-	int	flag;
-	int	i;
+	int		flag;
+	int		i;
+	char	*prin;
 
 	flag = echo_flag(argv);
 	i = flag;
 	while (argv[i] != NULL)
 	{
-		do_echo(argv[i], fd);
+		prin = skip_quotes(ft_strdup(argv[i]), 0);
+		do_echo(prin, fd);
 		if (argv[i + 1] != NULL)
 			ft_putstr_fd(" ", fd);
 		i++;
+		free(prin);
 	}
 	if (flag == 1)
 		ft_putstr_fd("\n", fd);

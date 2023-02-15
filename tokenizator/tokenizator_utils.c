@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:47:53 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/13 18:50:50 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:27:49 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	**cmd_arg_quottes(char	*pipe, t_data *data)
 	char	**aux_cmd;
 	char	*aux;
 	int		x;
+	int		i;
 
 	data->err = 0;
 	aux = NULL;
@@ -24,9 +25,13 @@ char	**cmd_arg_quottes(char	*pipe, t_data *data)
 		return (NULL);
 	aux_cmd = spqu_split(skip_spaces(pipe), ' ');
 	x = -1;
+	i = 0;
 	while (aux_cmd[++x] != NULL)
 	{
-		if (find_rm_size(aux_cmd[x], 0, -1) == (int)ft_strlen(aux_cmd[x]))
+		if (!ft_strcmp_built(aux_cmd[x], "echo"))
+			i++;
+		if (find_rm_size(aux_cmd[x], 0, -1) == (int)ft_strlen(aux_cmd[x])
+			&& i == 0)
 			aux = skip_quotes(skip_spaces(aux_cmd[x]), 0);
 		else
 			aux = skip_spaces(aux_cmd[x]);
