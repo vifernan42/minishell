@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/14 20:35:55 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:43:00 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	rdline_heredoc(char *key, int fd_w)
 				&& (int)ft_strlen(key) == (int)ft_strlen(wr_on))
 			|| wr_on == NULL)
 			break ;
+		/* cambiar wr_on -> take_variable() */
 		write(fd_w, wr_on, ft_strlen(wr_on));
 		write(fd_w, "\n", 1);
 		free(wr_on);
