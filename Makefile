@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2023/02/14 18:44:42 by vifernan         ###   ########.fr        #
+#    Updated: 2023/02/23 20:36:09 by ialvarez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ $(NAME): $(OBJECTS)
 	@echo "$(BCyan)[COMPILED]$(NO_COLOR)"
 	@make -s -C $(LIBFT_DIR)
 	@make -s -C $(PRINTF_DIR)
-	@$(CC) $(READLINE) $(CFLAGS) $(OBJECTS) ./printf/libftprintf.a ./libft/libft.a -o $(NAME)
+	@$(CC) $(CFLAGS) $(READLINE) $(OBJECTS) ./printf/libftprintf.a ./libft/libft.a -o $(NAME)
 
 debug: fclean all
 	@make -s -C $(LIBFT_DIR)
