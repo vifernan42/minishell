@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/15 21:31:44 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:57:42 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,5 @@ int	main(int argc, char **argv, char **envp)
 		if (cmd_line && cmd_line[i] != '\0' && (int)ft_strlen(cmd_line + i) > 0)
 			ready_to_start(&data, cmd_line);
 		free_variables(cmd_line, &data);
-		system("leaks -q minishell");
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/15 21:43:00 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:54:14 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	rdline_heredoc(char *key, int fd_w)
+static void	rdline_heredoc(t_data *data, char *key, int fd_w)
 {
 	char	*wr_on;
 
@@ -28,7 +28,7 @@ static void	rdline_heredoc(char *key, int fd_w)
 				&& (int)ft_strlen(key) == (int)ft_strlen(wr_on))
 			|| wr_on == NULL)
 			break ;
-		/* cambiar wr_on -> take_variable() */
+		wr_on = take_variable(data, wr_on);
 		write(fd_w, wr_on, ft_strlen(wr_on));
 		write(fd_w, "\n", 1);
 		free(wr_on);
@@ -37,13 +37,13 @@ static void	rdline_heredoc(char *key, int fd_w)
 		free(wr_on);
 }
 
-static int	do_heredoc(char *key)
+static int	do_heredoc(t_data *data, char *key)
 {
 	int	pip[2];
 
 	if (pipe(pip) < 0)
 		return (0);
-	rdline_heredoc(key, pip[WR_END]);
+	rdline_heredoc(data, key, pip[WR_END]);
 	close(pip[WR_END]);
 	if (key)
 		free(key);
@@ -70,14 +70,15 @@ static char	*key_value(char **cmd_sp, int i)
 	return (key);
 }
 
-static	int	aux_take(char **aux_cmd, char **cmd_sp, int *fd, char *aux)
+static	int	aux_take(char **aux_cmd, char **cmd_sp, int *fd, t_data *data)
 {
 	int		i;
+	char	*aux;
 
 	i = find_heredir(cmd_sp, -1, 0);
 	if (i != -1)
 	{
-		*fd = do_heredoc(skip_quotes(key_value(cmd_sp, i), 0));
+		*fd = do_heredoc(data, skip_quotes(key_value(cmd_sp, i), 0));
 		aux = rm_used(cmd_sp, i, 0, 2);
 		free(*aux_cmd);
 		*aux_cmd = ft_strdup(aux);
@@ -98,7 +99,8 @@ int	take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data)
 
 	fd = 0;
 	i = 1;
-	i = aux_take(aux_cmd, cmd_sp, &fd, aux);
+	i = aux_take(aux_cmd, cmd_sp, &fd, data);
+	aux = NULL;
 	if (i == 0)
 		return (0);
 	if (find_heredir(cmd_arg_quottes(*aux_cmd, data), 0, 0) == -1)
