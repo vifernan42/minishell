@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/23 20:33:36 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/23 20:54:16 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ static void	parent_process(t_pipe *list, t_data *data, int *pipe_fd)
 
 static void	exec_builtins(t_pipe *list, t_data *data, int *i)
 {
+	if (!list->argv)
+		return ;
 	if (!ft_strcmp_built(list->argv[0], "pwd") && *i != 0)
 		pwdcurrent(list, data);
-	else if (!ft_strcmp_built(list->argv[0], "echo") && *i != 0)
+	else if (!ft_strcmp_built(list->argv[0], "echo") && ++*i)
 		my_echo(list->argv, list->out_fd);
 	else if (!ft_strcmp_built(list->argv[0], "exit") && ++*i)
 		my_exit(data);
