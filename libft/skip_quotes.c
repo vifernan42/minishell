@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:25:06 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/15 20:40:10 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/23 19:51:50 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*skip_result(char *str, char c, int count, int k)
 		}
 	}
 	s[j] = '\0';
+	if (k < 0)
+		k = 0;
 	return (skip_quotes(s, k));
 }
 
