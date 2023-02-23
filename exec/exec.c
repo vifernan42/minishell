@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/23 18:56:49 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/23 20:33:36 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,25 @@ static void	parent_process(t_pipe *list, t_data *data, int *pipe_fd)
 	data->wait++;
 }
 
-static void	exec_builtins(t_pipe *list, t_data *data)
+static void	exec_builtins(t_pipe *list, t_data *data, int *i)
 {
-	if (!list->argv)
-		return ;
-	if (!ft_strcmp_built(list->argv[0], "pwd"))
+	if (!ft_strcmp_built(list->argv[0], "pwd") && *i != 0)
 		pwdcurrent(list, data);
-	else if (!ft_strcmp_built(list->argv[0], "echo"))
+	else if (!ft_strcmp_built(list->argv[0], "echo") && *i != 0)
 		my_echo(list->argv, list->out_fd);
-	else if (!ft_strcmp_built(list->argv[0], "exit"))
+	else if (!ft_strcmp_built(list->argv[0], "exit") && ++*i)
 		my_exit(data);
-	else if (!ft_strcmp_built(list->argv[0], "env"))
+	else if (!ft_strcmp_built(list->argv[0], "env") && *i != 0)
 		env(data->env, list->out_fd);
-	else if (!ft_strcmp_built(list->argv[0], "cd"))
+	else if (!ft_strcmp_built(list->argv[0], "cd") && ++*i)
 		my_chdir(data, ft_strdup(list->argv[1]));
-	else if (!ft_strcmp_built(list->argv[0], "unset"))
+	else if (!ft_strcmp_built(list->argv[0], "unset") && ++*i)
 		my_unset(data, list->argv);
-	else if (!ft_strcmp_built(list->argv[0], "export"))
+	else if (!ft_strcmp_built(list->argv[0], "export") && ++*i)
 		my_export(data, list->argv);
-	else
+	else if (ft_strcmp_built(list->argv[0], "echo")
+		&& ft_strcmp_built(list->argv[0], "env")
+		&& ft_strcmp_built(list->argv[0], "pwd"))
 	{
 		g_err_no = 127;
 		ft_printf("minishell: %s: command not found\n", list->argv[0]);
@@ -70,7 +70,7 @@ static void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
 	else if (list->next && list->out_fd)
 		dup2(pipe_fd[WR_END], STDOUT_FILENO);
 	if (!list->exec_path)
-		exec_builtins(list, data);
+		exec_builtins(list, data, pipe_fd);
 	else
 	{
 		if (execve(list->exec_path, list->argv, data->env) == -1)
@@ -113,7 +113,9 @@ void	exec_pipes(t_pipe *list, t_data *data)
 {
 	t_pipe	*next;
 	int		pipe_fd[2];
+	int		bultins;
 
+	bultins = 0;
 	if (pipe(pipe_fd) < 0)
 	{
 		perror("minishell: PIPE error\n");
@@ -121,7 +123,9 @@ void	exec_pipes(t_pipe *list, t_data *data)
 	}
 	if (!list->next && !list->out_fd)
 		list->out_fd = STDOUT_FILENO;
-	if (list->argv)
+	if (!list->exec_path)
+		exec_builtins(list, data, &bultins);
+	if (list->argv && !bultins)
 		execution(list, data, pipe_fd);
 	close(pipe_fd[WR_END]);
 	close(pipe_fd[RD_END]);
