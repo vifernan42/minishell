@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/23 18:57:42 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/27 21:53:29 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ static char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 		select_signal(0);
 		g_err_no = 0;
 		data->wait = 0;
-		data->all_path = get_promt(getenv("PATH"));
-		data->promt = get_promt(getenv("USER"));
+		data->all_path = ft_strdup(search_variable(data->env, "PATH="));
+		data->promt = get_promt(ft_strdup(search_variable(data->env, "USER=")));
 		return (readline(data->promt));
 	}	
 }

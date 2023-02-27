@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
+#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2023/02/23 20:36:09 by ialvarez         ###   ########.fr        #
+#    Updated: 2023/02/27 18:52:41 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS = ./main.c \
 	   ./builtins/unset.c \
 	   ./builtins/bultins_utils.c \
 	   ./builtins/export.c \
+	   ./exec/exec_builtins.c \
 	   ./exec/exec.c
 
 

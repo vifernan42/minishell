@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/23 18:54:14 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:11:04 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	rdline_heredoc(t_data *data, char *key, int fd_w)
 	if (!key)
 		return ;
 	wr_on = NULL;
+	data->err = data->err;
 	select_signal(1);
 	while (1)
 	{

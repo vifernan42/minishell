@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:38 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/14 17:58:36 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:59:05 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	free_variables(char	*cmd_line, t_data *data)
 	free(cmd_line);
 	free(data->promt);
 	free(data->all_path);
-	if (g_err_no == 256)
+	if (g_err_no == 256 || g_err_no == 13)
 		g_err_no = 1;
 	join = ft_itoa(g_err_no);
 	env_update(data, ft_strjoin("?=", join), "?=");
