@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:04:52 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/27 21:42:33 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:43:01 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ char	*take_args(char **cmd_sp, t_pipe *ret, char *all_path)
 {
 	char	*path;
 
+	if ((cmd_sp[0] && cmd_sp[0][0] == '/')
+		|| (cmd_sp[0][0] == '.' && cmd_sp[0][0] == '/'))
+	{
+		ret->argv = cmd_sp;
+		return (ft_strdup(cmd_sp[0]));
+	}
 	path = find_path(cmd_sp[0], all_path, -1);
 	ret->argv = cmd_sp;
 	if (!ft_strcmp("cd", ret->argv[0]) || !ft_strcmp("echo", ret->argv[0])

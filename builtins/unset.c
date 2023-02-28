@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 20:03:33 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/14 21:12:44 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:43:38 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,17 @@ void	my_unset(t_data *data, char **argv)
 	int	i;
 
 	i = 1;
-	while (argv[i] != NULL)
+	if (data->env)
 	{
-		do_unset(data, argv[i]);
-		i++;
+		while (argv[i] != NULL)
+		{
+			do_unset(data, argv[i]);
+			i++;
+		}
+	}
+	else
+	{
+		ft_printf("minishell: unset: `%s':\
+			not a valid identifier\n", argv[i]);
 	}
 }

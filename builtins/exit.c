@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/27 19:17:28 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:56:32 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	handle_signal(int sl)
 {
 	if (sl == 2)
 	{
+		g_err_no = -1;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_on_new_line();
 	}	
@@ -32,7 +33,6 @@ void	handle_signal(int sl)
 void	handle_signal_here(int sl)
 {
 	(void) sl;
-	g_err_no = 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
 }

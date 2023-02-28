@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:55:38 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/27 18:59:05 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:57:54 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,16 @@ void	free_variables(char	*cmd_line, t_data *data)
 	char	*join;
 
 	add_history(cmd_line);
-	free(cmd_line);
-	free(data->promt);
-	free(data->all_path);
-	if (g_err_no == 256 || g_err_no == 13)
+	if (cmd_line)
+		free(cmd_line);
+	if (data->promt)
+		free(data->promt);
+	if (data->all_path)
+		free(data->all_path);
+	if (g_err_no == 256 || g_err_no == 13 || g_err_no == -1)
 		g_err_no = 1;
 	join = ft_itoa(g_err_no);
-	env_update(data, ft_strjoin("?=", join), "?=");
+	if (data->env)
+		env_update(data, ft_strjoin("?=", join), "?=");
 	free(join);
 }

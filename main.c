@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/27 21:53:29 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:49:51 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static char	**keep_env(char **env)
 	int		j;
 
 	i = 0;
+	if (!env)
+		return (NULL);
 	while (env[i] != NULL)
 		i++;
 	envir = (char **)malloc((i + 1) * sizeof(char *));
@@ -42,20 +44,31 @@ static char	**keep_env(char **env)
 	return (envir);
 }
 
-static char	*start_variables(int argc, char **argv, char **envp, t_data *data)
+static void	starting_var(int argc, char **argv, char **envp, t_data *data)
 {
 	char	*join;
 
 	join = NULL;
-	if (argc != 0)
-	{
-		(void)argc;
-		(void)argv;
+	(void)argc;
+	(void)argv;
+	if (envp[0])
 		data->env = keep_env(envp);
+	else
+		data->env = NULL;
+	if (data->env)
+	{
 		data->level = ft_atoi(search_variable(data->env, "SHLVL="));
 		join = ft_itoa(g_err_no);
 		env_update(data, ft_strjoin("?=", join), "?=");
 		free(join);
+	}	
+}
+
+static char	*start_variables(int argc, char **argv, char **envp, t_data *data)
+{
+	if (argc != 0)
+	{
+		starting_var(argc, argv, envp, data);
 		return ("");
 	}
 	else
@@ -63,8 +76,17 @@ static char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 		select_signal(0);
 		g_err_no = 0;
 		data->wait = 0;
-		data->all_path = ft_strdup(search_variable(data->env, "PATH="));
-		data->promt = get_promt(ft_strdup(search_variable(data->env, "USER=")));
+		if (data->env)
+		{
+			data->all_path = ft_strdup(search_variable(data->env, "PATH="));
+			data->promt = get_promt(ft_strdup(search_variable(data->env,
+							"USER=")));
+		}
+		else
+		{
+			data->all_path = NULL;
+			data->promt = get_promt(NULL);
+		}
 		return (readline(data->promt));
 	}	
 }
@@ -96,13 +118,14 @@ int	main(int argc, char **argv, char **envp)
 	while (cmd_line)
 	{
 		i = 0;
-		cmd_line = start_variables(0, argv, envp, &data);
+		cmd_line = start_variables(0, argv, data.env, &data);
 		if (!cmd_line)
 			ft_printf("exit\n");
 		else
 			while (cmd_line[i] == ' ')
 				i++;
-		if (cmd_line && cmd_line[i] != '\0' && (int)ft_strlen(cmd_line + i) > 0)
+		if (cmd_line && g_err_no >= 0 && cmd_line[i] != '\0'
+			&& (int)ft_strlen(cmd_line + i) > 0)
 			ready_to_start(&data, cmd_line);
 		free_variables(cmd_line, &data);
 	}
