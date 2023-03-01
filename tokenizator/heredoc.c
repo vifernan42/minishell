@@ -6,7 +6,11 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:09:27 by vifernan          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/02/23 19:01:39 by ialvarez         ###   ########.fr       */
+=======
+/*   Updated: 2023/02/27 18:11:04 by vifernan         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +23,7 @@ static void	rdline_heredoc(t_data *data, char *key, int fd_w)
 	if (!key)
 		return ;
 	wr_on = NULL;
+	data->err = data->err;
 	select_signal(1);
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 19:26:51 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/15 17:27:29 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:45:43 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	do_export(t_data *data, char *full_var)
 	var_content = ft_substr(full_var, ft_charindex(full_var, '=')
 			+ 1, ft_strlen(full_var));
 	var_full = ft_strjoin(var_name, var_content);
-	env_update(data, var_full, var_name);
+	if (data->env)
+		env_update(data, var_full, var_name);
 	free(var_name);
 	free(var_content);
 }
@@ -39,7 +40,7 @@ void	my_export(t_data *data, char **argv)
 			ft_printf("minishell: export: `=': not a valid identifier\n");
 			return ;
 		}
-		else if (ft_charindex(argv[i], '=') == -1)
+		else if (ft_charindex(argv[i], '=') == -1 || !data->env)
 		{
 			ft_printf("minishell: export: `%s':\
 				not a valid identifier\n", argv[i]);

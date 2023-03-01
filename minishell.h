@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/14 18:43:02 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:39:34 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_pipe	*tokenizator(t_data *data, int i);
 t_pipe	*create_node(char *cmd_stg, char *all_path, t_data *data);
 int		take_heredoc(char **aux_cmd, char **cmd_sp, char *aux, t_data *data);
 void	take_redirec(char **aux_cmd, char **cmd_sp, t_pipe *ret, t_data *data);
-void	take_args(char **cmd_sp, t_pipe *ret, char *all_path);
+char	*take_args(char **cmd_sp, t_pipe *ret, char *all_path);
 int		find_heredir(char **cmd_sp, int i, int type);
 char	*find_key(char *str, int i, int j);
 char	*ret_key(char *str, int i, int j, char c);
@@ -96,6 +96,8 @@ void	my_export(t_data *data, char **argv);
 
 /* -- exec -- */
 void	exec_pipes(t_pipe *list, t_data *data);
+int		exec_builtins(t_pipe *list, t_data *data);
+int		exec_killers_builtins(t_pipe *list, t_data *data, int *pipe_fd);
 
 /* -- liberator -- */
 void	nodedelete(t_pipe *pipe, t_pipe **next);

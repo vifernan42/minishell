@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/14 21:09:55 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:56:32 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	sigquit_handler(int sign)
 {
+	g_err_no = -1;
 	(void)sign;
 	ft_printf("exit\n");
 	exit (0);
@@ -23,6 +24,7 @@ void	handle_signal(int sl)
 {
 	if (sl == 2)
 	{
+		g_err_no = -1;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_on_new_line();
 	}	
@@ -31,13 +33,13 @@ void	handle_signal(int sl)
 void	handle_signal_here(int sl)
 {
 	(void) sl;
-	g_err_no = 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
 }
 
 void	my_exit(t_data *data)
 {
+	g_err_no = -1;
 	if (ft_atoi(search_variable(data->env, "SHLVL=")) > 1)
 	{
 		write(1, "exit\n", 5);
