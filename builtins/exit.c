@@ -40,7 +40,7 @@ void	handle_signal_here(int sl)
 void	my_exit(t_data *data)
 {
 	g_err_no = -1;
-	if (ft_atoi(search_variable(data->env, "SHLVL=")) > 1)
+	if (data->env && ft_atoi(search_variable(data->env, "SHLVL=")) > 1)
 	{
 		write(1, "exit\n", 5);
 		data->level--;

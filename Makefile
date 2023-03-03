@@ -78,8 +78,9 @@ clean:
 
 fclean: clean
 	@echo "$(Red)[FCLEAN]$(NO_COLOR)"
-	@make -s -C $(LIBFT_DIR) fclean
-	@make -s -C $(PRINTF_DIR) fclean
+	@make -C $(LIBFT_DIR) fclean
+	@make -C $(PRINTF_DIR) fclean
+	@rm -f $(NAME)
 
 test: fclean all
 	@./minishell
