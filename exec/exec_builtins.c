@@ -20,7 +20,9 @@ int	exec_killers_builtins(t_pipe *list, t_data *data, int *pipe_fd)
 		close(pipe_fd[RD_END]);
 		return (0);
 	}
-	if (!ft_strcmp_built(list->argv[0], "pwd"))
+	if (!ft_strcmp_built(list->argv[0], "echo"))
+		my_echo(list->argv, list->out_fd);
+	else if (!ft_strcmp_built(list->argv[0], "pwd"))
 		pwdcurrent(list, data);
 	else if (!ft_strcmp_built(list->argv[0], "env")
 		|| !ft_strcmp_built(list->argv[0], "ENV"))
@@ -41,11 +43,10 @@ int	exec_builtins(t_pipe *list, t_data *data)
 	if (!list->argv || list->exec_path
 		|| !ft_strcmp_built(list->argv[0], "pwd")
 		|| !ft_strcmp_built(list->argv[0], "env")
-		|| !ft_strcmp_built(list->argv[0], "ENV"))
+		|| !ft_strcmp_built(list->argv[0], "ENV")
+		|| !ft_strcmp_built(list->argv[0], "echo"))
 		return (0);
-	if (!ft_strcmp_built(list->argv[0], "echo"))
-		my_echo(list->argv, list->out_fd);
-	else if (!ft_strcmp_built(list->argv[0], "exit"))
+	if (!ft_strcmp_built(list->argv[0], "exit"))
 		my_exit(data);
 	else if (!ft_strcmp_built(list->argv[0], "cd"))
 		my_chdir(data, ft_strdup(list->argv[1]));
