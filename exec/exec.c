@@ -100,6 +100,12 @@ void	exec_pipes(t_pipe *list, t_data *data)
 		execution(list, data, pipe_fd);
 	next = list->next;
 	if (next)
+	{
+		if (!list->argv)
+			next->in_fd = open("/dev/null", O_RDONLY, 0666);
+		exec_pipes(next, data);
+	}
+	if (next)
 		exec_pipes(next, data);
 	while (data->wait-- > 0)
 		waitpid(-1, &g_err_no, 0);
