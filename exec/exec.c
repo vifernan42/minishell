@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/03/02 21:01:37 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:03:00 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,8 @@ static void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
 static void	execution(t_pipe *list, t_data *data, int *pipe_fd)
 {
 	int		pid;
-	char	*level;
 
 	pid = fork();
-	level = NULL;
-	if (!ft_strcmp_built(list->argv[0], "./minishell"))
-	{
-		data->level++;
-		level = ft_itoa(data->level);
-		update_env_var(data, ft_strjoin("SHLVL=", level), "SHLVL=");
-		free(level);
-	}
 	if (pid < 0)
 	{
 		close(pipe_fd[WR_END]);
@@ -102,7 +93,11 @@ void	exec_pipes(t_pipe *list, t_data *data)
 		execution(list, data, pipe_fd);
 	next = list->next;
 	if (next)
+	{
+		if (!list->argv)
+			next->in_fd = open("/dev/null", O_RDONLY, 0666);
 		exec_pipes(next, data);
+	}
 	while (data->wait-- > 0)
 		waitpid(-1, &g_err_no, 0);
 }

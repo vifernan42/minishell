@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/28 21:39:34 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/04 19:58:37 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*join_swap(char	*str, char	*str2, int flag);
 int		pwdcurrent(t_pipe *list, t_data *data);
 int		my_echo(char **argv, int fd);
 int		print_variable(char **env, char *str, int i, int fd);
-void	my_exit(t_data *data);
+void	my_exit(char **argv, t_data *data);
 void	handle_signal(int sl);
 void	handle_signal_here(int sl);
 void	sigquit_handler(int sign);
