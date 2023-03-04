@@ -6,7 +6,7 @@
 #    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2023/02/27 18:52:41 by vifernan         ###   ########.fr        #
+#    Updated: 2023/03/04 20:42:36 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,19 +53,19 @@ Yellow = \033[0;33m
 Red = \033[0;31m
 NO_COLOR = \033[0m
 
-.SILENT:
+#.SILENT:
 
 all: $(NAME)
 
-libft:
+$(LIB_NAME):
 	@echo "$(BCyan)Compiling libft...$(NO_COLOR)"
 	@make -s -C $(LIBFT_DIR)
 
-printf:
+$(PRINTF_NAME):
 	@echo "$(BCyan)Compiling printf...$(NO_COLOR)"
 	@make -s -C $(PRINTF_DIR)
 
-$(NAME): $(OBJECTS) libft printf
+$(NAME): $(OBJECTS) $(LIB_NAME) $(PRINTF_NAME)
 	@echo "$(BCyan)Compiling minishell...$(NO_COLOR)"
 	@$(CC) $(CFLAGS) $(READLINE) $(OBJECTS) $(PRINTF_NAME) $(LIB_NAME) -o $(NAME)
 	@echo "$(GREEN)[COMPILED]$(NO_COLOR)"
@@ -87,4 +87,4 @@ test: fclean all
 
 re: fclean all
 
-.PHONY: all clean fclean debug test re libft printf
+.PHONY: all clean fclean test re

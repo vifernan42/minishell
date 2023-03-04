@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/03/04 19:28:59 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:02:45 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,15 @@ static void	starting_var(int argc, char **argv, char **envp, t_data *data)
 	(void)argc;
 	(void)argv;
 	if (envp[0])
+	{
 		data->env = keep_env(envp);
+		data->level = ft_atoi(search_variable(data->env, "SHLVL="));
+		data->level++;
+		join = ft_itoa(data->level);
+		//leak? JOIN
+		update_env_var(data, ft_strjoin("SHLVL=", join), "SHLVL=");
+		free(join);
+	}
 	else
 		data->env = NULL;
 	if (data->env)
@@ -130,3 +138,4 @@ int	main(int argc, char **argv, char **envp)
 		free_variables(cmd_line, &data);
 	}
 }
+
