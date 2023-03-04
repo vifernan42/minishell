@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/28 21:49:51 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/04 19:28:59 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	main(int argc, char **argv, char **envp)
 	while (cmd_line)
 	{
 		i = 0;
-		cmd_line = start_variables(0, argv, data.env, &data);
+		cmd_line = change_nbsp(start_variables(0, argv, data.env, &data));
 		if (!cmd_line)
 			ft_printf("exit\n");
 		else

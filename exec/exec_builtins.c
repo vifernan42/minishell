@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:51:00 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/28 21:39:27 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/04 19:56:44 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	exec_builtins(t_pipe *list, t_data *data)
 	if (!ft_strcmp_built(list->argv[0], "echo"))
 		my_echo(list->argv, list->out_fd);
 	else if (!ft_strcmp_built(list->argv[0], "exit"))
-		my_exit(data);
+		my_exit(list->argv, data);
 	else if (!ft_strcmp_built(list->argv[0], "cd"))
 		my_chdir(data, ft_strdup(list->argv[1]));
 	else if (!ft_strcmp_built(list->argv[0], "unset"))
