@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/03/01 20:23:14 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/03/02 21:01:37 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ static void	parent_process(t_pipe *list, t_data *data, int *pipe_fd)
 	if (list->next && !list->next->in_fd)
 		list->next->in_fd = pipe_fd[RD_END];
 	else
+	{		
 		close(pipe_fd[RD_END]);
-	if (list->in_fd >= 2)
+	}
+	if (list->in_fd > 2)
 		close(list->in_fd);
-	if (list->out_fd >= 2)
+	if (list->out_fd > 2)
 		close(list->out_fd);
 	data->wait++;
 }
