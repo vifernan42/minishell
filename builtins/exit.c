@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: talentum <talentum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/03/04 20:58:02 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/05 21:01:40 by talentum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,24 @@ void	handle_signal_here(int sl)
 
 void	my_exit(char **argv, t_data *data)
 {
+	int	i;
+
+	i = -1;
 	if (argv[1])
 	{
-		//hacer atoi especial controlando errores ejemplo 12kbrc no vale
+		if (!ft_strisdigit(argv[1]))
+		{
+			ft_printf("minishell: exit: %s: num argument required", argv[1]);
+			exit(255);
+		}
 		g_err_no = ft_atoi(argv[1]);
 		if (g_err_no < 0 || g_err_no == 1)
 			g_err_no = 255;
+	}
+	else
+	{
+		if (data->env)
+			g_err_no = ft_atoi(search_variable(data->env, "?="));
 	}
 	if (data->env && ft_atoi(search_variable(data->env, "SHLVL=")) > 1)
 		write(1, "exit\n", 5);

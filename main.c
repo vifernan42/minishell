@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: talentum <talentum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/03/04 21:02:45 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/05 21:07:39 by talentum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ static char	*start_variables(int argc, char **argv, char **envp, t_data *data)
 		if (data->env)
 		{
 			data->all_path = ft_strdup(search_variable(data->env, "PATH="));
-			data->promt = get_promt(ft_strdup(search_variable(data->env,
-							"USER=")));
+			data->promt = get_promt(search_variable(data->env, "USER="));
 		}
 		else
 		{
@@ -138,4 +137,3 @@ int	main(int argc, char **argv, char **envp)
 		free_variables(cmd_line, &data);
 	}
 }
-
