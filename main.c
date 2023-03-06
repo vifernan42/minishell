@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:36:59 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/03/06 16:52:00 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/06 22:26:52 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,4 @@ int	main(int argc, char **argv, char **envp)
 			ready_to_start(&data, cmd_line);
 		free_variables(cmd_line, &data);
 	}
-	system("leaks -q minishell");
 }

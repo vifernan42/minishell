@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:51:00 by vifernan          #+#    #+#             */
-/*   Updated: 2023/03/04 21:11:36 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:41:11 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	exec_killers_builtins(t_pipe *list, t_data *data, int *pipe_fd)
 		close(pipe_fd[RD_END]);
 		return (0);
 	}
-	if (!ft_strcmp_built(list->argv[0], "echo"))
-		my_echo(list->argv, list->out_fd);
-	else if (!ft_strcmp_built(list->argv[0], "pwd"))
+	if (!ft_strcmp_built(list->argv[0], "pwd"))
 		pwdcurrent(list, data);
 	else if (!ft_strcmp_built(list->argv[0], "env")
 		|| !ft_strcmp_built(list->argv[0], "ENV"))
@@ -43,10 +41,11 @@ int	exec_builtins(t_pipe *list, t_data *data)
 	if (!list->argv || list->exec_path
 		|| !ft_strcmp_built(list->argv[0], "pwd")
 		|| !ft_strcmp_built(list->argv[0], "env")
-		|| !ft_strcmp_built(list->argv[0], "ENV")
-		|| !ft_strcmp_built(list->argv[0], "echo"))
+		|| !ft_strcmp_built(list->argv[0], "ENV"))
 		return (0);
-	if (!ft_strcmp_built(list->argv[0], "exit"))
+	if (!ft_strcmp_built(list->argv[0], "echo"))
+		my_echo(list->argv, list->out_fd);
+	else if (!ft_strcmp_built(list->argv[0], "exit"))
 		my_exit(list->argv, data);
 	else if (!ft_strcmp_built(list->argv[0], "cd"))
 		my_chdir(data, ft_strdup(list->argv[1]));
