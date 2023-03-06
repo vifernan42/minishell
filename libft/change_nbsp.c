@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_nbsp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: talentum <talentum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:26:38 by vifernan          #+#    #+#             */
-/*   Updated: 2023/03/04 21:21:52 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/03/05 21:03:49 by talentum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*change_nbsp(char *str)
 {
-	char		*s;
-	int			i;
-	int			j;
+	char	*s;
+	int		i;
+	int		j;
 
 	if (!str)
 		return (NULL);

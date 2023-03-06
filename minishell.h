@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/03/04 19:58:37 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:52:57 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ int		find_heredir(char **cmd_sp, int i, int type);
 char	*find_key(char *str, int i, int j);
 char	*ret_key(char *str, int i, int j, char c);
 int		find_rm_size(char *str, int lock, int type);
+char	*get_promt(char *user);
+char	**keep_env(char **env);
+void	starting_var(int argc, char **argv, char **envp, t_data *data);
+char	*start_variables(int argc, char **argv, char **envp, t_data *data);
 
 /* -- rm_used -- */
 char	*rm_used(char **cmd_sp, int i, int f, int size);

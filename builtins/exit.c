@@ -6,45 +6,51 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/03/04 20:58:02 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:55:10 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sigquit_handler(int sign)
+int	exit_args(char **argv)
 {
-	g_err_no = -1;
-	(void)sign;
-	ft_printf("exit\n");
-	exit (0);
-}
+	int	i;
 
-void	handle_signal(int sl)
-{
-	if (sl == 2)
+	if (!ft_strisdigit(argv[1]))
 	{
-		g_err_no = -1;
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_on_new_line();
-	}	
-}
-
-void	handle_signal_here(int sl)
-{
-	(void) sl;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	rl_on_new_line();
+		ft_printf("minishell: exit: %s: num argument required", argv[1]);
+		rl_clear_history();
+		exit(255);
+	}
+	i = 0;
+	while (argv[i] != NULL)
+		i++;
+	if (i > 1)
+	{
+		ft_printf("minishell: exit: too many arguments\n");
+		g_err_no = 1;
+		return (0);
+	}
+	g_err_no = ft_atoi(argv[1]);
+	if (g_err_no < 0 || g_err_no == 1)
+		g_err_no = 255;
+	return (1);
 }
 
 void	my_exit(char **argv, t_data *data)
 {
+	int	i;
+
+	i = -1;
 	if (argv[1])
 	{
-		//hacer atoi especial controlando errores ejemplo 12kbrc no vale
-		g_err_no = ft_atoi(argv[1]);
-		if (g_err_no < 0 || g_err_no == 1)
-			g_err_no = 255;
+		if (!exit_args(argv))
+			return ;
+	}
+	else
+	{
+		if (data->env)
+			g_err_no = ft_atoi(search_variable(data->env, "?="));
 	}
 	if (data->env && ft_atoi(search_variable(data->env, "SHLVL=")) > 1)
 		write(1, "exit\n", 5);
@@ -52,22 +58,4 @@ void	my_exit(char **argv, t_data *data)
 		write(1, "exit", 4);
 	rl_clear_history();
 	exit(g_err_no);
-}
-
-void	select_signal(int select)
-{
-	if (select == 0)
-	{
-		signal(SIGINT, handle_signal);
-		if (signal(SIGQUIT, sigquit_handler) == SIG_ERR)
-		{
-			ft_printf("Error setting SIGQUIT handler\n");
-			exit(1);
-		}
-	}
-	else
-	{
-		signal(SIGINT, handle_signal_here);
-		signal(SIGQUIT, SIG_IGN);
-	}
 }

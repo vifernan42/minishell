@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: talentum <talentum@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 18:00:35 by ialvarez          #+#    #+#              #
-#    Updated: 2023/03/04 19:27:35 by vifernan         ###   ########.fr        #
+#    Updated: 2023/03/05 20:09:26 by talentum         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ RM = rm -f
 
 SRCS	= ft_isalnum.c ft_isprint.c ft_memcpy.c ft_strlcat.c ft_atoi.c \
 		ft_isalpha.c ft_memccpy.c ft_memmove.c ft_strlcpy.c ft_strrchr.c \
-		ft_bzero.c ft_isascii.c ft_memchr.c ft_memset.c ft_strlen.c \
+		ft_bzero.c ft_isascii.c ft_strisdigit.c ft_memchr.c ft_memset.c ft_strlen.c \
 		ft_tolower.c ft_isdigit.c ft_memcmp.c ft_strchr.c ft_strcmp.c \
 		ft_toupper.c ft_strnstr.c ft_calloc.c ft_strdup.c ft_substr.c \
 		ft_strjoin.c ft_strtrim.c ft_strncmp.c ft_split.c ft_itoa.c ft_strmapi.c \

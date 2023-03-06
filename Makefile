@@ -6,7 +6,7 @@
 #    By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/11 19:08:52 by ialvarez          #+#    #+#              #
-#    Updated: 2023/03/04 20:42:36 by vifernan         ###   ########.fr        #
+#    Updated: 2023/03/06 17:06:38 by vifernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS = ./main.c \
        ./parse/expand_parser.c \
        ./parse/redir_parser.c \
        ./errors/syntax_err.c \
+       ./tokenizator/init_variables.c \
        ./tokenizator/tokenizator.c \
        ./tokenizator/heredoc.c \
        ./tokenizator/redirec.c \
@@ -34,6 +35,7 @@ SRCS = ./main.c \
        ./builtins/unset.c \
        ./builtins/bultins_utils.c \
        ./builtins/export.c \
+       ./exec/handle_signal.c \
        ./exec/exec_builtins.c \
        ./exec/exec.c
 
@@ -58,15 +60,12 @@ NO_COLOR = \033[0m
 all: $(NAME)
 
 $(LIB_NAME):
-	@echo "$(BCyan)Compiling libft...$(NO_COLOR)"
 	@make -s -C $(LIBFT_DIR)
 
 $(PRINTF_NAME):
-	@echo "$(BCyan)Compiling printf...$(NO_COLOR)"
 	@make -s -C $(PRINTF_DIR)
 
 $(NAME): $(OBJECTS) $(LIB_NAME) $(PRINTF_NAME)
-	@echo "$(BCyan)Compiling minishell...$(NO_COLOR)"
 	@$(CC) $(CFLAGS) $(READLINE) $(OBJECTS) $(PRINTF_NAME) $(LIB_NAME) -o $(NAME)
 	@echo "$(GREEN)[COMPILED]$(NO_COLOR)"
 
@@ -82,9 +81,6 @@ fclean: clean
 	@make -C $(PRINTF_DIR) fclean
 	@rm -f $(NAME)
 
-test: fclean all
-	@./minishell
-
 re: fclean all
 
-.PHONY: all clean fclean test re
+.PHONY: all clean fclean re
