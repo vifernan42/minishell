@@ -6,7 +6,7 @@
 /*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:51:00 by vifernan          #+#    #+#             */
-/*   Updated: 2023/03/07 20:48:40 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/03/09 19:17:11 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	exec_killers_builtins(t_pipe *list, t_data *data, int *pipe_fd)
 	else if (!ft_strcmp_built(list->argv[0], "env")
 		|| !ft_strcmp_built(list->argv[0], "ENV"))
 		{
-			if (!ft_strcmp_built(list->argv[1], "-i") || !list->argv[1])
+			if (!list->argv[1])
 				env(data->env, list->out_fd);
 			else
 				ft_printf("env: %s: No such file or directory\n", list->argv[1]);
