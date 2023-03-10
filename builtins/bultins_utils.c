@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bultins_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: talentum <talentum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:23:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/27 19:57:59 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/05 20:58:53 by talentum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ char	*search_variable(char **env, char *key)
 	while (env[++i] != NULL)
 	{
 		if (!ft_strcmp(key, env[i]))
-		{
 			return (env[i] + ft_strlen(key));
-			break ;
-		}
 	}
 	return (NULL);
 }

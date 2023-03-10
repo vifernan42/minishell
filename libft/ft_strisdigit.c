@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strisdigit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: talentum <talentum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 19:59:12 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/03/05 20:56:49 by talentum         ###   ########.fr       */
+/*   Created: 2023/03/05 20:06:54 by talentum          #+#    #+#             */
+/*   Updated: 2023/03/05 21:01:10 by talentum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strisdigit(char *str)
 {
-	if (n == 0)
-		return (0);
-	n--;
-	while (n > 0 && *s1 == *s2 && *s1 && *s2)
+	int	i;
+
+	i = -1;
+	while (str[++i] != '\0')
 	{
-		s1++;
-		s2++;
-		n--;
+		if (str[i] < 48 || str[i] > 57)
+			return (0);
 	}
-	return ((unsigned char)*s1 - (unsigned char)*s2);
+	return (1);
 }

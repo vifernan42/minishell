@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:42:14 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/02/28 21:39:34 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:52:57 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ int		find_heredir(char **cmd_sp, int i, int type);
 char	*find_key(char *str, int i, int j);
 char	*ret_key(char *str, int i, int j, char c);
 int		find_rm_size(char *str, int lock, int type);
+char	*get_promt(char *user);
+char	**keep_env(char **env);
+void	starting_var(int argc, char **argv, char **envp, t_data *data);
+char	*start_variables(int argc, char **argv, char **envp, t_data *data);
 
 /* -- rm_used -- */
 char	*rm_used(char **cmd_sp, int i, int f, int size);
@@ -81,7 +85,7 @@ char	*join_swap(char	*str, char	*str2, int flag);
 int		pwdcurrent(t_pipe *list, t_data *data);
 int		my_echo(char **argv, int fd);
 int		print_variable(char **env, char *str, int i, int fd);
-void	my_exit(t_data *data);
+void	my_exit(char **argv, t_data *data);
 void	handle_signal(int sl);
 void	handle_signal_here(int sl);
 void	sigquit_handler(int sign);

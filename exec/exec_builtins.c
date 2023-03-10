@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:51:00 by vifernan          #+#    #+#             */
-/*   Updated: 2023/02/28 21:39:27 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:41:11 by ialvarez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ int	exec_builtins(t_pipe *list, t_data *data)
 		|| !ft_strcmp_built(list->argv[0], "ENV")
 		|| !ft_strcmp_built(list->argv[0], "echo"))
 		return (0);
-	if (!ft_strcmp_built(list->argv[0], "exit"))
-		my_exit(data);
+	if (!ft_strcmp_built(list->argv[0], "echo"))
+		my_echo(list->argv, list->out_fd);
+	else if (!ft_strcmp_built(list->argv[0], "exit"))
+		my_exit(list->argv, data);
 	else if (!ft_strcmp_built(list->argv[0], "cd"))
 		my_chdir(data, ft_strdup(list->argv[1]));
 	else if (!ft_strcmp_built(list->argv[0], "unset"))
