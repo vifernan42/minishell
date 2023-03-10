@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: talentum <talentum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:51:00 by vifernan          #+#    #+#             */
-/*   Updated: 2023/03/06 19:41:11 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/03/10 09:13:16 by talentum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 int	exec_killers_builtins(t_pipe *list, t_data *data, int *pipe_fd)
 {
 	if (list->exec_path)
-	{
-		close(pipe_fd[WR_END]);
-		close(pipe_fd[RD_END]);
 		return (0);
-	}
 	if (!ft_strcmp_built(list->argv[0], "echo"))
 		my_echo(list->argv, list->out_fd);
 	else if (!ft_strcmp_built(list->argv[0], "pwd"))
@@ -32,6 +28,13 @@ int	exec_killers_builtins(t_pipe *list, t_data *data, int *pipe_fd)
 		g_err_no = 127;
 		ft_printf("minishell: %s: command not found\n", list->argv[0]);
 	}
+	if (list->out_fd != 1)
+	{
+		dup2(list->out_fd, STDOUT_FILENO);
+		close(list->out_fd);
+	}
+	else if (list->next && list->out_fd)
+		dup2(pipe_fd[WR_END], STDOUT_FILENO);
 	close(pipe_fd[WR_END]);
 	close(pipe_fd[RD_END]);
 	exit (0);
@@ -46,9 +49,7 @@ int	exec_builtins(t_pipe *list, t_data *data)
 		|| !ft_strcmp_built(list->argv[0], "ENV")
 		|| !ft_strcmp_built(list->argv[0], "echo"))
 		return (0);
-	if (!ft_strcmp_built(list->argv[0], "echo"))
-		my_echo(list->argv, list->out_fd);
-	else if (!ft_strcmp_built(list->argv[0], "exit"))
+	if (!ft_strcmp_built(list->argv[0], "exit"))
 		my_exit(list->argv, data);
 	else if (!ft_strcmp_built(list->argv[0], "cd"))
 		my_chdir(data, ft_strdup(list->argv[1]));

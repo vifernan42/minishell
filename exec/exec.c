@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: talentum <talentum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/03/07 20:05:21 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/03/10 09:10:09 by talentum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,17 @@ static void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
 		dup2(list->in_fd, STDIN_FILENO);
 		close(list->in_fd);
 	}
-	if (list->out_fd != 1)
-	{
-		dup2(list->out_fd, STDOUT_FILENO);
-		close(list->out_fd);
-	}
-	else if (list->next && list->out_fd)
-		dup2(pipe_fd[WR_END], STDOUT_FILENO);
 	if (!exec_killers_builtins(list, data, pipe_fd))
 	{
+		if (list->out_fd != 1)
+		{
+			dup2(list->out_fd, STDOUT_FILENO);
+			close(list->out_fd);
+		}
+		else if (list->next && list->out_fd)
+			dup2(pipe_fd[WR_END], STDOUT_FILENO);
+		close(pipe_fd[WR_END]);
+		close(pipe_fd[RD_END]);
 		if (execve(list->exec_path, list->argv, data->env) == -1)
 		{
 			g_err_no = 126;
