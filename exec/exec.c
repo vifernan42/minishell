@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: talentum <talentum@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/03/10 09:10:09 by talentum         ###   ########.fr       */
+/*   Updated: 2023/03/12 18:26:56 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,16 @@ static void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
 		dup2(list->in_fd, STDIN_FILENO);
 		close(list->in_fd);
 	}
+	if (list->out_fd != 1 && ft_strcmp_built(list->argv[0], "echo"))
+	{
+		dup2(list->out_fd, STDOUT_FILENO);
+		close(list->out_fd);
+	}
+	else if (list->next && list->out_fd &&
+			ft_strcmp_built(list->argv[0], "echo"))
+		dup2(pipe_fd[WR_END], STDOUT_FILENO);
 	if (!exec_killers_builtins(list, data, pipe_fd))
 	{
-		if (list->out_fd != 1)
-		{
-			dup2(list->out_fd, STDOUT_FILENO);
-			close(list->out_fd);
-		}
-		else if (list->next && list->out_fd)
-			dup2(pipe_fd[WR_END], STDOUT_FILENO);
 		close(pipe_fd[WR_END]);
 		close(pipe_fd[RD_END]);
 		if (execve(list->exec_path, list->argv, data->env) == -1)
