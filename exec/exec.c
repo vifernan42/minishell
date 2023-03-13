@@ -6,7 +6,7 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:03:56 by vifernan          #+#    #+#             */
-/*   Updated: 2023/03/12 18:26:56 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:47:17 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void	child_process(t_pipe *list, t_data *data, int *pipe_fd)
 		dup2(list->out_fd, STDOUT_FILENO);
 		close(list->out_fd);
 	}
-	else if (list->next && list->out_fd &&
-			ft_strcmp_built(list->argv[0], "echo"))
+	else if (list->next && list->out_fd
+		&& ft_strcmp_built(list->argv[0], "echo"))
 		dup2(pipe_fd[WR_END], STDOUT_FILENO);
 	if (!exec_killers_builtins(list, data, pipe_fd))
 	{

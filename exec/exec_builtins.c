@@ -6,11 +6,19 @@
 /*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:51:00 by vifernan          #+#    #+#             */
-/*   Updated: 2023/03/12 18:24:04 by vifernan         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:48:49 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	env_splitted(t_pipe *list, t_data *data)
+{
+	if (!list->argv[1])
+		env(data->env, list->out_fd);
+	else
+		ft_printf("env: %s: No such file or directory\n", list->argv[1]);
+}
 
 int	exec_killers_builtins(t_pipe *list, t_data *data, int *pipe_fd)
 {
@@ -22,7 +30,7 @@ int	exec_killers_builtins(t_pipe *list, t_data *data, int *pipe_fd)
 		pwdcurrent(list, data);
 	else if (!ft_strcmp_built(list->argv[0], "env")
 		|| !ft_strcmp_built(list->argv[0], "ENV"))
-		env(data->env, list->out_fd);
+		env_splitted(list, data);
 	else
 	{
 		g_err_no = 127;
