@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ialvarez <ialvarez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vifernan <vifernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 18:28:06 by ialvarez          #+#    #+#             */
-/*   Updated: 2023/03/06 22:23:03 by ialvarez         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:26:27 by vifernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	exit_args(char **argv)
 	}
 	if (argv[2] != NULL)
 	{
+		ft_printf("exit\n");
 		ft_printf("minishell: exit: too many arguments\n");
 		g_err_no = 1;
 		return (0);
